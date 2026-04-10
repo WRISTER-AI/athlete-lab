@@ -550,6 +550,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
   return (
     <>
       <motion.nav
+        className="main-nav"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -689,6 +690,11 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: block !important; }
+          .main-nav {
+            background: rgba(5, 5, 5, 0.95) !important;
+            backdrop-filter: blur(24px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+          }
         }
       `}</style>
     </>
@@ -951,10 +957,10 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
             min-height: 0 !important;
           }
           .hero-media-side {
-            padding: 88px clamp(20px, 4vw, 64px) 0 !important;
-            height: 56vw !important;
+            padding: 130px clamp(20px, 4vw, 64px) 0 !important;
+            height: 65vw !important;
             max-height: 520px !important;
-            min-height: 240px !important;
+            min-height: 280px !important;
             order: -1;
           }
           .hero-content-left {
