@@ -1643,7 +1643,7 @@ function AthleteDifference() {
           <SectionHeadline>
             Talent is obvious early.
             <br />
-            <span style={{ color: brand.red }}>Late in games</span> is where it&apos;s decided.
+            <span style={{ color: brand.red }}>Late in games</span>{" "}is where it&apos;s decided.
           </SectionHeadline>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
             Early in games, talent is obvious. But late in games — when fatigue hits — that&apos;s where
