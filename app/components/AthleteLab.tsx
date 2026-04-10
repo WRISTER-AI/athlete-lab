@@ -1,0 +1,2026 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import {
+  Play, MapPin, Clock, ChevronDown, Menu, X, Mail, Phone,
+  Calendar, Users, Zap, Shield, ArrowRight,
+  CheckCircle, Smartphone,
+} from "lucide-react";
+
+// ── Brand Tokens ──
+const brand = {
+  bg: "#0a0a0a",
+  surface: "#111111",
+  surfaceLight: "#1a1a1a",
+  border: "#222222",
+  red: "#dc2626",
+  redGlow: "rgba(220, 38, 38, 0.15)",
+  redHover: "#ef4444",
+  text: "#e8e8e8",
+  muted: "#888888",
+  mutedLight: "#aaaaaa",
+};
+
+// ── Real Asset URLs ──
+const assets = {
+  logoIcon: "https://static.wixstatic.com/media/5abe16_beb360a530434852aa61d87a03f46513~mv2.png",
+  franPhoto: "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg",
+  chrisPhoto: "https://static.wixstatic.com/media/5abe16_fd56d4ba25a64c5881e662e81a7a59f0~mv2.png",
+  qrCode: "https://static.wixstatic.com/media/2feeec_9502e1d7d07e4bdf97f5fe0fa4d9309f~mv2.png",
+  appStore: "https://static.wixstatic.com/media/3e41b8_a0bf062897f64090b91f438ce6bf69ba~mv2.png",
+  googlePlay: "https://static.wixstatic.com/media/3e41b8_c7dfb607579c44039e9f8c2610f15d3d~mv2.png",
+  perfTrainingImg: "https://static.wixstatic.com/media/07f490_7a1ba3c0b1024d12be0c238814999960~mv2.jpg",
+  sportsPerformanceImg: "https://static.wixstatic.com/media/22615e_a07020aab7a642e5b628cb53e8a1c8cd~mv2.jpg",
+  speedAgilityImg: "https://static.wixstatic.com/media/5abe16_9c3995bfb7a14a5986f85237a853a3ba~mv2.png",
+  miniSoccerImg: "https://static.wixstatic.com/media/5abe16_44d989ed93cb4ef1a1c75c3f0545dd61~mv2.png",
+  littleAthletesImg: "https://static.wixstatic.com/media/11062b_9b2140362f364b2baf7c5798af3a2fa2~mv2.jpg",
+  mainVideo: "https://video.wixstatic.com/video/22615e_afe513b2cb3144d0bac8d201a4e3f41d/1080p/mp4/file.mp4",
+  videoPoster: "https://static.wixstatic.com/media/22615e_afe513b2cb3144d0bac8d201a4e3f41df000.jpg",
+  facebook: "https://www.facebook.com/profile.php?id=61582999460260",
+};
+
+// ── Program Data ──
+type ScheduleEntry = { day: string; time: string; location: string };
+type Program = {
+  id: string;
+  ageGroup: string;
+  name: string;
+  tagline: string;
+  description: string;
+  price: string;
+  priceSub?: string;
+  priceAlt?: string;
+  priceNote: string;
+  schedule: ScheduleEntry[];
+  features: string[];
+  image: string;
+  video: string | null;
+  bookingUrl: string;
+  color: string;
+  featured: boolean;
+};
+
+const programs: Program[] = [
+  {
+    id: "little-athletes",
+    ageGroup: "Ages 2–3",
+    name: "Little Athletes",
+    tagline: "First steps to athletic confidence",
+    description:
+      "A 30-minute high-energy introduction to movement for toddlers. Through games, obstacle courses, and guided activities, kids build balance, coordination, body control, and confidence. Parent participation encouraged.",
+    price: "Free Trial",
+    priceNote: "Limited spots — reserve now",
+    schedule: [
+      { day: "Monday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
+      { day: "Wednesday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
+    ],
+    features: ["Obstacle courses & games", "Balance & coordination", "Parent participation", "Supportive environment"],
+    image: assets.littleAthletesImg,
+    video: null,
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/little-athletes-free-trial?referral=service_list_widget",
+    color: "#f59e0b",
+    featured: false,
+  },
+  {
+    id: "mini-soccer",
+    ageGroup: "Ages 3–5",
+    name: "Mini Soccer",
+    tagline: "Where young athletes learn to move",
+    description:
+      "Introduces the basics of soccer while developing balance, coordination, running mechanics, and body control. Athletes work on dribbling, stopping, and ball skills through stations and interactive games.",
+    price: "$140",
+    priceSub: "8-week session",
+    priceAlt: "$25 drop-in",
+    priceNote: "8-week sessions or single drop-in available",
+    schedule: [
+      { day: "Monday", time: "10:30–11:15 AM", location: "Riverside Sports Complex, Pembroke" },
+      { day: "Wednesday", time: "10:30–11:15 AM", location: "Riverside Sports Complex, Pembroke" },
+      { day: "Saturday", time: "9:30–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
+      { day: "Sunday", time: "9:30–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
+    ],
+    features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
+    image: assets.miniSoccerImg,
+    video: assets.mainVideo,
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/mini-soccer-drop-in",
+    color: "#22c55e",
+    featured: true,
+  },
+  {
+    id: "speed-agility",
+    ageGroup: "Ages 5–8",
+    name: "Intro to Speed & Agility",
+    tagline: "Build the athletic foundation",
+    description:
+      "Designed for developing athletes ready to learn how to move fast, change direction, and build coordination. Sessions focus on acceleration, footwork, reaction drills, and body control that translate to every sport.",
+    price: "$25",
+    priceSub: "drop-in",
+    priceAlt: "5-session pack $100",
+    priceNote: "Drop-in or 5-session package ($100)",
+    schedule: [
+      { day: "Monday", time: "4:00–5:00 PM", location: "City Arena Field 4, Pembroke" },
+      { day: "Wednesday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
+      { day: "Thursday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
+      { day: "Friday", time: "4:00–5:00 PM", location: "Riverside Sports Complex, Pembroke" },
+    ],
+    features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
+    image: assets.speedAgilityImg,
+    video: assets.mainVideo,
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/intro-to-speed-and-agility",
+    color: "#3b82f6",
+    featured: false,
+  },
+  {
+    id: "performance",
+    ageGroup: "Ages 9+",
+    name: "Performance Training",
+    tagline: "Train like a serious athlete",
+    description:
+      "Purpose-driven strength and conditioning for competitive athletes. Every session is structured around speed, strength, and conditioning pillars — developing explosiveness, durability, and mental toughness.",
+    price: "$200/mo",
+    priceSub: "unlimited sessions",
+    priceAlt: "$25 drop-in",
+    priceNote: "Monthly unlimited or single drop-in ($25)",
+    schedule: [
+      { day: "Monday", time: "7:00–9:00 PM", location: "City Arena Field 4, Pembroke" },
+      { day: "Tuesday", time: "4:00–6:00 PM", location: "Arena Field 4, Pembroke" },
+      { day: "Thursday", time: "7:00–9:00 PM", location: "Arena Field 4, Pembroke" },
+      { day: "Friday", time: "5:00–8:00 PM", location: "Riverside Sports Complex, Pembroke" },
+    ],
+    features: ["Strength & power development", "Speed & agility training", "Injury prevention", "Mental toughness"],
+    image: assets.perfTrainingImg,
+    video: assets.mainVideo,
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/performance-training-monthly-membership",
+    color: "#dc2626",
+    featured: false,
+  },
+];
+
+// ── Coaches Data ──
+const coaches = [
+  {
+    name: "Francis Mulkern",
+    title: "Founder & Head Coach",
+    photo: assets.franPhoto,
+    bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts — most recently coached a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional training that builds strong, fast, confident athletes.",
+  },
+  {
+    name: "Chris Nelson",
+    title: "Performance Coach",
+    photo: assets.chrisPhoto,
+    bio: "Former collegiate tennis player at Quinnipiac University, competing at the NCAA level. Standout athlete at Scituate High School earning All-Scholastic honors and serving as team captain. Brings a disciplined, detail-oriented approach to training, helping athletes improve agility, coordination, and confidence.",
+  },
+];
+
+// ── Reusable Components ──
+
+function GlowEffect({
+  color = brand.red,
+  top = "0%",
+  left = "50%",
+  size = "600px",
+  opacity = 0.12,
+}: {
+  color?: string;
+  top?: string;
+  left?: string;
+  size?: string;
+  opacity?: number;
+}) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top,
+        left,
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+        opacity,
+        transform: "translate(-50%, -50%)",
+        pointerEvents: "none",
+        filter: "blur(40px)",
+      }}
+    />
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        fontSize: 12,
+        fontWeight: 600,
+        letterSpacing: "0.12em",
+        textTransform: "uppercase",
+        color: brand.red,
+        marginBottom: 16,
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+function SectionHeadline({
+  children,
+  style = {},
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <h2
+      style={{
+        fontSize: "clamp(32px, 5vw, 52px)",
+        fontWeight: 800,
+        letterSpacing: "-0.03em",
+        lineHeight: 1.1,
+        color: brand.text,
+        margin: 0,
+        ...style,
+      }}
+    >
+      {children}
+    </h2>
+  );
+}
+
+function Button({
+  children,
+  variant = "primary",
+  href = "#",
+  onClick,
+  style = {},
+  icon,
+}: {
+  children: React.ReactNode;
+  variant?: "primary" | "ghost";
+  href?: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  style?: React.CSSProperties;
+  icon?: boolean;
+}) {
+  const [hovered, setHovered] = useState(false);
+  const isPrimary = variant === "primary";
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        height: 52,
+        padding: "0 32px",
+        fontSize: 14,
+        fontWeight: 700,
+        letterSpacing: "0.04em",
+        textTransform: "uppercase",
+        textDecoration: "none",
+        borderRadius: 4,
+        cursor: "pointer",
+        transition: "all 0.3s cubic-bezier(0.65, 0, 0.076, 1)",
+        ...(isPrimary
+          ? {
+              background: hovered ? brand.redHover : brand.red,
+              color: "#fff",
+              border: "none",
+              transform: hovered ? "translateY(-1px)" : "none",
+              boxShadow: hovered ? `0 8px 30px ${brand.redGlow}` : "none",
+            }
+          : {
+              background: hovered ? "rgba(255,255,255,0.05)" : "transparent",
+              color: brand.text,
+              border: `1px solid ${hovered ? brand.mutedLight : brand.border}`,
+            }),
+        ...style,
+      }}
+    >
+      {children}
+      {icon && <ArrowRight size={16} />}
+    </a>
+  );
+}
+
+function VideoPlayer({
+  src,
+  poster,
+  label,
+}: {
+  src: string;
+  poster?: string;
+  label?: string;
+}) {
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (playing) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setPlaying(!playing);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        borderRadius: 12,
+        overflow: "hidden",
+        border: `1px solid ${brand.border}`,
+        cursor: "pointer",
+        background: "#000",
+      }}
+      onClick={togglePlay}
+    >
+      <video
+        ref={videoRef}
+        src={src}
+        poster={poster}
+        style={{ width: "100%", display: "block", aspectRatio: "16/9", objectFit: "cover" }}
+        playsInline
+        onEnded={() => setPlaying(false)}
+      />
+      {!playing && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0,0,0,0.3)",
+          }}
+        >
+          <div
+            style={{
+              width: 72,
+              height: 72,
+              borderRadius: "50%",
+              background: "rgba(220,38,38,0.9)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 0 40px rgba(220,38,38,0.4)",
+            }}
+          >
+            <Play size={28} fill="#fff" color="#fff" style={{ marginLeft: 3 }} />
+          </div>
+          {label && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: 16,
+                left: 16,
+                fontSize: 13,
+                fontWeight: 600,
+                color: "rgba(255,255,255,0.7)",
+              }}
+            >
+              ▶ {label}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ImageCard({ src, label }: { src: string; label?: string }) {
+  return (
+    <div
+      style={{
+        position: "relative",
+        borderRadius: 12,
+        overflow: "hidden",
+        border: `1px solid ${brand.border}`,
+        background: "#000",
+      }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={label || ""}
+        style={{ width: "100%", display: "block", aspectRatio: "16/9", objectFit: "cover" }}
+      />
+      {label && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: "24px 16px 16px",
+            background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+            fontSize: 13,
+            fontWeight: 600,
+            color: "rgba(255,255,255,0.8)",
+          }}
+        >
+          {label}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function EmailSignup({ programName }: { programName: string }) {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  return (
+    <div
+      style={{
+        background: brand.surface,
+        border: `1px solid ${brand.border}`,
+        borderRadius: 10,
+        padding: "20px 24px",
+        marginTop: 16,
+      }}
+    >
+      {submitted ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            color: "#22c55e",
+            fontSize: 14,
+            fontWeight: 600,
+          }}
+        >
+          <CheckCircle size={18} /> You&apos;re on the {programName} list!
+        </div>
+      ) : (
+        <>
+          <div
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: brand.muted,
+              marginBottom: 10,
+              letterSpacing: "0.02em",
+            }}
+          >
+            <Mail size={14} style={{ marginRight: 6, verticalAlign: "middle" }} />
+            Get {programName} updates &amp; schedule changes
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="parent@email.com"
+              style={{
+                flex: 1,
+                height: 40,
+                padding: "0 14px",
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 6,
+                color: brand.text,
+                fontSize: 14,
+                outline: "none",
+              }}
+            />
+            <button
+              onClick={() => {
+                if (email.includes("@")) setSubmitted(true);
+              }}
+              style={{
+                height: 40,
+                padding: "0 18px",
+                background: brand.red,
+                color: "#fff",
+                border: "none",
+                borderRadius: 6,
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Join
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ── Navigation ──
+function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handle = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handle);
+    return () => window.removeEventListener("scroll", handle);
+  }, []);
+
+  const links = [
+    { label: "Programs", id: "programs" },
+    { label: "Schedule", id: "schedule" },
+    { label: "Coaches", id: "coaches" },
+    { label: "Contact", id: "contact" },
+  ];
+
+  return (
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          height: 72,
+          background: scrolled ? "rgba(10,10,10,0.95)" : "transparent",
+          backdropFilter: scrolled ? "blur(16px)" : "none",
+          borderBottom: scrolled ? `1px solid ${brand.border}` : "1px solid transparent",
+          transition: "all 0.3s ease",
+          display: "flex",
+          alignItems: "center",
+          padding: "0 clamp(20px, 4vw, 48px)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginRight: "auto" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={assets.logoIcon} alt="The Athlete Lab" style={{ width: 36, height: 36, borderRadius: 4 }} />
+          <div>
+            <div
+              style={{
+                fontSize: 14,
+                fontWeight: 800,
+                color: brand.text,
+                letterSpacing: "0.06em",
+                lineHeight: 1.1,
+              }}
+            >
+              THE ATHLETE LAB
+            </div>
+            <div style={{ fontSize: 10, color: brand.muted, letterSpacing: "0.08em", fontWeight: 500 }}>
+              PEMBROKE, MA
+            </div>
+          </div>
+        </div>
+
+        <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32 }}>
+          {links.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate(link.id);
+              }}
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                color: brand.muted,
+                transition: "color 0.2s ease",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = brand.text)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = brand.muted)}
+            >
+              {link.label}
+            </a>
+          ))}
+          <Button
+            href="#programs"
+            variant="primary"
+            style={{ height: 42, padding: "0 24px", fontSize: 12 }}
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate("programs");
+            }}
+          >
+            Book a Session
+          </Button>
+        </div>
+
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="mobile-menu-btn"
+          style={{
+            display: "none",
+            background: "none",
+            border: "none",
+            color: brand.text,
+            cursor: "pointer",
+            padding: 8,
+          }}
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </nav>
+
+      {mobileOpen && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 99,
+            background: "rgba(10,10,10,0.98)",
+            backdropFilter: "blur(20px)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 32,
+          }}
+        >
+          {links.map((link) => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate(link.id);
+                setMobileOpen(false);
+              }}
+              style={{ fontSize: 24, fontWeight: 700, color: brand.text, textDecoration: "none" }}
+            >
+              {link.label}
+            </a>
+          ))}
+          <Button
+            href="#programs"
+            variant="primary"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate("programs");
+              setMobileOpen(false);
+            }}
+          >
+            Book a Session
+          </Button>
+        </div>
+      )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: block !important; }
+        }
+      `}</style>
+    </>
+  );
+}
+
+// ── Hero ──
+function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
+  return (
+    <section
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        padding: "120px clamp(20px, 4vw, 48px) 80px",
+        overflow: "hidden",
+        background: brand.bg,
+      }}
+    >
+      <GlowEffect color={brand.red} top="20%" left="70%" size="800px" opacity={0.08} />
+      <GlowEffect color={brand.red} top="80%" left="20%" size="500px" opacity={0.05} />
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.015,
+          backgroundImage: `linear-gradient(${brand.text} 1px, transparent 1px), linear-gradient(90deg, ${brand.text} 1px, transparent 1px)`,
+          backgroundSize: "80px 80px",
+        }}
+      />
+
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          width: "100%",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <div
+          className="hero-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}
+        >
+          <div>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: brand.surface,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 100,
+                padding: "8px 16px",
+                marginBottom: 32,
+                fontSize: 13,
+                color: brand.muted,
+                fontWeight: 500,
+              }}
+            >
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} />
+              Now enrolling — Spring 2026
+            </div>
+
+            <h1
+              style={{
+                fontSize: "clamp(48px, 7vw, 84px)",
+                fontWeight: 900,
+                letterSpacing: "-0.04em",
+                lineHeight: 0.95,
+                color: brand.text,
+                margin: "0 0 24px 0",
+              }}
+            >
+              BUILD
+              <br />
+              <span style={{ color: brand.red }}>ELITE</span>
+              <br />
+              ATHLETES.
+            </h1>
+
+            <p
+              style={{
+                fontSize: 18,
+                lineHeight: 1.6,
+                color: brand.muted,
+                maxWidth: 440,
+                margin: "0 0 40px 0",
+              }}
+            >
+              Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
+            </p>
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Button
+                href="#programs"
+                variant="primary"
+                icon
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate("programs");
+                }}
+              >
+                Book a Session
+              </Button>
+              <Button
+                href="#programs"
+                variant="ghost"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate("programs");
+                }}
+              >
+                View Programs
+              </Button>
+            </div>
+
+            <div
+              className="trust-row"
+              style={{
+                display: "flex",
+                gap: 32,
+                marginTop: 48,
+                paddingTop: 32,
+                borderTop: `1px solid ${brand.border}`,
+              }}
+            >
+              {[
+                { num: "4", label: "Programs by age" },
+                { num: "5", label: "Weekly locations" },
+                { num: "19/23", label: "Players to college soccer" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div
+                    style={{
+                      fontSize: 28,
+                      fontWeight: 800,
+                      color: brand.red,
+                      letterSpacing: "-0.02em",
+                      fontFamily: "Georgia, serif",
+                    }}
+                  >
+                    {stat.num}
+                  </div>
+                  <div style={{ fontSize: 12, color: brand.muted, fontWeight: 500, marginTop: 2 }}>
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="hero-video">
+            <VideoPlayer
+              src={assets.mainVideo}
+              poster={assets.videoPoster}
+              label="Watch our athletes train"
+            />
+            <div
+              style={{
+                display: "flex",
+                gap: 8,
+                marginTop: 12,
+                justifyContent: "center",
+              }}
+            >
+              {[
+                { icon: <Zap size={14} />, text: "Speed" },
+                { icon: <Shield size={14} />, text: "Strength" },
+                { icon: <Users size={14} />, text: "Confidence" },
+              ].map((pill) => (
+                <div
+                  key={pill.text}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "6px 14px",
+                    borderRadius: 100,
+                    background: brand.surface,
+                    border: `1px solid ${brand.border}`,
+                    fontSize: 12,
+                    color: brand.muted,
+                    fontWeight: 500,
+                  }}
+                >
+                  {pill.icon} {pill.text}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-video { display: none !important; }
+          .trust-row { gap: 20px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ── Program Card ──
+function ProgramCard({ program, isActive }: { program: Program; isActive: boolean }) {
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  if (!isActive) return null;
+
+  return (
+    <div
+      className="program-card-grid"
+      style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}
+    >
+      <div>
+        {program.video ? (
+          <VideoPlayer
+            src={program.video}
+            poster={program.image}
+            label={`${program.name} in action`}
+          />
+        ) : (
+          <ImageCard src={program.image} label={`${program.name} — photo coming soon`} />
+        )}
+        <EmailSignup programName={program.name} />
+      </div>
+
+      <div>
+        {program.featured && (
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              padding: "5px 12px",
+              borderRadius: 100,
+              background: "rgba(220,38,38,0.1)",
+              border: "1px solid rgba(220,38,38,0.3)",
+              fontSize: 11,
+              fontWeight: 800,
+              color: brand.red,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              marginBottom: 12,
+            }}
+          >
+            ★ FEATURED PROGRAM
+          </div>
+        )}
+
+        <div
+          style={{
+            display: "inline-block",
+            padding: "4px 12px",
+            borderRadius: 100,
+            background: `${program.color}15`,
+            border: `1px solid ${program.color}30`,
+            fontSize: 12,
+            fontWeight: 700,
+            color: program.color,
+            letterSpacing: "0.04em",
+            marginBottom: 16,
+          }}
+        >
+          {program.ageGroup}
+        </div>
+
+        <h3
+          style={{
+            fontSize: program.featured ? 42 : 36,
+            fontWeight: 900,
+            color: brand.text,
+            letterSpacing: "-0.02em",
+            margin: "0 0 8px 0",
+          }}
+        >
+          {program.name}
+        </h3>
+
+        <p style={{ fontSize: 14, color: brand.muted, fontStyle: "italic", margin: "0 0 20px 0" }}>
+          {program.tagline}
+        </p>
+
+        <p style={{ fontSize: 15, lineHeight: 1.7, color: brand.mutedLight, margin: "0 0 24px 0" }}>
+          {program.description}
+        </p>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "10px 16px",
+            marginBottom: 24,
+          }}
+        >
+          {program.features.map((f) => (
+            <div
+              key={f}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: 13,
+                color: brand.mutedLight,
+              }}
+            >
+              <CheckCircle size={14} color={program.color} /> {f}
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            background: brand.surface,
+            border: `1px solid ${brand.border}`,
+            borderRadius: 10,
+            padding: "20px 24px",
+            marginBottom: 20,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+            <span
+              style={{
+                fontSize: 36,
+                fontWeight: 900,
+                color: brand.text,
+                fontFamily: "Georgia, serif",
+              }}
+            >
+              {program.price}
+            </span>
+            {program.priceSub && (
+              <span style={{ fontSize: 14, color: brand.muted, fontWeight: 500 }}>
+                {program.priceSub}
+              </span>
+            )}
+          </div>
+          {program.priceAlt && (
+            <div style={{ fontSize: 14, color: brand.mutedLight, marginTop: 6, fontWeight: 500 }}>
+              or {program.priceAlt}
+            </div>
+          )}
+        </div>
+
+        <button
+          onClick={() => setScheduleOpen(!scheduleOpen)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            background: brand.surface,
+            border: `1px solid ${brand.border}`,
+            borderRadius: 10,
+            padding: "14px 20px",
+            cursor: "pointer",
+            color: brand.text,
+            fontSize: 14,
+            fontWeight: 600,
+            marginBottom: scheduleOpen ? 0 : 20,
+            borderBottomLeftRadius: scheduleOpen ? 0 : 10,
+            borderBottomRightRadius: scheduleOpen ? 0 : 10,
+          }}
+        >
+          <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Calendar size={16} /> Schedule &amp; Locations
+          </span>
+          <ChevronDown
+            size={18}
+            style={{
+              transition: "transform 0.2s ease",
+              transform: scheduleOpen ? "rotate(180deg)" : "none",
+            }}
+          />
+        </button>
+
+        {scheduleOpen && (
+          <div
+            style={{
+              background: brand.surface,
+              border: `1px solid ${brand.border}`,
+              borderTop: "none",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              padding: "4px 20px 16px",
+              marginBottom: 20,
+            }}
+          >
+            {program.schedule.map((s) => (
+              <div
+                key={s.day + s.time}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "90px 1fr 1fr",
+                  gap: 12,
+                  padding: "12px 0",
+                  borderBottom: `1px solid ${brand.border}`,
+                  fontSize: 14,
+                }}
+              >
+                <span style={{ fontWeight: 700, color: brand.text }}>{s.day}</span>
+                <span
+                  style={{
+                    color: brand.mutedLight,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <Clock size={13} /> {s.time}
+                </span>
+                <span
+                  style={{
+                    color: brand.muted,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <MapPin size={13} /> {s.location}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <Button
+          href={program.bookingUrl}
+          variant="primary"
+          icon
+          style={{ width: "100%", justifyContent: "center" }}
+        >
+          Book {program.name}
+        </Button>
+      </div>
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+        @media (max-width: 900px) { .program-card-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Programs Section ──
+function Programs() {
+  const [activeProgram, setActiveProgram] = useState("mini-soccer");
+
+  return (
+    <section
+      id="programs"
+      style={{
+        position: "relative",
+        padding: "120px clamp(20px, 4vw, 48px)",
+        background: brand.bg,
+      }}
+    >
+      <GlowEffect color={brand.red} top="0%" left="50%" size="1000px" opacity={0.04} />
+      <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <SectionLabel>Programs</SectionLabel>
+          <SectionHeadline>Find the right program for your athlete</SectionHeadline>
+          <p
+            style={{
+              fontSize: 16,
+              color: brand.muted,
+              marginTop: 12,
+              maxWidth: 500,
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            Every program is structured, coached, and built around long-term athlete development.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 8,
+            marginBottom: 48,
+            flexWrap: "wrap",
+          }}
+        >
+          {programs.map((p) => {
+            const isActive = activeProgram === p.id;
+            return (
+              <button
+                key={p.id}
+                onClick={() => setActiveProgram(p.id)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "12px 24px",
+                  borderRadius: 8,
+                  cursor: "pointer",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  letterSpacing: "0.02em",
+                  border: isActive ? `2px solid ${p.color}` : `1px solid ${brand.border}`,
+                  background: isActive ? `${p.color}10` : brand.surface,
+                  color: isActive ? p.color : brand.muted,
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {p.ageGroup}
+                <span
+                  style={{
+                    fontSize: 11,
+                    padding: "2px 8px",
+                    borderRadius: 100,
+                    background: isActive ? `${p.color}20` : brand.surfaceLight,
+                    color: isActive ? p.color : brand.muted,
+                  }}
+                >
+                  {p.name}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {programs.map((p) => (
+          <ProgramCard key={p.id} program={p} isActive={activeProgram === p.id} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Full Schedule ──
+function FullSchedule() {
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+  const getClassesForDay = (day: string) => {
+    const classes: Array<ScheduleEntry & { program: string; color: string; ageGroup: string; bookingUrl: string }> = [];
+    programs.forEach((p) => {
+      p.schedule.forEach((s) => {
+        if (s.day === day) {
+          classes.push({ ...s, program: p.name, color: p.color, ageGroup: p.ageGroup, bookingUrl: p.bookingUrl });
+        }
+      });
+    });
+    return classes.sort((a, b) => {
+      const parseTime = (t: string) => {
+        const match = t.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+        if (!match) return 0;
+        let h = parseInt(match[1]);
+        const m = parseInt(match[2]);
+        const ampm = match[3].toUpperCase();
+        if (ampm === "PM" && h !== 12) h += 12;
+        if (ampm === "AM" && h === 12) h = 0;
+        return h * 60 + m;
+      };
+      return parseTime(a.time) - parseTime(b.time);
+    });
+  };
+
+  return (
+    <section
+      id="schedule"
+      style={{
+        position: "relative",
+        padding: "120px clamp(20px, 4vw, 48px)",
+        background: brand.surface,
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <SectionLabel>Weekly Schedule</SectionLabel>
+          <SectionHeadline>Every session, every location</SectionHeadline>
+          <p style={{ fontSize: 16, color: brand.muted, marginTop: 12 }}>
+            Tap any class to book directly.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gap: 16,
+          }}
+        >
+          {days.map((day) => {
+            const classes = getClassesForDay(day);
+            if (classes.length === 0) return null;
+            return (
+              <div
+                key={day}
+                style={{
+                  background: brand.bg,
+                  border: `1px solid ${brand.border}`,
+                  borderRadius: 12,
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "16px 20px",
+                    borderBottom: `1px solid ${brand.border}`,
+                    fontSize: 15,
+                    fontWeight: 800,
+                    color: brand.text,
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {day}
+                </div>
+                <div style={{ padding: 12 }}>
+                  {classes.map((cls, i) => (
+                    <a
+                      key={i}
+                      href={cls.bookingUrl}
+                      style={{
+                        display: "block",
+                        textDecoration: "none",
+                        padding: "12px 14px",
+                        borderRadius: 8,
+                        marginBottom: i < classes.length - 1 ? 8 : 0,
+                        background: brand.surface,
+                        border: `1px solid ${brand.border}`,
+                        transition: "all 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = cls.color;
+                        e.currentTarget.style.transform = "translateY(-1px)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = brand.border;
+                        e.currentTarget.style.transform = "none";
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginBottom: 6,
+                        }}
+                      >
+                        <span style={{ fontSize: 13, fontWeight: 700, color: cls.color }}>
+                          {cls.program}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: 10,
+                            padding: "2px 8px",
+                            borderRadius: 100,
+                            background: `${cls.color}15`,
+                            color: cls.color,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {cls.ageGroup}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 13,
+                          color: brand.mutedLight,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                        }}
+                      >
+                        <Clock size={12} /> {cls.time}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: brand.muted,
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                          marginTop: 4,
+                        }}
+                      >
+                        <MapPin size={12} /> {cls.location}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Coaches ──
+function Coaches() {
+  return (
+    <section
+      id="coaches"
+      style={{
+        position: "relative",
+        padding: "120px clamp(20px, 4vw, 48px)",
+        background: brand.bg,
+        overflow: "hidden",
+      }}
+    >
+      <GlowEffect color={brand.red} top="50%" left="80%" size="600px" opacity={0.05} />
+      <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <SectionLabel>Our Coaches</SectionLabel>
+          <SectionHeadline>Led by athletes who&apos;ve been there</SectionHeadline>
+        </div>
+
+        <div
+          className="coaches-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}
+        >
+          {coaches.map((coach) => (
+            <div
+              key={coach.name}
+              style={{
+                background: brand.surface,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 16,
+                padding: 32,
+                transition: "all 0.3s ease",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 20,
+                  marginBottom: 24,
+                }}
+              >
+                <div
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    border: `3px solid ${brand.red}`,
+                    flexShrink: 0,
+                    background: brand.surfaceLight,
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={coach.photo}
+                    alt={coach.name}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 800,
+                      color: brand.text,
+                      letterSpacing: "-0.01em",
+                    }}
+                  >
+                    {coach.name}
+                  </div>
+                  <div style={{ fontSize: 13, color: brand.red, fontWeight: 600, marginTop: 2 }}>
+                    {coach.title}
+                  </div>
+                </div>
+              </div>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: brand.mutedLight, margin: 0 }}>
+                {coach.bio}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div
+          className="why-section"
+          style={{
+            marginTop: 56,
+            background: brand.surface,
+            border: `1px solid ${brand.border}`,
+            borderRadius: 16,
+            padding: 40,
+            display: "flex",
+            gap: 40,
+            alignItems: "center",
+          }}
+        >
+          <div style={{ flex: 1 }}>
+            <SectionLabel>Why The Athlete Lab</SectionLabel>
+            <h3
+              style={{
+                fontSize: 28,
+                fontWeight: 800,
+                color: brand.text,
+                letterSpacing: "-0.02em",
+                marginBottom: 20,
+              }}
+            >
+              A gym doesn&apos;t build athletes. We do.
+            </h3>
+            <div
+              style={{
+                fontSize: 15,
+                lineHeight: 1.8,
+                color: brand.mutedLight,
+                borderLeft: `3px solid ${brand.red}`,
+                paddingLeft: 24,
+              }}
+            >
+              &ldquo;A gym membership gives you access to equipment — but it doesn&apos;t build better
+              athletes. I hit the gym hard in college, gained muscle, but lost my agility and first
+              step. Athletic performance requires structured training — building strength while
+              improving speed, agility, and movement quality. That&apos;s what The Athlete Lab is built
+              on.&rdquo;
+            </div>
+            <div style={{ marginTop: 16, fontSize: 14, fontWeight: 700, color: brand.text }}>
+              — Francis Mulkern, Founder
+            </div>
+          </div>
+
+          <div className="session-steps" style={{ flex: "0 0 auto" }}>
+            <div
+              style={{
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 12,
+                padding: 24,
+                minWidth: 280,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: brand.red,
+                  letterSpacing: "0.06em",
+                  marginBottom: 20,
+                }}
+              >
+                EVERY SESSION
+              </div>
+              {[
+                { num: "01", title: "Dynamic Warm-Up", desc: "Mobility, activation, movement prep" },
+                { num: "02", title: "Speed & Agility", desc: "Acceleration, footwork, reaction drills" },
+                { num: "03", title: "Strength & Conditioning", desc: "Functional strength, core stability" },
+              ].map((step, i) => (
+                <div
+                  key={step.num}
+                  style={{
+                    display: "flex",
+                    gap: 16,
+                    padding: "14px 0",
+                    borderTop: i > 0 ? `1px solid ${brand.border}` : "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 900,
+                      color: brand.red,
+                      fontFamily: "Georgia, serif",
+                      opacity: 0.5,
+                      minWidth: 30,
+                    }}
+                  >
+                    {step.num}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: brand.text,
+                        marginBottom: 3,
+                      }}
+                    >
+                      {step.title}
+                    </div>
+                    <div style={{ fontSize: 12, color: brand.muted }}>{step.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .coaches-grid { grid-template-columns: 1fr !important; }
+          .why-section { flex-direction: column !important; }
+          .session-steps { width: 100% !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ── CTA Banner ──
+function CTABanner({ onNavigate }: { onNavigate: (id: string) => void }) {
+  return (
+    <section
+      style={{
+        position: "relative",
+        padding: "80px clamp(20px, 4vw, 48px)",
+        background: brand.red,
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.05,
+          backgroundImage: `repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%)`,
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div
+        style={{
+          maxWidth: 800,
+          margin: "0 auto",
+          textAlign: "center",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "clamp(28px, 5vw, 44px)",
+            fontWeight: 900,
+            color: "#fff",
+            letterSpacing: "-0.02em",
+            margin: "0 0 16px 0",
+          }}
+        >
+          Ready to build a stronger athlete?
+        </h2>
+        <p style={{ fontSize: 16, color: "rgba(255,255,255,0.8)", marginBottom: 32 }}>
+          Every session is coached, structured, and purpose-driven. Spots are limited.
+        </p>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Button
+            variant="primary"
+            href="#programs"
+            icon
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate("programs");
+            }}
+            style={{ background: "#fff", color: brand.red, fontWeight: 800 }}
+          >
+            Book a Session
+          </Button>
+          <Button
+            variant="ghost"
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate("contact");
+            }}
+            style={{ borderColor: "rgba(255,255,255,0.4)", color: "#fff" }}
+          >
+            Contact Us
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Footer ──
+function Footer() {
+  return (
+    <footer
+      id="contact"
+      style={{
+        padding: "80px clamp(20px, 4vw, 48px) 40px",
+        background: brand.surface,
+        borderTop: `1px solid ${brand.border}`,
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div
+          className="footer-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr 1.2fr",
+            gap: 48,
+            marginBottom: 48,
+          }}
+        >
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={assets.logoIcon}
+                alt="The Athlete Lab"
+                style={{ width: 32, height: 32, borderRadius: 4 }}
+              />
+              <div
+                style={{
+                  fontSize: 16,
+                  fontWeight: 900,
+                  color: brand.text,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                THE ATHLETE LAB
+              </div>
+            </div>
+            <p
+              style={{
+                fontSize: 14,
+                lineHeight: 1.7,
+                color: brand.muted,
+                maxWidth: 320,
+                marginBottom: 20,
+              }}
+            >
+              Purpose-driven strength and conditioning for youth athletes and adults. Pembroke &amp; Hanover, MA.
+            </p>
+            <a
+              href={assets.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 8,
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: brand.muted,
+                textDecoration: "none",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = brand.red;
+                e.currentTarget.style.color = brand.red;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = brand.border;
+                e.currentTarget.style.color = brand.muted;
+              }}
+            >
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+          </div>
+
+          <div>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: brand.muted,
+                letterSpacing: "0.08em",
+                marginBottom: 16,
+              }}
+            >
+              PROGRAMS
+            </div>
+            {programs.map((p) => (
+              <a
+                key={p.id}
+                href={p.bookingUrl}
+                style={{
+                  display: "block",
+                  fontSize: 14,
+                  color: brand.mutedLight,
+                  textDecoration: "none",
+                  marginBottom: 10,
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = brand.text)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = brand.mutedLight)}
+              >
+                {p.name}{" "}
+                <span style={{ color: brand.muted, fontSize: 12 }}>({p.ageGroup})</span>
+              </a>
+            ))}
+          </div>
+
+          <div>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: brand.muted,
+                letterSpacing: "0.08em",
+                marginBottom: 16,
+              }}
+            >
+              CONTACT
+            </div>
+            <a
+              href="mailto:theathletelab@yahoo.com"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: 14,
+                color: brand.mutedLight,
+                textDecoration: "none",
+                marginBottom: 10,
+              }}
+            >
+              <Mail size={14} /> theathletelab@yahoo.com
+            </a>
+            <a
+              href="tel:6178889854"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: 14,
+                color: brand.mutedLight,
+                textDecoration: "none",
+                marginBottom: 20,
+              }}
+            >
+              <Phone size={14} /> (617) 888-9854
+            </a>
+
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: brand.muted,
+                letterSpacing: "0.08em",
+                marginBottom: 12,
+              }}
+            >
+              HOURS
+            </div>
+            <div style={{ fontSize: 13, color: brand.muted, lineHeight: 1.8 }}>
+              Mon: 4–5pm &amp; 7–9pm
+              <br />
+              Tue: 4–6pm
+              <br />
+              Wed: Closed
+              <br />
+              Thu: 7–9pm
+              <br />
+              Fri: 4–8pm
+              <br />
+              Sat–Sun: By Appointment
+            </div>
+          </div>
+
+          <div>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: brand.muted,
+                letterSpacing: "0.08em",
+                marginBottom: 16,
+              }}
+            >
+              <Smartphone size={14} style={{ verticalAlign: "middle", marginRight: 6 }} />
+              DOWNLOAD OUR APP
+            </div>
+            <div
+              style={{
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 12,
+                padding: 20,
+                textAlign: "center",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={assets.qrCode}
+                alt="Scan QR code to join the app"
+                style={{ width: 120, height: 120, borderRadius: 8, marginBottom: 12 }}
+              />
+              <div style={{ fontSize: 12, color: brand.muted, marginBottom: 8 }}>
+                Scan to download or use code:
+              </div>
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 900,
+                  color: brand.red,
+                  letterSpacing: "0.1em",
+                  fontFamily: "monospace",
+                  marginBottom: 12,
+                }}
+              >
+                1L6EYB
+              </div>
+              <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={assets.appStore} alt="Download on App Store" style={{ height: 32, cursor: "pointer" }} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={assets.googlePlay} alt="Get it on Google Play" style={{ height: 32, cursor: "pointer" }} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: 24,
+            flexWrap: "wrap",
+            padding: "24px 0",
+            marginBottom: 24,
+            borderTop: `1px solid ${brand.border}`,
+            borderBottom: `1px solid ${brand.border}`,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 700,
+              color: brand.muted,
+              letterSpacing: "0.06em",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <MapPin size={13} /> LOCATIONS:
+          </div>
+          {[
+            "City Arena, Pembroke",
+            "Arena Field 4, Pembroke",
+            "Riverside Sports Complex, Pembroke",
+            "Starland Sportsplex, Hanover",
+          ].map((loc) => (
+            <span key={loc} style={{ fontSize: 13, color: brand.mutedLight }}>
+              {loc}
+            </span>
+          ))}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 12,
+          }}
+        >
+          <div style={{ fontSize: 12, color: brand.muted }}>
+            © 2026 The Athlete Lab. All rights reserved.
+          </div>
+          <div style={{ fontSize: 12, color: brand.muted }}>Pembroke &amp; Hanover, Massachusetts</div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
+    </footer>
+  );
+}
+
+// ── Sticky Mobile CTA ──
+function StickyMobileCTA() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const handle = () => setVisible(window.scrollY > 400);
+    window.addEventListener("scroll", handle);
+    return () => window.removeEventListener("scroll", handle);
+  }, []);
+
+  return (
+    <>
+      <div
+        className="sticky-mobile-cta"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 90,
+          padding: "12px 20px",
+          background: "rgba(10,10,10,0.95)",
+          backdropFilter: "blur(12px)",
+          borderTop: `1px solid ${brand.border}`,
+          transform: visible ? "translateY(0)" : "translateY(100%)",
+          transition: "transform 0.3s ease",
+          display: "none",
+        }}
+      >
+        <a
+          href="#programs"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            width: "100%",
+            height: 48,
+            borderRadius: 8,
+            background: brand.red,
+            color: "#fff",
+            fontSize: 14,
+            fontWeight: 800,
+            textDecoration: "none",
+            letterSpacing: "0.04em",
+          }}
+        >
+          Book a Session <ArrowRight size={16} />
+        </a>
+      </div>
+      <style>{`@media (max-width: 768px) { .sticky-mobile-cta { display: block !important; } }`}</style>
+    </>
+  );
+}
+
+// ── Main App ──
+export default function AthleteLab() {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = 80;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div style={{ background: brand.bg, minHeight: "100vh" }}>
+      <Nav onNavigate={scrollToSection} />
+      <Hero onNavigate={scrollToSection} />
+      <Programs />
+      <FullSchedule />
+      <Coaches />
+      <CTABanner onNavigate={scrollToSection} />
+      <Footer />
+      <StickyMobileCTA />
+    </div>
+  );
+}
