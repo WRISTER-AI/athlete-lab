@@ -489,6 +489,7 @@ function EmailSignup({ programName }: { programName: string }) {
               placeholder="parent@email.com"
               style={{
                 flex: 1,
+                minWidth: 0,
                 height: 40,
                 padding: "0 14px",
                 background: brand.bg,
@@ -569,7 +570,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
           <img
             src="/AthleteLab Logo Main.jpg"
             alt="The Athlete Lab"
-            style={{ height: 64, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.15)" }}
+            style={{ height: 56, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.3) contrast(15)" }}
           />
         </div>
 
@@ -703,198 +704,257 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
         background: brand.bg,
       }}
     >
-      {/* Full-bleed background video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        src={assets.mainVideo}
-        poster={assets.videoPoster}
+      <div
+        className="hero-split-grid"
         style={{
-          position: "absolute",
-          inset: 0,
           width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          opacity: 0.35,
-        }}
-      />
-
-      {/* Dark gradient overlay */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to right, rgba(5,5,5,0.95) 40%, rgba(5,5,5,0.5) 70%, rgba(5,5,5,0.2) 100%)",
-        }}
-      />
-
-      {/* Logo watermark */}
-      <div
-        style={{
-          position: "absolute",
-          right: "-5%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          width: "55%",
-          maxWidth: 800,
-          opacity: 0.06,
-          pointerEvents: "none",
-          mixBlendMode: "screen",
+          minHeight: "100vh",
+          display: "grid",
+          gridTemplateColumns: "1.1fr 0.9fr",
+          alignItems: "center",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/AthleteLab Logo Main.jpg"
-          alt=""
-          style={{ width: "100%", height: "auto", mixBlendMode: "screen" }}
-        />
-      </div>
-
-      {/* Content */}
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          width: "100%",
-          padding: "140px clamp(20px, 4vw, 48px) 100px",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+        {/* Left Content Side */}
+        <div
+          className="hero-content-left"
+          style={{
+            padding: "160px clamp(20px, 4vw, 64px) 100px",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            position: "relative",
+            zIndex: 2,
           }}
-          style={{ maxWidth: 680 }}
         >
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              background: "rgba(255,255,255,0.05)",
-              border: `1px solid ${brand.border}`,
-              borderRadius: 100,
-              padding: "8px 16px",
-              marginBottom: 32,
-              fontSize: 13,
-              color: brand.muted,
-              fontWeight: 500,
-              backdropFilter: "blur(8px)",
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
             }}
+            style={{ maxWidth: 640, marginLeft: "auto", marginRight: "clamp(0px, 2vw, 40px)" }}
           >
-            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} />
-            Now enrolling — Spring 2026
-          </motion.div>
-
-          <motion.h1
-            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            style={{
-              fontSize: "clamp(52px, 8vw, 96px)",
-              fontWeight: 900,
-              letterSpacing: "-0.04em",
-              lineHeight: 0.92,
-              color: brand.text,
-              margin: "0 0 28px 0",
-            }}
-          >
-            BUILD
-            <br />
-            <span style={{ color: brand.red }}>ELITE</span>
-            <br />
-            ATHLETES.
-          </motion.h1>
-
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-              fontSize: 18,
-              lineHeight: 1.65,
-              color: brand.muted,
-              maxWidth: 480,
-              margin: "0 0 40px 0",
-            }}
-          >
-            Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
-          </motion.p>
-
-          <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
-          >
-            <Button
-              href="#programs"
-              variant="primary"
-              icon
-              onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                background: "rgba(255,255,255,0.05)",
+                border: `1px solid ${brand.border}`,
+                borderRadius: 100,
+                padding: "8px 16px",
+                marginBottom: 32,
+                fontSize: 13,
+                color: brand.muted,
+                fontWeight: 500,
+                backdropFilter: "blur(8px)",
+              }}
             >
-              Book a Session
-            </Button>
-            <Button
-              href="#programs"
-              variant="ghost"
-              onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}
-            >
-              View Programs
-            </Button>
-          </motion.div>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} />
+              Now enrolling — Spring 2026
+            </motion.div>
 
-          <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-              display: "flex",
-              gap: 40,
-              marginTop: 56,
-              paddingTop: 32,
-              borderTop: "1px solid rgba(255,255,255,0.08)",
-            }}
-            className="trust-row"
-          >
-            {[
-              { num: "4", label: "Programs by age" },
-              { num: "5", label: "Weekly locations" },
-              { num: "19/23", label: "Players to college soccer" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div style={{ fontSize: 30, fontWeight: 900, color: brand.red, letterSpacing: "-0.02em" }}>
-                  {stat.num}
+            <motion.h1
+              variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              style={{
+                fontSize: "clamp(48px, 6vw, 84px)",
+                fontWeight: 900,
+                letterSpacing: "-0.04em",
+                lineHeight: 0.95,
+                color: brand.text,
+                margin: "0 0 28px 0",
+              }}
+            >
+              BUILD
+              <br />
+              <span style={{ color: brand.red }}>ELITE</span>
+              <br />
+              ATHLETES.
+            </motion.h1>
+
+            <motion.p
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
+                fontSize: 18,
+                lineHeight: 1.65,
+                color: brand.muted,
+                maxWidth: 440,
+                margin: "0 0 40px 0",
+              }}
+            >
+              Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
+            </motion.p>
+
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
+            >
+              <Button
+                href="#programs"
+                variant="primary"
+                icon
+                onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}
+              >
+                Book a Session
+              </Button>
+              <Button
+                href="#programs"
+                variant="ghost"
+                onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}
+              >
+                View Programs
+              </Button>
+            </motion.div>
+
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
+                display: "flex",
+                gap: 40,
+                marginTop: 64,
+                paddingTop: 32,
+                borderTop: "1px solid rgba(255,255,255,0.08)",
+              }}
+              className="trust-row"
+            >
+              {[
+                { num: "4", label: "Programs by age" },
+                { num: "5", label: "Weekly locations" },
+                { num: "82%", label: "Players to college soccer" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div style={{ fontSize: 32, fontWeight: 900, color: brand.text, letterSpacing: "-0.02em", fontFamily: "Georgia, serif" }}>
+                    {stat.num}
+                  </div>
+                  <div style={{ fontSize: 12, color: brand.muted, fontWeight: 500, marginTop: 3 }}>
+                    {stat.label}
+                  </div>
                 </div>
-                <div style={{ fontSize: 12, color: brand.muted, fontWeight: 500, marginTop: 3 }}>
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              ))}
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
+
+        {/* Right Media Side */}
+        <div
+          className="hero-media-side"
+          style={{
+            height: "100%",
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "80px clamp(20px, 3vw, 40px) 40px 0",
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, x: 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            style={{
+              width: "100%",
+              height: "calc(100vh - 160px)",
+              maxHeight: 800,
+              position: "relative",
+              borderRadius: 24,
+              overflow: "hidden",
+              border: `1px solid rgba(255,255,255,0.1)`,
+              boxShadow: "0 20px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05)",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: `linear-gradient(45deg, ${brand.red} 0%, transparent 100%)`,
+                opacity: 0.2,
+                mixBlendMode: "overlay",
+                zIndex: 1,
+                pointerEvents: "none",
+              }}
+            />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              src={assets.mainVideo}
+              poster={assets.videoPoster}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </motion.div>
+        </div>
       </div>
 
-      {/* Bottom fade */}
+      {/* Decorative Glows */}
       <div
         style={{
           position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 120,
-          background: `linear-gradient(to bottom, transparent, ${brand.bg})`,
+          top: "30%",
+          left: "-10%",
+          width: "40vw",
+          height: "40vw",
+          background: brand.red,
+          opacity: 0.05,
+          filter: "blur(120px)",
+          borderRadius: "50%",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "-20%",
+          right: "10%",
+          width: "50vw",
+          height: "50vw",
+          background: brand.red,
+          opacity: 0.03,
+          filter: "blur(100px)",
+          borderRadius: "50%",
           pointerEvents: "none",
         }}
       />
 
       <style>{`
+        @media (max-width: 1024px) {
+          .hero-split-grid {
+            grid-template-columns: 1fr !important;
+            height: auto !important;
+            min-height: 0 !important;
+          }
+          .hero-media-side {
+            padding: 88px clamp(20px, 4vw, 64px) 0 !important;
+            height: 56vw !important;
+            max-height: 520px !important;
+            min-height: 240px !important;
+            order: -1;
+          }
+          .hero-content-left {
+            padding: 32px clamp(20px, 4vw, 64px) 80px !important;
+          }
+        }
         @media (max-width: 768px) {
-          .trust-row { gap: 20px !important; }
+          .trust-row { gap: 20px !important; flex-wrap: wrap !important; }
+          .hero-media-side { height: 56vw !important; }
+          .hero-content-left { padding-bottom: 60px !important; }
+        }
+        @media (max-width: 480px) {
+          .schedule-row { grid-template-columns: 1fr !important; gap: 4px !important; }
+          .schedule-row span { justify-content: flex-start !important; }
+          .program-features-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
@@ -985,6 +1045,7 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
         </p>
 
         <div
+          className="program-features-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -1088,6 +1149,7 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
             {program.schedule.map((s) => (
               <div
                 key={s.day + s.time}
+                className="schedule-row"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "90px 1fr 1fr",
@@ -1136,6 +1198,10 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
       <style>{`
         @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
         @media (max-width: 900px) { .program-card-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 480px) {
+          .schedule-row { grid-template-columns: 1fr !important; gap: 4px !important; padding: 10px 0 !important; }
+          .program-features-grid { grid-template-columns: 1fr !important; }
+        }
       `}</style>
     </div>
   );
@@ -2038,7 +2104,7 @@ function Footer() {
               <img
                 src="/AthleteLab Logo Main.jpg"
                 alt="The Athlete Lab"
-                style={{ height: 88, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.15)" }}
+                style={{ height: 88, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.3) contrast(15)" }}
               />
             </div>
             <p
