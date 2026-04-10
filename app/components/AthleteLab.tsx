@@ -37,6 +37,8 @@ const assets = {
   miniSoccerImg: "https://static.wixstatic.com/media/5abe16_44d989ed93cb4ef1a1c75c3f0545dd61~mv2.png",
   littleAthletesImg: "https://static.wixstatic.com/media/11062b_9b2140362f364b2baf7c5798af3a2fa2~mv2.jpg",
   mainVideo: "https://video.wixstatic.com/video/22615e_afe513b2cb3144d0bac8d201a4e3f41d/1080p/mp4/file.mp4",
+  miniSoccerVideo: "https://video.wixstatic.com/video/22615e_2cc99e540e0541458cff2d00356f88ea/720p/mp4/file.mp4",
+  speedAgilityVideo: "https://video.wixstatic.com/video/22615e_84be692e98a943f6b0ec31a3adda6d9e/720p/mp4/file.mp4",
   videoPoster: "https://static.wixstatic.com/media/22615e_afe513b2cb3144d0bac8d201a4e3f41df000.jpg",
   facebook: "https://www.facebook.com/profile.php?id=61582999460260",
   tiktok: "https://www.tiktok.com/@theathletelab.llc",
@@ -103,7 +105,7 @@ const programs: Program[] = [
     ],
     features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
     image: assets.miniSoccerImg,
-    video: assets.mainVideo,
+    video: assets.miniSoccerVideo,
     bookingUrl: "https://www.theathletelab.net/booking-calendar/mini-soccer-drop-in",
     color: "#22c55e",
     featured: true,
@@ -127,7 +129,7 @@ const programs: Program[] = [
     ],
     features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
     image: assets.speedAgilityImg,
-    video: assets.mainVideo,
+    video: assets.speedAgilityVideo,
     bookingUrl: "https://www.theathletelab.net/booking-calendar/intro-to-speed-and-agility",
     color: "#3b82f6",
     featured: false,
@@ -567,7 +569,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
           <img
             src="/AthleteLab Logo Main.jpg"
             alt="The Athlete Lab"
-            style={{ height: 52, width: "auto", objectFit: "contain", mixBlendMode: "screen" }}
+            style={{ height: 64, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.15)" }}
           />
         </div>
 
@@ -2036,7 +2038,7 @@ function Footer() {
               <img
                 src="/AthleteLab Logo Main.jpg"
                 alt="The Athlete Lab"
-                style={{ height: 64, width: "auto", objectFit: "contain", mixBlendMode: "screen" }}
+                style={{ height: 88, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.15)" }}
               />
             </div>
             <p
