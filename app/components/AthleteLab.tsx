@@ -1192,13 +1192,18 @@ function Programs() {
           {programs.map((p) => {
             const isActive = activeProgram === p.id;
             return (
-              <button
+              <motion.button
                 key={p.id}
                 onClick={() => setActiveProgram(p.id)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: 8,
+                  flex: "1 1 auto",
+                  minWidth: "150px",
                   padding: "12px 24px",
                   borderRadius: 8,
                   cursor: "pointer",
@@ -1223,7 +1228,7 @@ function Programs() {
                 >
                   {p.name}
                 </span>
-              </button>
+              </motion.button>
             );
           })}
         </div>
@@ -1421,14 +1426,16 @@ function Coaches() {
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}
         >
           {coaches.map((coach) => (
-            <div
+            <motion.div
               key={coach.name}
+              whileHover={{ y: -5, boxShadow: "0px 10px 30px rgba(0,0,0,0.5)" }}
+              transition={{ duration: 0.3 }}
               style={{
                 background: brand.surface,
                 border: `1px solid ${brand.border}`,
                 borderRadius: 16,
                 padding: 32,
-                transition: "all 0.3s ease",
+                cursor: "pointer",
               }}
             >
               <div
@@ -1476,7 +1483,7 @@ function Coaches() {
               <p style={{ fontSize: 14, lineHeight: 1.8, color: brand.mutedLight, margin: 0 }}>
                 {coach.bio}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -1839,19 +1846,30 @@ function Testimonials() {
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}
         >
           {placeholders.map((t, i) => (
-            <div
+            <motion.div
               key={i}
+              whileHover={{ scale: 1.02 }}
               style={{
-                background: brand.bg,
-                border: `1px solid ${brand.border}`,
+                background: brand.surface,
+                border: `1px solid rgba(255, 255, 255, 0.03)`,
                 borderRadius: 16,
                 padding: 32,
                 display: "flex",
                 flexDirection: "column",
                 gap: 20,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              <div style={{ display: "flex", gap: 4 }}>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%)",
+                  pointerEvents: "none",
+                }}
+              />
+              <div style={{ display: "flex", gap: 4, opacity: 0.3 }}>
                 {[...Array(5)].map((_, s) => (
                   <span key={s} style={{ color: brand.red, fontSize: 16 }}>★</span>
                 ))}
@@ -1863,15 +1881,36 @@ function Testimonials() {
                   color: brand.muted,
                   fontStyle: "italic",
                   flex: 1,
+                  filter: "blur(4px)",
+                  userSelect: "none",
+                  opacity: 0.4,
                 }}
               >
-                &ldquo;{t.quote}&rdquo;
+                &ldquo;This is a placeholder for a real testimonial. It will go here once collected.&rdquo;
               </p>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: brand.text }}>{t.author}</div>
-                <div style={{ fontSize: 12, color: brand.red, marginTop: 2 }}>{t.program}</div>
+              <div style={{ opacity: 0.5 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: brand.text, filter: "blur(2px)" }}>Parent Name</div>
+                <div style={{ fontSize: 12, color: brand.red, marginTop: 2, filter: "blur(2px)" }}>Program Enrolled</div>
               </div>
-            </div>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: brand.text,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  background: "rgba(0,0,0,0.4)",
+                  backdropFilter: "blur(2px)",
+                }}
+              >
+                Collecting Feedback...
+              </div>
+            </motion.div>
           ))}
         </div>
 
