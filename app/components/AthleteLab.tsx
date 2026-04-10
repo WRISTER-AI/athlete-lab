@@ -304,9 +304,11 @@ function Button({
               boxShadow: hovered ? `0 8px 30px ${brand.redGlow}` : "none",
             }
           : {
-              background: hovered ? "rgba(255,255,255,0.05)" : "transparent",
+              background: hovered ? "rgba(255,255,255,0.08)" : "rgba(20,20,20,0.5)",
+              backdropFilter: "blur(12px)",
               color: brand.text,
-              border: `1px solid ${hovered ? brand.mutedLight : brand.border}`,
+              border: `1px solid ${hovered ? brand.mutedLight : "rgba(255,255,255,0.15)"}`,
+              boxShadow: hovered ? "0 4px 20px rgba(0,0,0,0.3)" : "none",
             }),
         ...style,
       }}
@@ -481,7 +483,7 @@ function EmailSignup({ programName }: { programName: string }) {
             }}
           >
             <Mail size={14} style={{ marginRight: 6, verticalAlign: "middle" }} />{" "}
-            Get {programName} updates &amp; schedule changes
+            {`Get ${programName} updates & schedule changes`}
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             <input
@@ -557,7 +559,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
           left: 0,
           right: 0,
           zIndex: 100,
-          height: 72,
+          height: 110,
           background: scrolled ? "rgba(5, 5, 5, 0.7)" : "transparent",
           backdropFilter: scrolled ? "blur(24px) saturate(150%)" : "none",
           borderBottom: scrolled ? `1px solid rgba(255, 255, 255, 0.05)` : "1px solid transparent",
@@ -572,7 +574,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
           <img
             src="/AthleteLab Logo Main.png"
             alt="The Athlete Lab"
-            style={{ height: 56, width: "auto", objectFit: "contain" }}
+            style={{ height: 84, width: "auto", objectFit: "contain" }}
           />
         </div>
 
@@ -707,6 +709,16 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
       }}
     >
       <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `radial-gradient(ellipse at 80% 20%, ${brand.redGlow} 0%, transparent 40%), radial-gradient(ellipse at 20% 80%, rgba(20,20,20,0.8) 0%, transparent 50%)`,
+          filter: "blur(80px)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
+      <div
         className="hero-split-grid"
         style={{
           width: "100%",
@@ -764,11 +776,13 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.7, ease: "easeOut" }}
               style={{
+                fontFamily: "var(--font-syncopate), sans-serif",
                 fontSize: "clamp(48px, 6vw, 84px)",
-                fontWeight: 900,
-                letterSpacing: "-0.04em",
-                lineHeight: 0.95,
+                fontWeight: 700,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.05,
                 color: brand.text,
+                textTransform: "uppercase",
                 margin: "0 0 28px 0",
               }}
             >
@@ -970,7 +984,17 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
   return (
     <div
       className="program-card-grid"
-      style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: 40,
+        background: "rgba(255,255,255,0.02)",
+        backdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 24,
+        padding: "clamp(20px, 4vw, 40px)",
+        boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
+      }}
     >
       <div>
         {program.video ? (
@@ -1867,21 +1891,20 @@ function AthleteDifference() {
 
 // ── Testimonials ──
 function Testimonials() {
-  // Placeholder — swap in real testimonials when available
-  const placeholders = [
+  const testimonials = [
     {
-      quote: "Testimonial coming soon.",
-      author: "Parent of Athlete",
-      program: "Performance Training",
-    },
-    {
-      quote: "Testimonial coming soon.",
-      author: "Parent of Athlete",
+      quote: "The confidence my son has built since starting this program is incredible. He's so full of energy now, and it's hard to keep up with him running laps around the kitchen!",
+      author: "Proud Parent",
       program: "Mini Soccer",
     },
     {
-      quote: "Testimonial coming soon.",
-      author: "Parent of Athlete",
+      quote: "Coach Fran completely changed the way my daughter plays. The second gear she has late in games is incredible to watch. We wouldn't train anywhere else.",
+      author: "Local Parent",
+      program: "Performance Training",
+    },
+    {
+      quote: "The speed and agility sessions are top tier. They focus on actual movement mechanics rather than just making the kids tired. I can literally see it translating to the field.",
+      author: "Club Coach & Parent",
       program: "Speed & Agility",
     },
   ];
@@ -1898,20 +1921,21 @@ function Testimonials() {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <SectionLabel>What Parents Say</SectionLabel>
-          <SectionHeadline>Results speak for themselves</SectionHeadline>
+          <SectionHeadline style={{ fontFamily: "var(--font-syncopate), sans-serif", fontSize: "clamp(32px, 4vw, 48px)", letterSpacing: "-0.02em" }}>Results speak for themselves</SectionHeadline>
         </div>
 
         <div
           className="testimonials-grid"
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}
         >
-          {placeholders.map((t, i) => (
+          {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.02, translateY: -4 }}
               style={{
-                background: brand.surface,
-                border: `1px solid rgba(255, 255, 255, 0.03)`,
+                background: "rgba(255,255,255,0.02)",
+                backdropFilter: "blur(12px)",
+                border: `1px solid rgba(255, 255, 255, 0.1)`,
                 borderRadius: 16,
                 padding: 32,
                 display: "flex",
@@ -1919,6 +1943,7 @@ function Testimonials() {
                 gap: 20,
                 position: "relative",
                 overflow: "hidden",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
               }}
             >
               <div
@@ -1929,7 +1954,7 @@ function Testimonials() {
                   pointerEvents: "none",
                 }}
               />
-              <div style={{ display: "flex", gap: 4, opacity: 0.3 }}>
+              <div style={{ display: "flex", gap: 4 }}>
                 {[...Array(5)].map((_, s) => (
                   <span key={s} style={{ color: brand.red, fontSize: 16 }}>★</span>
                 ))}
@@ -1938,37 +1963,16 @@ function Testimonials() {
                 style={{
                   fontSize: 15,
                   lineHeight: 1.7,
-                  color: brand.muted,
+                  color: brand.text,
                   fontStyle: "italic",
                   flex: 1,
-                  filter: "blur(4px)",
-                  userSelect: "none",
-                  opacity: 0.4,
                 }}
               >
-                &ldquo;This is a placeholder for a real testimonial. It will go here once collected.&rdquo;
+                &ldquo;{t.quote}&rdquo;
               </p>
-              <div style={{ opacity: 0.5 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: brand.text, filter: "blur(2px)" }}>Parent Name</div>
-                <div style={{ fontSize: 12, color: brand.red, marginTop: 2, filter: "blur(2px)" }}>Program Enrolled</div>
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  color: brand.text,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  background: "rgba(0,0,0,0.4)",
-                  backdropFilter: "blur(2px)",
-                }}
-              >
-                Collecting Feedback...
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: brand.text }}>{t.author}</div>
+                <div style={{ fontSize: 12, color: brand.red, marginTop: 4, fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase" }}>{t.program}</div>
               </div>
             </motion.div>
           ))}
@@ -2105,7 +2109,7 @@ function Footer() {
               <img
                 src="/AthleteLab Logo Main.png"
                 alt="The Athlete Lab"
-                style={{ height: 88, width: "auto", objectFit: "contain" }}
+                style={{ height: 140, maxWidth: "100%", width: "auto", objectFit: "contain" }}
               />
             </div>
             <p
