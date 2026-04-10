@@ -142,7 +142,7 @@ const programs: Program[] = [
     name: "Performance Training",
     tagline: "Train like a serious athlete",
     description:
-      "Purpose-driven strength and conditioning for competitive athletes. Every session is structured around speed, strength, and conditioning pillars — developing explosiveness, durability, and mental toughness.",
+      "Purpose-driven strength and conditioning for competitive youth athletes. Every session is structured around speed, strength, and conditioning pillars to develop explosiveness, durability, and mental toughness.",
     price: "$100",
     priceSub: "5-session pack",
     priceAlt: "$200/mo unlimited · $25 drop-in",
@@ -168,7 +168,7 @@ const coaches = [
     name: "Francis Mulkern",
     title: "Founder & Head Coach",
     photo: assets.franPhoto,
-    bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts — most recently coached a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional training that builds strong, fast, confident athletes.",
+    bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts, most recently leading a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional youth athletic training on the South Shore.",
   },
   {
     name: "Chris Nelson",
@@ -775,7 +775,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               }}
             >
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} />
-              Now enrolling — Spring 2026
+              Now enrolling for Spring 2026
             </motion.div>
 
             <motion.h1
@@ -810,7 +810,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
                 margin: "0 0 40px 0",
               }}
             >
-              Purpose-driven speed, strength, and conditioning for youth athletes. Pembroke &amp; Hanover, MA.
+              Youth speed, strength, and conditioning training on the South Shore. Pembroke and Hanover, MA.
             </motion.p>
 
             <motion.div
@@ -913,6 +913,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+                objectPosition: "center 20%",
               }}
             />
           </motion.div>
@@ -1266,7 +1267,7 @@ function Programs() {
               marginRight: "auto",
             }}
           >
-            Every program is structured, coached, and built around long-term athlete development.
+            Structured, coached programs built around long-term youth athlete development on the South Shore.
           </p>
         </div>
 
@@ -1612,9 +1613,9 @@ function Coaches() {
                 paddingLeft: 24,
               }}
             >
-              &ldquo;A gym membership gives you access to equipment — but it doesn&apos;t build better
+              &ldquo;A gym membership gives you access to equipment, but it doesn&apos;t build better
               athletes. I hit the gym hard in college, gained muscle, but lost my agility and first
-              step. Athletic performance requires structured training — building strength while
+              step. Athletic performance requires structured training: building strength while
               improving speed, agility, and movement quality. That&apos;s what The Athlete Lab is built
               on.&rdquo;
             </div>
@@ -1707,17 +1708,17 @@ function AthleteDifference() {
     {
       label: "The Second Gear",
       headline: "When everyone else slows down, they speed up.",
-      body: "Athlete Lab athletes still accelerate late in games. They still change direction with control. They still compete at full speed — because they've trained for that exact moment.",
+      body: "Athlete Lab athletes still accelerate late in games. They still change direction with control. They still compete at full speed because they've trained for that exact moment.",
     },
     {
       label: "The Mental Edge",
       headline: "Most athletes think: \"I'm tired.\"",
-      body: "Athlete Lab athletes are wired to think: \"This is where I separate.\" That's trained — pushing through fatigue in circuits, competing when legs are heavy, learning to execute under pressure.",
+      body: "Athlete Lab athletes are wired to think: \"This is where I separate.\" That mindset is trained. Pushing through fatigue in circuits, competing when legs are heavy, learning to execute under pressure.",
     },
     {
       label: "What You're Building",
       headline: "Not just speed. Not just strength.",
-      body: "You're building resilience, conditioned confidence, and the ability to perform under fatigue. Talent might show early. But late in games? The athlete who can still move, think, and compete — that's the athlete who wins.",
+      body: "You're building resilience, conditioned confidence, and the ability to perform under fatigue. Talent might show early, but late in games, the athlete who can still move, think, and compete is the one who wins.",
     },
   ];
 
@@ -1743,7 +1744,7 @@ function AthleteDifference() {
             <span style={{ color: brand.red }}>Late in games</span>{" "}is where it&apos;s decided.
           </SectionHeadline>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
-            Early in games, talent is obvious. But late in games — when fatigue hits — that&apos;s where
+            Early in games, talent is obvious. But late in games, when fatigue hits, that&apos;s where
             separation actually happens. Conditioning and mentality take over.
           </p>
         </div>
@@ -1850,7 +1851,7 @@ function AthleteDifference() {
             </h3>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: brand.mutedLight }}>
               Loose balls. Final sprints. Defensive recoveries. Last attacking runs.
-              That&apos;s where games are decided — and that&apos;s where Athlete Lab athletes
+              That&apos;s where games are decided, and that&apos;s where Athlete Lab athletes
               stand out most.
             </p>
           </div>
@@ -1995,7 +1996,7 @@ function Testimonials() {
           }}
         >
           <p style={{ fontSize: 14, color: brand.muted }}>
-            Testimonials coming soon — follow along on{" "}
+            Testimonials coming soon. Follow along on{" "}
             <a href={assets.facebook} target="_blank" rel="noopener noreferrer" style={{ color: brand.red }}>
               Facebook
             </a>{" "}
@@ -2127,7 +2128,7 @@ function Footer() {
                 marginBottom: 20,
               }}
             >
-              Purpose-driven strength and conditioning for youth athletes and adults. Pembroke &amp; Hanover, MA.
+              Youth athletic training and sports performance on the South Shore. Pembroke and Hanover, MA.
             </p>
             <a
               href={assets.facebook}
