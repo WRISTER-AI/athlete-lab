@@ -570,9 +570,9 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
         <div style={{ display: "flex", alignItems: "center", marginRight: "auto" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/AthleteLab Logo Main.jpg"
+            src="/AthleteLab Logo Main.png"
             alt="The Athlete Lab"
-            style={{ height: 56, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(5) contrast(100)" }}
+            style={{ height: 56, width: "auto", objectFit: "contain" }}
           />
         </div>
 
@@ -2103,9 +2103,9 @@ function Footer() {
             <div style={{ marginBottom: 16 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/AthleteLab Logo Main.jpg"
+                src="/AthleteLab Logo Main.png"
                 alt="The Athlete Lab"
-                style={{ height: 88, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(5) contrast(100)" }}
+                style={{ height: 88, width: "auto", objectFit: "contain" }}
               />
             </div>
             <p
