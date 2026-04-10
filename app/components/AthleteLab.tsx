@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, MapPin, Clock, ChevronDown, Menu, X, Mail, Phone,
   Calendar, Users, Zap, Shield, ArrowRight,
@@ -9,21 +10,22 @@ import {
 
 // ── Brand Tokens ──
 const brand = {
-  bg: "#0a0a0a",
-  surface: "#111111",
-  surfaceLight: "#1a1a1a",
-  border: "#222222",
-  red: "#dc2626",
-  redGlow: "rgba(220, 38, 38, 0.15)",
-  redHover: "#ef4444",
-  text: "#e8e8e8",
-  muted: "#888888",
-  mutedLight: "#aaaaaa",
+  bg: "#050505",
+  surface: "rgba(20, 20, 20, 0.4)",
+  surfaceLight: "rgba(30, 30, 30, 0.6)",
+  border: "rgba(255, 255, 255, 0.08)",
+  red: "#f93a3a",
+  redGlow: "rgba(249, 58, 58, 0.25)",
+  redHover: "#ff5252",
+  text: "#f4f4f5",
+  muted: "#a1a1aa",
+  mutedLight: "#d4d4d8",
 };
 
 // ── Real Asset URLs ──
 const assets = {
   logoIcon: "https://static.wixstatic.com/media/5abe16_beb360a530434852aa61d87a03f46513~mv2.png",
+  logoFull: "https://static.wixstatic.com/media/07f490_2252602a95894028947be151ae41b016~mv2.jpg",
   franPhoto: "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg",
   chrisPhoto: "https://static.wixstatic.com/media/5abe16_fd56d4ba25a64c5881e662e81a7a59f0~mv2.png",
   qrCode: "https://static.wixstatic.com/media/2feeec_9502e1d7d07e4bdf97f5fe0fa4d9309f~mv2.png",
@@ -37,6 +39,7 @@ const assets = {
   mainVideo: "https://video.wixstatic.com/video/22615e_afe513b2cb3144d0bac8d201a4e3f41d/1080p/mp4/file.mp4",
   videoPoster: "https://static.wixstatic.com/media/22615e_afe513b2cb3144d0bac8d201a4e3f41df000.jpg",
   facebook: "https://www.facebook.com/profile.php?id=61582999460260",
+  tiktok: "https://www.tiktok.com/@theathletelab", // UPDATE with real handle
 };
 
 // ── Program Data ──
@@ -136,10 +139,10 @@ const programs: Program[] = [
     tagline: "Train like a serious athlete",
     description:
       "Purpose-driven strength and conditioning for competitive athletes. Every session is structured around speed, strength, and conditioning pillars — developing explosiveness, durability, and mental toughness.",
-    price: "$200/mo",
-    priceSub: "unlimited sessions",
-    priceAlt: "$25 drop-in",
-    priceNote: "Monthly unlimited or single drop-in ($25)",
+    price: "$100",
+    priceSub: "5-session pack",
+    priceAlt: "$200/mo unlimited · $25 drop-in",
+    priceNote: "Best value: 5-session pack $100 · Monthly unlimited $200 · Drop-in $25",
     schedule: [
       { day: "Monday", time: "7:00–9:00 PM", location: "City Arena Field 4, Pembroke" },
       { day: "Tuesday", time: "4:00–6:00 PM", location: "Arena Field 4, Pembroke" },
@@ -187,7 +190,10 @@ function GlowEffect({
   opacity?: number;
 }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity, scale: 1 }}
+      transition={{ duration: 2, ease: "easeOut" }}
       style={{
         position: "absolute",
         top,
@@ -195,11 +201,12 @@ function GlowEffect({
         width: size,
         height: size,
         borderRadius: "50%",
-        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+        background: `radial-gradient(circle at center, ${color} 0%, transparent 70%)`,
         opacity,
         transform: "translate(-50%, -50%)",
         pointerEvents: "none",
-        filter: "blur(40px)",
+        filter: "blur(60px)",
+        mixBlendMode: "screen",
       }}
     />
   );
@@ -535,7 +542,10 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
 
   return (
     <>
-      <nav
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         style={{
           position: "fixed",
           top: 0,
@@ -543,34 +553,22 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
           right: 0,
           zIndex: 100,
           height: 72,
-          background: scrolled ? "rgba(10,10,10,0.95)" : "transparent",
-          backdropFilter: scrolled ? "blur(16px)" : "none",
-          borderBottom: scrolled ? `1px solid ${brand.border}` : "1px solid transparent",
-          transition: "all 0.3s ease",
+          background: scrolled ? "rgba(5, 5, 5, 0.7)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px) saturate(150%)" : "none",
+          borderBottom: scrolled ? `1px solid rgba(255, 255, 255, 0.05)` : "1px solid transparent",
+          transition: "background 0.3s ease, backdrop-filter 0.3s ease, border-bottom 0.3s ease",
           display: "flex",
           alignItems: "center",
           padding: "0 clamp(20px, 4vw, 48px)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginRight: "auto" }}>
+        <div style={{ display: "flex", alignItems: "center", marginRight: "auto" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={assets.logoIcon} alt="The Athlete Lab" style={{ width: 36, height: 36, borderRadius: 4 }} />
-          <div>
-            <div
-              style={{
-                fontSize: 14,
-                fontWeight: 800,
-                color: brand.text,
-                letterSpacing: "0.06em",
-                lineHeight: 1.1,
-              }}
-            >
-              THE ATHLETE LAB
-            </div>
-            <div style={{ fontSize: 10, color: brand.muted, letterSpacing: "0.08em", fontWeight: 500 }}>
-              PEMBROKE, MA
-            </div>
-          </div>
+          <img
+            src={assets.logoFull}
+            alt="The Athlete Lab"
+            style={{ height: 52, width: "auto", objectFit: "contain" }}
+          />
         </div>
 
         <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32 }}>
@@ -625,50 +623,60 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </nav>
+      </motion.nav>
 
-      {mobileOpen && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 99,
-            background: "rgba(10,10,10,0.98)",
-            backdropFilter: "blur(20px)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 32,
-          }}
-        >
-          {links.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigate(link.id);
-                setMobileOpen(false);
-              }}
-              style={{ fontSize: 24, fontWeight: 700, color: brand.text, textDecoration: "none" }}
-            >
-              {link.label}
-            </a>
-          ))}
-          <Button
-            href="#programs"
-            variant="primary"
-            onClick={(e) => {
-              e.preventDefault();
-              onNavigate("programs");
-              setMobileOpen(false);
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(30px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 99,
+              background: "rgba(5, 5, 5, 0.85)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 32,
             }}
           >
-            Book a Session
-          </Button>
-        </div>
-      )}
+            {links.map((link, i) => (
+              <motion.a
+                key={link.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(link.id);
+                  setMobileOpen(false);
+                }}
+                style={{ fontSize: 24, fontWeight: 700, color: brand.text, textDecoration: "none" }}
+              >
+                {link.label}
+              </motion.a>
+            ))}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+              <Button
+                href="#programs"
+                variant="primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate("programs");
+                  setMobileOpen(false);
+                }}
+              >
+                Book a Session
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @media (max-width: 768px) {
@@ -720,8 +728,17 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
           className="hero-grid"
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}
         >
-          <div>
-            <div
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+            }}
+          >
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -738,9 +755,11 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
             >
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} />
               Now enrolling — Spring 2026
-            </div>
+            </motion.div>
 
-            <h1
+            <motion.h1
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               style={{
                 fontSize: "clamp(48px, 7vw, 84px)",
                 fontWeight: 900,
@@ -755,9 +774,11 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               <span style={{ color: brand.red }}>ELITE</span>
               <br />
               ATHLETES.
-            </h1>
+            </motion.h1>
 
-            <p
+            <motion.p
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               style={{
                 fontSize: 18,
                 lineHeight: 1.6,
@@ -767,9 +788,13 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               }}
             >
               Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
-            </p>
+            </motion.p>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
+            >
               <Button
                 href="#programs"
                 variant="primary"
@@ -791,9 +816,11 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               >
                 View Programs
               </Button>
-            </div>
+            </motion.div>
 
-            <div
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="trust-row"
               style={{
                 display: "flex",
@@ -813,7 +840,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
                     style={{
                       fontSize: 28,
                       fontWeight: 800,
-                      color: brand.red,
+                      color: brand.text,
                       letterSpacing: "-0.02em",
                       fontFamily: "Georgia, serif",
                     }}
@@ -825,8 +852,8 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <div className="hero-video">
             <VideoPlayer
@@ -1577,6 +1604,308 @@ function Coaches() {
   );
 }
 
+// ── The Athlete Lab Difference ──
+function AthleteDifference() {
+  const pillars = [
+    {
+      label: "The Second Gear",
+      headline: "When everyone else slows down, they speed up.",
+      body: "Athlete Lab athletes still accelerate late in games. They still change direction with control. They still compete at full speed — because they've trained for that exact moment.",
+    },
+    {
+      label: "The Mental Edge",
+      headline: "Most athletes think: \"I'm tired.\"",
+      body: "Athlete Lab athletes are wired to think: \"This is where I separate.\" That's trained — pushing through fatigue in circuits, competing when legs are heavy, learning to execute under pressure.",
+    },
+    {
+      label: "What You're Building",
+      headline: "Not just speed. Not just strength.",
+      body: "You're building resilience, conditioned confidence, and the ability to perform under fatigue. Talent might show early. But late in games? The athlete who can still move, think, and compete — that's the athlete who wins.",
+    },
+  ];
+
+  return (
+    <section
+      id="difference"
+      style={{
+        position: "relative",
+        padding: "120px clamp(20px, 4vw, 48px)",
+        background: brand.bg,
+        overflow: "hidden",
+      }}
+    >
+      <GlowEffect color={brand.red} top="50%" left="50%" size="1200px" opacity={0.05} />
+
+      <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: 72 }}>
+          <SectionLabel>The Athlete Lab Difference</SectionLabel>
+          <SectionHeadline>
+            Talent is obvious early.
+            <br />
+            <span style={{ color: brand.red }}>Late in games</span> is where it&apos;s decided.
+          </SectionHeadline>
+          <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
+            Early in games, talent is obvious. But late in games — when fatigue hits — that&apos;s where
+            separation actually happens. Conditioning and mentality take over.
+          </p>
+        </div>
+
+        {/* Three Pillars */}
+        <div
+          className="difference-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24, marginBottom: 64 }}
+        >
+          {pillars.map((p, i) => (
+            <div
+              key={p.label}
+              style={{
+                background: brand.surface,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 16,
+                padding: 32,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 3,
+                  background: brand.red,
+                  opacity: 0.6 + i * 0.15,
+                }}
+              />
+              <div
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: brand.red,
+                  marginBottom: 16,
+                }}
+              >
+                {p.label}
+              </div>
+              <h3
+                style={{
+                  fontSize: 20,
+                  fontWeight: 800,
+                  color: brand.text,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.3,
+                  marginBottom: 16,
+                }}
+              >
+                {p.headline}
+              </h3>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: brand.mutedLight, margin: 0 }}>
+                {p.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* The Moments That Matter */}
+        <div
+          style={{
+            background: brand.surface,
+            border: `1px solid ${brand.border}`,
+            borderRadius: 16,
+            padding: "48px 48px",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 60,
+            alignItems: "center",
+          }}
+          className="moments-grid"
+        >
+          <div>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: brand.red,
+                marginBottom: 16,
+              }}
+            >
+              End of Game. Who Wins?
+            </div>
+            <h3
+              style={{
+                fontSize: 32,
+                fontWeight: 900,
+                color: brand.text,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.15,
+                marginBottom: 20,
+              }}
+            >
+              They win the moments
+              <br />
+              <span style={{ color: brand.red }}>that matter most.</span>
+            </h3>
+            <p style={{ fontSize: 15, lineHeight: 1.8, color: brand.mutedLight }}>
+              Loose balls. Final sprints. Defensive recoveries. Last attacking runs.
+              That&apos;s where games are decided — and that&apos;s where Athlete Lab athletes
+              stand out most.
+            </p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            {[
+              { icon: "⚡", label: "Still accelerating" },
+              { icon: "🎯", label: "Sharp decisions" },
+              { icon: "🔄", label: "Full-speed cuts" },
+              { icon: "🧠", label: "Pressure mindset" },
+              { icon: "💪", label: "Extra-effort plays" },
+              { icon: "🏆", label: "Clutch moments" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                style={{
+                  background: brand.bg,
+                  border: `1px solid ${brand.border}`,
+                  borderRadius: 10,
+                  padding: "16px 20px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                }}
+              >
+                <span style={{ fontSize: 20 }}>{item.icon}</span>
+                <span style={{ fontSize: 13, fontWeight: 600, color: brand.text }}>
+                  {item.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .difference-grid { grid-template-columns: 1fr !important; }
+          .moments-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// ── Testimonials ──
+function Testimonials() {
+  // Placeholder — swap in real testimonials when available
+  const placeholders = [
+    {
+      quote: "Testimonial coming soon.",
+      author: "Parent of Athlete",
+      program: "Performance Training",
+    },
+    {
+      quote: "Testimonial coming soon.",
+      author: "Parent of Athlete",
+      program: "Mini Soccer",
+    },
+    {
+      quote: "Testimonial coming soon.",
+      author: "Parent of Athlete",
+      program: "Speed & Agility",
+    },
+  ];
+
+  return (
+    <section
+      id="testimonials"
+      style={{
+        position: "relative",
+        padding: "120px clamp(20px, 4vw, 48px)",
+        background: brand.surface,
+      }}
+    >
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <SectionLabel>What Parents Say</SectionLabel>
+          <SectionHeadline>Results speak for themselves</SectionHeadline>
+        </div>
+
+        <div
+          className="testimonials-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}
+        >
+          {placeholders.map((t, i) => (
+            <div
+              key={i}
+              style={{
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 16,
+                padding: 32,
+                display: "flex",
+                flexDirection: "column",
+                gap: 20,
+              }}
+            >
+              <div style={{ display: "flex", gap: 4 }}>
+                {[...Array(5)].map((_, s) => (
+                  <span key={s} style={{ color: brand.red, fontSize: 16 }}>★</span>
+                ))}
+              </div>
+              <p
+                style={{
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                  color: brand.muted,
+                  fontStyle: "italic",
+                  flex: 1,
+                }}
+              >
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: brand.text }}>{t.author}</div>
+                <div style={{ fontSize: 12, color: brand.red, marginTop: 2 }}>{t.program}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            marginTop: 48,
+            textAlign: "center",
+            padding: "32px",
+            background: brand.bg,
+            border: `1px solid ${brand.border}`,
+            borderRadius: 12,
+          }}
+        >
+          <p style={{ fontSize: 14, color: brand.muted }}>
+            Testimonials coming soon — follow along on{" "}
+            <a href={assets.facebook} target="_blank" rel="noopener noreferrer" style={{ color: brand.red }}>
+              Facebook
+            </a>{" "}
+            and{" "}
+            <a href={assets.tiktok} target="_blank" rel="noopener noreferrer" style={{ color: brand.red }}>
+              TikTok
+            </a>{" "}
+            to see athletes in action.
+          </p>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
+    </section>
+  );
+}
+
 // ── CTA Banner ──
 function CTABanner({ onNavigate }: { onNavigate: (id: string) => void }) {
   return (
@@ -1672,23 +2001,13 @@ function Footer() {
           }}
         >
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+            <div style={{ marginBottom: 16 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={assets.logoIcon}
+                src={assets.logoFull}
                 alt="The Athlete Lab"
-                style={{ width: 32, height: 32, borderRadius: 4 }}
+                style={{ height: 64, width: "auto", objectFit: "contain" }}
               />
-              <div
-                style={{
-                  fontSize: 16,
-                  fontWeight: 900,
-                  color: brand.text,
-                  letterSpacing: "0.04em",
-                }}
-              >
-                THE ATHLETE LAB
-              </div>
             </div>
             <p
               style={{
@@ -1729,6 +2048,38 @@ function Footer() {
             >
               <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+            </a>
+            <a
+              href={assets.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 8,
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: brand.muted,
+                textDecoration: "none",
+                transition: "all 0.2s ease",
+                marginLeft: 8,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = brand.red;
+                e.currentTarget.style.color = brand.red;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = brand.border;
+                e.currentTarget.style.color = brand.muted;
+              }}
+            >
+              {/* TikTok icon */}
+              <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" />
               </svg>
             </a>
           </div>
@@ -2017,7 +2368,9 @@ export default function AthleteLab() {
       <Hero onNavigate={scrollToSection} />
       <Programs />
       <FullSchedule />
+      <AthleteDifference />
       <Coaches />
+      <Testimonials />
       <CTABanner onNavigate={scrollToSection} />
       <Footer />
       <StickyMobileCTA />
