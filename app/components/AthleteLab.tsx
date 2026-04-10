@@ -73,8 +73,10 @@ const programs: Program[] = [
     tagline: "First steps to athletic confidence",
     description:
       "A 30-minute high-energy introduction to movement for toddlers. Through games, obstacle courses, and guided activities, kids build balance, coordination, body control, and confidence. Parent participation encouraged.",
-    price: "Free Trial",
-    priceNote: "Limited spots — reserve now",
+    price: "$100",
+    priceSub: "5-session pack",
+    priceAlt: "$25 drop-in",
+    priceNote: "5-session pack or $25 drop-in",
     schedule: [
       { day: "Monday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
       { day: "Wednesday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
@@ -82,7 +84,7 @@ const programs: Program[] = [
     features: ["Obstacle courses & games", "Balance & coordination", "Parent participation", "Supportive environment"],
     image: assets.littleAthletesImg,
     video: null,
-    bookingUrl: "https://www.theathletelab.net/booking-calendar/little-athletes-free-trial?referral=service_list_widget",
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/little-athletes?referral=service_list_widget",
     color: "#f59e0b",
     featured: false,
   },
@@ -478,7 +480,7 @@ function EmailSignup({ programName }: { programName: string }) {
               letterSpacing: "0.02em",
             }}
           >
-            <Mail size={14} style={{ marginRight: 6, verticalAlign: "middle" }} />
+            <Mail size={14} style={{ marginRight: 6, verticalAlign: "middle" }} />{" "}
             Get {programName} updates &amp; schedule changes
           </div>
           <div style={{ display: "flex", gap: 8 }}>
@@ -570,7 +572,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
           <img
             src="/AthleteLab Logo Main.jpg"
             alt="The Athlete Lab"
-            style={{ height: 56, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.3) contrast(15)" }}
+            style={{ height: 56, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(5) contrast(100)" }}
           />
         </div>
 
@@ -979,7 +981,7 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
             label={`${program.name} in action`}
           />
         ) : (
-          <ImageCard src={program.image} label={`${program.name} — photo coming soon`} />
+          <ImageCard src={program.image} label={program.name} />
         )}
         <EmailSignup programName={program.name} />
       </div>
@@ -2104,7 +2106,7 @@ function Footer() {
               <img
                 src="/AthleteLab Logo Main.jpg"
                 alt="The Athlete Lab"
-                style={{ height: 88, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(1.3) contrast(15)" }}
+                style={{ height: 88, width: "auto", objectFit: "contain", mixBlendMode: "screen", filter: "brightness(5) contrast(100)" }}
               />
             </div>
             <p
