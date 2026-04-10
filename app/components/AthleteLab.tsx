@@ -790,7 +790,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
                 margin: "0 0 40px 0",
               }}
             >
-              Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
+              Purpose-driven speed, strength, and conditioning for youth athletes. Pembroke &amp; Hanover, MA.
             </motion.p>
 
             <motion.div
@@ -828,9 +828,8 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               className="trust-row"
             >
               {[
-                { num: "4", label: "Programs by age" },
-                { num: "5", label: "Weekly locations" },
-                { num: "82%", label: "Players to college soccer" },
+                { num: "14+", label: "Weekly sessions" },
+                { num: "2–17", label: "Ages served" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div style={{ fontSize: 32, fontWeight: 900, color: brand.text, letterSpacing: "-0.02em", fontFamily: "Georgia, serif" }}>
