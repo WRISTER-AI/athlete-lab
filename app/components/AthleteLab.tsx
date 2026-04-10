@@ -39,7 +39,7 @@ const assets = {
   mainVideo: "https://video.wixstatic.com/video/22615e_afe513b2cb3144d0bac8d201a4e3f41d/1080p/mp4/file.mp4",
   videoPoster: "https://static.wixstatic.com/media/22615e_afe513b2cb3144d0bac8d201a4e3f41df000.jpg",
   facebook: "https://www.facebook.com/profile.php?id=61582999460260",
-  tiktok: "https://www.tiktok.com/@theathletelab", // UPDATE with real handle
+  tiktok: "https://www.tiktok.com/@theathletelab.llc",
 };
 
 // ── Program Data ──
@@ -565,9 +565,9 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
         <div style={{ display: "flex", alignItems: "center", marginRight: "auto" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={assets.logoFull}
+            src="/AthleteLab Logo Main.jpg"
             alt="The Athlete Lab"
-            style={{ height: 52, width: "auto", objectFit: "contain" }}
+            style={{ height: 52, width: "auto", objectFit: "contain", mixBlendMode: "screen" }}
           />
         </div>
 
@@ -697,210 +697,201 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
-        padding: "120px clamp(20px, 4vw, 48px) 80px",
         overflow: "hidden",
         background: brand.bg,
       }}
     >
-      <GlowEffect color={brand.red} top="20%" left="70%" size="800px" opacity={0.08} />
-      <GlowEffect color={brand.red} top="80%" left="20%" size="500px" opacity={0.05} />
+      {/* Full-bleed background video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        src={assets.mainVideo}
+        poster={assets.videoPoster}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          opacity: 0.35,
+        }}
+      />
 
+      {/* Dark gradient overlay */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          opacity: 0.015,
-          backgroundImage: `linear-gradient(${brand.text} 1px, transparent 1px), linear-gradient(90deg, ${brand.text} 1px, transparent 1px)`,
-          backgroundSize: "80px 80px",
+          background: "linear-gradient(to right, rgba(5,5,5,0.95) 40%, rgba(5,5,5,0.5) 70%, rgba(5,5,5,0.2) 100%)",
         }}
       />
 
+      {/* Logo watermark */}
+      <div
+        style={{
+          position: "absolute",
+          right: "-5%",
+          top: "50%",
+          transform: "translateY(-50%)",
+          width: "55%",
+          maxWidth: 800,
+          opacity: 0.06,
+          pointerEvents: "none",
+          mixBlendMode: "screen",
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/AthleteLab Logo Main.jpg"
+          alt=""
+          style={{ width: "100%", height: "auto", mixBlendMode: "screen" }}
+        />
+      </div>
+
+      {/* Content */}
       <div
         style={{
           maxWidth: 1200,
           margin: "0 auto",
           width: "100%",
+          padding: "140px clamp(20px, 4vw, 48px) 100px",
           position: "relative",
           zIndex: 1,
         }}
       >
-        <div
-          className="hero-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+          }}
+          style={{ maxWidth: 680 }}
         >
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "rgba(255,255,255,0.05)",
+              border: `1px solid ${brand.border}`,
+              borderRadius: 100,
+              padding: "8px 16px",
+              marginBottom: 32,
+              fontSize: 13,
+              color: brand.muted,
+              fontWeight: 500,
+              backdropFilter: "blur(8px)",
             }}
           >
-            <motion.div
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                background: brand.surface,
-                border: `1px solid ${brand.border}`,
-                borderRadius: 100,
-                padding: "8px 16px",
-                marginBottom: 32,
-                fontSize: 13,
-                color: brand.muted,
-                fontWeight: 500,
-              }}
-            >
-              <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} />
-              Now enrolling — Spring 2026
-            </motion.div>
-
-            <motion.h1
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              style={{
-                fontSize: "clamp(48px, 7vw, 84px)",
-                fontWeight: 900,
-                letterSpacing: "-0.04em",
-                lineHeight: 0.95,
-                color: brand.text,
-                margin: "0 0 24px 0",
-              }}
-            >
-              BUILD
-              <br />
-              <span style={{ color: brand.red }}>ELITE</span>
-              <br />
-              ATHLETES.
-            </motion.h1>
-
-            <motion.p
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              style={{
-                fontSize: 18,
-                lineHeight: 1.6,
-                color: brand.muted,
-                maxWidth: 440,
-                margin: "0 0 40px 0",
-              }}
-            >
-              Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
-            </motion.p>
-
-            <motion.div
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
-            >
-              <Button
-                href="#programs"
-                variant="primary"
-                icon
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate("programs");
-                }}
-              >
-                Book a Session
-              </Button>
-              <Button
-                href="#programs"
-                variant="ghost"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate("programs");
-                }}
-              >
-                View Programs
-              </Button>
-            </motion.div>
-
-            <motion.div
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="trust-row"
-              style={{
-                display: "flex",
-                gap: 32,
-                marginTop: 48,
-                paddingTop: 32,
-                borderTop: `1px solid ${brand.border}`,
-              }}
-            >
-              {[
-                { num: "4", label: "Programs by age" },
-                { num: "5", label: "Weekly locations" },
-                { num: "19/23", label: "Players to college soccer" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <div
-                    style={{
-                      fontSize: 28,
-                      fontWeight: 800,
-                      color: brand.text,
-                      letterSpacing: "-0.02em",
-                      fontFamily: "Georgia, serif",
-                    }}
-                  >
-                    {stat.num}
-                  </div>
-                  <div style={{ fontSize: 12, color: brand.muted, fontWeight: 500, marginTop: 2 }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e" }} />
+            Now enrolling — Spring 2026
           </motion.div>
 
-          <div className="hero-video">
-            <VideoPlayer
-              src={assets.mainVideo}
-              poster={assets.videoPoster}
-              label="Watch our athletes train"
-            />
-            <div
-              style={{
-                display: "flex",
-                gap: 8,
-                marginTop: 12,
-                justifyContent: "center",
-              }}
+          <motion.h1
+            variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            style={{
+              fontSize: "clamp(52px, 8vw, 96px)",
+              fontWeight: 900,
+              letterSpacing: "-0.04em",
+              lineHeight: 0.92,
+              color: brand.text,
+              margin: "0 0 28px 0",
+            }}
+          >
+            BUILD
+            <br />
+            <span style={{ color: brand.red }}>ELITE</span>
+            <br />
+            ATHLETES.
+          </motion.h1>
+
+          <motion.p
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              fontSize: 18,
+              lineHeight: 1.65,
+              color: brand.muted,
+              maxWidth: 480,
+              margin: "0 0 40px 0",
+            }}
+          >
+            Purpose-driven speed, strength, and conditioning for youth athletes ages 2–17. Pembroke &amp; Hanover, MA.
+          </motion.p>
+
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
+          >
+            <Button
+              href="#programs"
+              variant="primary"
+              icon
+              onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}
             >
-              {[
-                { icon: <Zap size={14} />, text: "Speed" },
-                { icon: <Shield size={14} />, text: "Strength" },
-                { icon: <Users size={14} />, text: "Confidence" },
-              ].map((pill) => (
-                <div
-                  key={pill.text}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    padding: "6px 14px",
-                    borderRadius: 100,
-                    background: brand.surface,
-                    border: `1px solid ${brand.border}`,
-                    fontSize: 12,
-                    color: brand.muted,
-                    fontWeight: 500,
-                  }}
-                >
-                  {pill.icon} {pill.text}
+              Book a Session
+            </Button>
+            <Button
+              href="#programs"
+              variant="ghost"
+              onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}
+            >
+              View Programs
+            </Button>
+          </motion.div>
+
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              display: "flex",
+              gap: 40,
+              marginTop: 56,
+              paddingTop: 32,
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+            }}
+            className="trust-row"
+          >
+            {[
+              { num: "4", label: "Programs by age" },
+              { num: "5", label: "Weekly locations" },
+              { num: "19/23", label: "Players to college soccer" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div style={{ fontSize: 30, fontWeight: 900, color: brand.red, letterSpacing: "-0.02em" }}>
+                  {stat.num}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
+                <div style={{ fontSize: 12, color: brand.muted, fontWeight: 500, marginTop: 3 }}>
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
 
+      {/* Bottom fade */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 120,
+          background: `linear-gradient(to bottom, transparent, ${brand.bg})`,
+          pointerEvents: "none",
+        }}
+      />
+
       <style>{`
-        @media (max-width: 900px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-video { display: none !important; }
+        @media (max-width: 768px) {
           .trust-row { gap: 20px !important; }
         }
       `}</style>
@@ -1766,12 +1757,12 @@ function AthleteDifference() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             {[
-              { icon: "⚡", label: "Still accelerating" },
-              { icon: "🎯", label: "Sharp decisions" },
-              { icon: "🔄", label: "Full-speed cuts" },
-              { icon: "🧠", label: "Pressure mindset" },
-              { icon: "💪", label: "Extra-effort plays" },
-              { icon: "🏆", label: "Clutch moments" },
+              { label: "Still accelerating" },
+              { label: "Sharp decisions" },
+              { label: "Full-speed cuts" },
+              { label: "Pressure mindset" },
+              { label: "Extra-effort plays" },
+              { label: "Clutch moments" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -1785,7 +1776,7 @@ function AthleteDifference() {
                   gap: 12,
                 }}
               >
-                <span style={{ fontSize: 20 }}>{item.icon}</span>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: brand.red, flexShrink: 0 }} />
                 <span style={{ fontSize: 13, fontWeight: 600, color: brand.text }}>
                   {item.label}
                 </span>
@@ -2043,9 +2034,9 @@ function Footer() {
             <div style={{ marginBottom: 16 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={assets.logoFull}
+                src="/AthleteLab Logo Main.jpg"
                 alt="The Athlete Lab"
-                style={{ height: 64, width: "auto", objectFit: "contain" }}
+                style={{ height: 64, width: "auto", objectFit: "contain", mixBlendMode: "screen" }}
               />
             </div>
             <p
