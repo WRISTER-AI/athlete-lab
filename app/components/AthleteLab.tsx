@@ -61,6 +61,8 @@ type Program = {
   image: string;
   video: string | null;
   bookingUrl: string;
+  bookingUrlAlt?: string;
+  bookingUrlAltLabel?: string;
   color: string;
   featured: boolean;
 };
@@ -73,10 +75,9 @@ const programs: Program[] = [
     tagline: "First steps to athletic confidence",
     description:
       "A 30-minute high-energy introduction to movement for toddlers. Through games, obstacle courses, and guided activities, kids build balance, coordination, body control, and confidence. Parent participation encouraged.",
-    price: "$100",
-    priceSub: "5-session pack",
-    priceAlt: "$25 drop-in",
-    priceNote: "5-session pack or $25 drop-in",
+    price: "$25",
+    priceSub: "per session",
+    priceNote: "Multi-session packages available. Contact us for details.",
     schedule: [
       { day: "Monday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
       { day: "Wednesday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
@@ -84,7 +85,7 @@ const programs: Program[] = [
     features: ["Obstacle courses & games", "Balance & coordination", "Parent participation", "Supportive environment"],
     image: assets.littleAthletesImg,
     video: null,
-    bookingUrl: "https://www.theathletelab.net/booking-calendar/little-athletes?referral=service_list_widget",
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/little-athletes-drop-in",
     color: "#f59e0b",
     featured: false,
   },
@@ -109,6 +110,8 @@ const programs: Program[] = [
     image: assets.miniSoccerImg,
     video: assets.miniSoccerVideo,
     bookingUrl: "https://www.theathletelab.net/booking-calendar/mini-soccer-drop-in",
+    bookingUrlAlt: "https://www.theathletelab.net/pricing-plans/list",
+    bookingUrlAltLabel: "8-Week Session ($140)",
     color: "#22c55e",
     featured: true,
   },
@@ -132,7 +135,9 @@ const programs: Program[] = [
     features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
     image: assets.speedAgilityImg,
     video: assets.speedAgilityVideo,
-    bookingUrl: "https://www.theathletelab.net/booking-calendar/intro-to-speed-and-agility",
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/intro-to-speed-agility",
+    bookingUrlAlt: "https://www.theathletelab.net/pricing-plans/list",
+    bookingUrlAltLabel: "5-Session Pack ($100)",
     color: "#3b82f6",
     featured: false,
   },
@@ -156,7 +161,9 @@ const programs: Program[] = [
     features: ["Strength & power development", "Speed & agility training", "Injury prevention", "Mental toughness"],
     image: assets.perfTrainingImg,
     video: assets.mainVideo,
-    bookingUrl: "https://www.theathletelab.net/booking-calendar/performance-training-monthly-membership",
+    bookingUrl: "https://www.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
+    bookingUrlAlt: "https://www.theathletelab.net/pricing-plans/list",
+    bookingUrlAltLabel: "5-Session Pack ($100) or Monthly ($200)",
     color: "#dc2626",
     featured: false,
   },
@@ -1225,6 +1232,29 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
         >
           Book {program.name}
         </Button>
+
+        {program.bookingUrlAlt && (
+          <a
+            href={program.bookingUrlAlt}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "block",
+              textAlign: "center",
+              fontSize: 13,
+              fontWeight: 600,
+              color: program.color,
+              textDecoration: "none",
+              marginTop: 10,
+              padding: "8px 0",
+              transition: "opacity 0.2s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            {program.bookingUrlAltLabel || "View Package Options"}
+          </a>
+        )}
       </div>
 
       <style>{`
