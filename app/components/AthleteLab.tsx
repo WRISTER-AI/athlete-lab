@@ -2,188 +2,21 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
   Play, MapPin, Clock, ChevronDown, Menu, X, Mail, Phone,
   Calendar, Users, Zap, Shield, ArrowRight,
   CheckCircle, Smartphone,
 } from "lucide-react";
+import { brand, assets, programs, coaches } from "../lib/data";
+import type { Program } from "../lib/data";
 
-// ── Brand Tokens ──
-const brand = {
-  bg: "#050505",
-  surface: "rgba(20, 20, 20, 0.4)",
-  surfaceLight: "rgba(30, 30, 30, 0.6)",
-  border: "rgba(255, 255, 255, 0.08)",
-  red: "#f93a3a",
-  redGlow: "rgba(249, 58, 58, 0.25)",
-  redHover: "#ff5252",
-  text: "#f4f4f5",
-  muted: "#a1a1aa",
-  mutedLight: "#d4d4d8",
-};
+// Data imported from ../lib/data
 
-// ── Real Asset URLs ──
-const assets = {
-  logoIcon: "https://static.wixstatic.com/media/5abe16_beb360a530434852aa61d87a03f46513~mv2.png",
-  logoFull: "https://static.wixstatic.com/media/07f490_2252602a95894028947be151ae41b016~mv2.jpg",
-  franPhoto: "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg",
-  chrisPhoto: "https://static.wixstatic.com/media/5abe16_fd56d4ba25a64c5881e662e81a7a59f0~mv2.png",
-  qrCode: "https://static.wixstatic.com/media/2feeec_9502e1d7d07e4bdf97f5fe0fa4d9309f~mv2.png",
-  appStore: "https://static.wixstatic.com/media/3e41b8_a0bf062897f64090b91f438ce6bf69ba~mv2.png",
-  googlePlay: "https://static.wixstatic.com/media/3e41b8_c7dfb607579c44039e9f8c2610f15d3d~mv2.png",
-  perfTrainingImg: "https://static.wixstatic.com/media/07f490_7a1ba3c0b1024d12be0c238814999960~mv2.jpg",
-  sportsPerformanceImg: "https://static.wixstatic.com/media/22615e_a07020aab7a642e5b628cb53e8a1c8cd~mv2.jpg",
-  speedAgilityImg: "https://static.wixstatic.com/media/5abe16_9c3995bfb7a14a5986f85237a853a3ba~mv2.png",
-  miniSoccerImg: "https://static.wixstatic.com/media/5abe16_44d989ed93cb4ef1a1c75c3f0545dd61~mv2.png",
-  littleAthletesImg: "https://static.wixstatic.com/media/11062b_9b2140362f364b2baf7c5798af3a2fa2~mv2.jpg",
-  mainVideo: "https://video.wixstatic.com/video/22615e_afe513b2cb3144d0bac8d201a4e3f41d/1080p/mp4/file.mp4",
-  miniSoccerVideo: "https://video.wixstatic.com/video/22615e_2cc99e540e0541458cff2d00356f88ea/720p/mp4/file.mp4",
-  speedAgilityVideo: "https://video.wixstatic.com/video/22615e_84be692e98a943f6b0ec31a3adda6d9e/720p/mp4/file.mp4",
-  videoPoster: "https://static.wixstatic.com/media/22615e_afe513b2cb3144d0bac8d201a4e3f41df000.jpg",
-  facebook: "https://www.facebook.com/profile.php?id=61582999460260",
-  tiktok: "https://www.tiktok.com/@theathletelab.llc",
-};
+// Assets, programs, coaches imported from ../lib/data
 
-// ── Program Data ──
-type ScheduleEntry = { day: string; time: string; location: string };
-type Program = {
-  id: string;
-  ageGroup: string;
-  name: string;
-  tagline: string;
-  description: string;
-  price: string;
-  priceSub?: string;
-  priceAlt?: string;
-  priceNote: string;
-  schedule: ScheduleEntry[];
-  features: string[];
-  image: string;
-  video: string | null;
-  bookingUrl: string;
-  bookingUrlAlt?: string;
-  bookingUrlAltLabel?: string;
-  color: string;
-  featured: boolean;
-};
+// Types imported from ../lib/data
 
-const programs: Program[] = [
-  {
-    id: "little-athletes",
-    ageGroup: "Ages 2–3",
-    name: "Little Athletes",
-    tagline: "First steps to athletic confidence",
-    description:
-      "A 30-minute high-energy introduction to movement for toddlers. Through games, obstacle courses, and guided activities, kids build balance, coordination, body control, and confidence. Parent participation encouraged.",
-    price: "$25",
-    priceSub: "per session",
-    priceNote: "Interested in a multi-session package? Contact us for details.",
-    schedule: [
-      { day: "Monday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
-      { day: "Wednesday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
-    ],
-    features: ["Obstacle courses & games", "Balance & coordination", "Parent participation", "Supportive environment"],
-    image: assets.littleAthletesImg,
-    video: null,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/little-athletes-drop-in",
-    color: "#f59e0b",
-    featured: false,
-  },
-  {
-    id: "mini-soccer",
-    ageGroup: "Ages 3–5",
-    name: "Mini Soccer",
-    tagline: "Where young athletes learn to move",
-    description:
-      "Introduces the basics of soccer while developing balance, coordination, running mechanics, and body control. Athletes work on dribbling, stopping, and ball skills through stations and interactive games.",
-    price: "$140",
-    priceSub: "8-week session",
-    priceAlt: "$25 drop-in",
-    priceNote: "8-week sessions or single drop-in available",
-    schedule: [
-      { day: "Monday", time: "10:30–11:15 AM", location: "Riverside Sports Complex, Pembroke" },
-      { day: "Wednesday", time: "10:30–11:15 AM", location: "Riverside Sports Complex, Pembroke" },
-      { day: "Saturday", time: "9:30–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
-      { day: "Sunday", time: "9:30–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
-    ],
-    features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
-    image: assets.miniSoccerImg,
-    video: assets.miniSoccerVideo,
-    bookingUrl: "https://bookings.theathletelab.net/book-now",
-    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
-    bookingUrlAltLabel: "Book a Drop-In ($25)",
-    color: "#22c55e",
-    featured: true,
-  },
-  {
-    id: "speed-agility",
-    ageGroup: "Ages 5–8",
-    name: "Intro to Speed & Agility",
-    tagline: "Build the athletic foundation",
-    description:
-      "Designed for developing athletes ready to learn how to move fast, change direction, and build coordination. Sessions focus on acceleration, footwork, reaction drills, and body control that translate to every sport.",
-    price: "$100",
-    priceSub: "5-session pack",
-    priceAlt: "$25 per session drop-in",
-    priceNote: "5-session pack or $25 per session",
-    schedule: [
-      { day: "Monday", time: "4:00–5:00 PM", location: "City Arena Field 4, Pembroke" },
-      { day: "Wednesday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
-      { day: "Thursday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
-      { day: "Friday", time: "4:00–5:00 PM", location: "Riverside Sports Complex, Pembroke" },
-    ],
-    features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
-    image: assets.speedAgilityImg,
-    video: assets.speedAgilityVideo,
-    bookingUrl: "https://bookings.theathletelab.net/book-now",
-    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
-    bookingUrlAltLabel: "Book a Drop-In ($25)",
-    color: "#3b82f6",
-    featured: false,
-  },
-  {
-    id: "performance",
-    ageGroup: "Ages 9+",
-    name: "Performance Training",
-    tagline: "Train like a serious athlete",
-    description:
-      "Purpose-driven strength and conditioning for competitive youth athletes. Every session is structured around speed, strength, and conditioning pillars to develop explosiveness, durability, and mental toughness.",
-    price: "$200",
-    priceSub: "per month, unlimited",
-    priceAlt: "$100 5-session pack · $25 drop-in",
-    priceNote: "Monthly unlimited $200 · 5-session pack $100 · Drop-in $25",
-    schedule: [
-      { day: "Monday", time: "7:00–9:00 PM", location: "City Arena Field 4, Pembroke" },
-      { day: "Tuesday", time: "4:00–6:00 PM", location: "Arena Field 4, Pembroke" },
-      { day: "Thursday", time: "7:00–9:00 PM", location: "Arena Field 4, Pembroke" },
-      { day: "Friday", time: "5:00–8:00 PM", location: "Riverside Sports Complex, Pembroke" },
-    ],
-    features: ["Strength & power development", "Speed & agility training", "Injury prevention", "Mental toughness"],
-    image: assets.perfTrainingImg,
-    video: assets.mainVideo,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/performance-training-monthly-membership",
-    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
-    bookingUrlAltLabel: "Book a Drop-In ($25) or 5-Session Pack ($100)",
-    color: "#dc2626",
-    featured: false,
-  },
-];
-
-// ── Coaches Data ──
-const coaches = [
-  {
-    name: "Francis Mulkern",
-    title: "Founder & Head Coach",
-    photo: assets.franPhoto,
-    bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts, most recently leading a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional youth athletic training on the South Shore.",
-  },
-  {
-    name: "Chris Nelson",
-    title: "Performance Coach",
-    photo: assets.chrisPhoto,
-    bio: "Former collegiate tennis player at Quinnipiac University, competing at the NCAA level. Standout athlete at Scituate High School earning All-Scholastic honors and serving as team captain. Brings a disciplined, detail-oriented approach to training, helping athletes improve agility, coordination, and confidence.",
-  },
-];
 
 // ── Reusable Components ──
 
@@ -549,7 +382,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
 
   const links = [
     { label: "Programs", id: "programs" },
-    { label: "Schedule", id: "schedule" },
+    { label: "Schedule", id: "schedule", href: "/schedule" },
     { label: "Coaches", id: "coaches" },
     { label: "Contact", id: "contact" },
   ];
@@ -587,30 +420,51 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
         </div>
 
         <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 32 }}>
-          {links.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigate(link.id);
-              }}
-              style={{
-                fontSize: 13,
-                fontWeight: 600,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                color: brand.muted,
-                transition: "color 0.2s ease",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = brand.text)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = brand.muted)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) =>
+            link.href ? (
+              <Link
+                key={link.id}
+                href={link.href}
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  color: brand.muted,
+                  transition: "color 0.2s ease",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = brand.text)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = brand.muted)}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate(link.id);
+                }}
+                style={{
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  color: brand.muted,
+                  transition: "color 0.2s ease",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = brand.text)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = brand.muted)}
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <Button
             href="#programs"
             variant="primary"
@@ -659,23 +513,40 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
               gap: 32,
             }}
           >
-            {links.map((link, i) => (
-              <motion.a
-                key={link.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                href={`#${link.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate(link.id);
-                  setMobileOpen(false);
-                }}
-                style={{ fontSize: 24, fontWeight: 700, color: brand.text, textDecoration: "none" }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
+            {links.map((link, i) =>
+              link.href ? (
+                <motion.div
+                  key={link.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    style={{ fontSize: 24, fontWeight: 700, color: brand.text, textDecoration: "none" }}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ) : (
+                <motion.a
+                  key={link.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  href={`#${link.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(link.id);
+                    setMobileOpen(false);
+                  }}
+                  style={{ fontSize: 24, fontWeight: 700, color: brand.text, textDecoration: "none" }}
+                >
+                  {link.label}
+                </motion.a>
+              )
+            )}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
               <Button
                 href="#programs"
@@ -976,7 +847,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
           }
         }
         @media (max-width: 768px) {
-          .trust-row { gap: 20px !important; flex-wrap: wrap !important; }
+          .trust-row { gap: 20px !important; flex-wrap: wrap !important; justify-content: center !important; text-align: center !important; }
           .hero-media-side { height: 56vw !important; }
           .hero-content-left { padding-bottom: 60px !important; }
         }
@@ -1367,163 +1238,99 @@ function Programs() {
   );
 }
 
-// ── Full Schedule ──
-function FullSchedule() {
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-  const getClassesForDay = (day: string) => {
-    const classes: Array<ScheduleEntry & { program: string; color: string; ageGroup: string; bookingUrl: string }> = [];
-    programs.forEach((p) => {
-      p.schedule.forEach((s) => {
-        if (s.day === day) {
-          classes.push({ ...s, program: p.name, color: p.color, ageGroup: p.ageGroup, bookingUrl: p.bookingUrl });
-        }
-      });
-    });
-    return classes.sort((a, b) => {
-      const parseTime = (t: string) => {
-        const match = t.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
-        if (!match) return 0;
-        let h = parseInt(match[1]);
-        const m = parseInt(match[2]);
-        const ampm = match[3].toUpperCase();
-        if (ampm === "PM" && h !== 12) h += 12;
-        if (ampm === "AM" && h === 12) h = 0;
-        return h * 60 + m;
-      };
-      return parseTime(a.time) - parseTime(b.time);
-    });
-  };
+// ── Schedule Preview ──
+function SchedulePreview() {
+  const preview = programs.map((p) => ({
+    program: p.name,
+    color: p.color,
+    ageGroup: p.ageGroup,
+    day: p.schedule[0].day,
+    time: p.schedule[0].time,
+    location: p.schedule[0].location,
+    bookingUrl: p.bookingUrl,
+  }));
 
   return (
     <section
       id="schedule"
       style={{
         position: "relative",
-        padding: "120px clamp(20px, 4vw, 48px)",
+        padding: "80px clamp(20px, 4vw, 48px)",
         background: brand.surface,
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <SectionLabel>Weekly Schedule</SectionLabel>
-          <SectionHeadline>Every session, every location</SectionHeadline>
-          <p style={{ fontSize: 16, color: brand.muted, marginTop: 12 }}>
-            Tap any class to book directly.
-          </p>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <SectionLabel>Schedule</SectionLabel>
+          <SectionHeadline>This week at The Athlete Lab</SectionHeadline>
         </div>
 
         <div
+          className="schedule-preview-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(4, 1fr)",
             gap: 16,
+            marginBottom: 32,
           }}
         >
-          {days.map((day) => {
-            const classes = getClassesForDay(day);
-            if (classes.length === 0) return null;
-            return (
-              <div
-                key={day}
-                style={{
-                  background: brand.bg,
-                  border: `1px solid ${brand.border}`,
-                  borderRadius: 12,
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    padding: "16px 20px",
-                    borderBottom: `1px solid ${brand.border}`,
-                    fontSize: 15,
-                    fontWeight: 800,
-                    color: brand.text,
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {day}
-                </div>
-                <div style={{ padding: 12 }}>
-                  {classes.map((cls, i) => (
-                    <a
-                      key={i}
-                      href={cls.bookingUrl}
-                      style={{
-                        display: "block",
-                        textDecoration: "none",
-                        padding: "12px 14px",
-                        borderRadius: 8,
-                        marginBottom: i < classes.length - 1 ? 8 : 0,
-                        background: brand.surface,
-                        border: `1px solid ${brand.border}`,
-                        transition: "all 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = cls.color;
-                        e.currentTarget.style.transform = "translateY(-1px)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = brand.border;
-                        e.currentTarget.style.transform = "none";
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          marginBottom: 6,
-                        }}
-                      >
-                        <span style={{ fontSize: 13, fontWeight: 700, color: cls.color }}>
-                          {cls.program}
-                        </span>
-                        <span
-                          style={{
-                            fontSize: 10,
-                            padding: "2px 8px",
-                            borderRadius: 100,
-                            background: `${cls.color}15`,
-                            color: cls.color,
-                            fontWeight: 600,
-                          }}
-                        >
-                          {cls.ageGroup}
-                        </span>
-                      </div>
-                      <div
-                        style={{
-                          fontSize: 13,
-                          color: brand.mutedLight,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 6,
-                        }}
-                      >
-                        <Clock size={12} /> {cls.time}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: 12,
-                          color: brand.muted,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 6,
-                          marginTop: 4,
-                        }}
-                      >
-                        <MapPin size={12} /> {cls.location}
-                      </div>
-                    </a>
-                  ))}
-                </div>
+          {preview.map((s) => (
+            <a
+              key={s.program}
+              href={s.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "block",
+                textDecoration: "none",
+                background: brand.bg,
+                border: `1px solid ${brand.border}`,
+                borderRadius: 12,
+                padding: "20px",
+                transition: "border-color 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.borderColor = s.color)}
+              onMouseLeave={(e) => (e.currentTarget.style.borderColor = brand.border)}
+            >
+              <div style={{ fontSize: 14, fontWeight: 700, color: s.color, marginBottom: 8 }}>
+                {s.program}
               </div>
-            );
-          })}
+              <div style={{ fontSize: 11, color: brand.muted, marginBottom: 12, padding: "2px 8px", display: "inline-block", borderRadius: 100, background: `${s.color}15` }}>
+                {s.ageGroup}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: brand.mutedLight, marginBottom: 6 }}>
+                <Clock size={12} /> {s.day} {s.time}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: brand.muted }}>
+                <MapPin size={12} /> {s.location}
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div style={{ textAlign: "center" }}>
+          <Link
+            href="/schedule"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontSize: 14,
+              fontWeight: 700,
+              color: brand.red,
+              textDecoration: "none",
+              letterSpacing: "0.02em",
+            }}
+          >
+            View Full Weekly Schedule <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) { .schedule-preview-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 480px) { .schedule-preview-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }
@@ -1926,126 +1733,6 @@ function AthleteDifference() {
           .difference-grid { grid-template-columns: 1fr !important; }
           .moments-grid { grid-template-columns: 1fr !important; }
         }
-      `}</style>
-    </section>
-  );
-}
-
-// ── Testimonials ──
-function Testimonials() {
-  const testimonials = [
-    {
-      quote: "The confidence my son has built since starting this program is incredible. He's so full of energy now, and it's hard to keep up with him running laps around the kitchen!",
-      author: "Proud Parent",
-      program: "Mini Soccer",
-    },
-    {
-      quote: "Coach Fran completely changed the way my daughter plays. The second gear she has late in games is incredible to watch. We wouldn't train anywhere else.",
-      author: "Local Parent",
-      program: "Performance Training",
-    },
-    {
-      quote: "The speed and agility sessions are top tier. They focus on actual movement mechanics rather than just making the kids tired. I can literally see it translating to the field.",
-      author: "Club Coach & Parent",
-      program: "Speed & Agility",
-    },
-  ];
-
-  return (
-    <section
-      id="testimonials"
-      style={{
-        position: "relative",
-        padding: "120px clamp(20px, 4vw, 48px)",
-        background: brand.surface,
-      }}
-    >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <SectionLabel>What Parents Say</SectionLabel>
-          <SectionHeadline style={{ fontFamily: "var(--font-syncopate), sans-serif", fontSize: "clamp(32px, 4vw, 48px)", letterSpacing: "-0.02em" }}>Results speak for themselves</SectionHeadline>
-        </div>
-
-        <div
-          className="testimonials-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}
-        >
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.02, translateY: -4 }}
-              style={{
-                background: "rgba(255,255,255,0.02)",
-                backdropFilter: "blur(12px)",
-                border: `1px solid rgba(255, 255, 255, 0.1)`,
-                borderRadius: 16,
-                padding: 32,
-                display: "flex",
-                flexDirection: "column",
-                gap: 20,
-                position: "relative",
-                overflow: "hidden",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%)",
-                  pointerEvents: "none",
-                }}
-              />
-              <div style={{ display: "flex", gap: 4 }}>
-                {[...Array(5)].map((_, s) => (
-                  <span key={s} style={{ color: brand.red, fontSize: 16 }}>★</span>
-                ))}
-              </div>
-              <p
-                style={{
-                  fontSize: 15,
-                  lineHeight: 1.7,
-                  color: brand.text,
-                  fontStyle: "italic",
-                  flex: 1,
-                }}
-              >
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: brand.text }}>{t.author}</div>
-                <div style={{ fontSize: 12, color: brand.red, marginTop: 4, fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase" }}>{t.program}</div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div
-          style={{
-            marginTop: 48,
-            textAlign: "center",
-            padding: "32px",
-            background: brand.bg,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 12,
-          }}
-        >
-          <p style={{ fontSize: 14, color: brand.muted }}>
-            Testimonials coming soon. Follow along on{" "}
-            <a href={assets.facebook} target="_blank" rel="noopener noreferrer" style={{ color: brand.red }}>
-              Facebook
-            </a>{" "}
-            and{" "}
-            <a href={assets.tiktok} target="_blank" rel="noopener noreferrer" style={{ color: brand.red }}>
-              TikTok
-            </a>{" "}
-            to see athletes in action.
-          </p>
-        </div>
-      </div>
-
-      <style>{`
-        @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   );
@@ -2462,6 +2149,7 @@ function StickyMobileCTA() {
           right: 0,
           zIndex: 90,
           padding: "12px 20px",
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
           background: "rgba(10,10,10,0.95)",
           backdropFilter: "blur(12px)",
           borderTop: `1px solid ${brand.border}`,
@@ -2511,11 +2199,10 @@ export default function AthleteLab() {
     <div style={{ background: brand.bg, minHeight: "100vh" }}>
       <Nav onNavigate={scrollToSection} />
       <Hero onNavigate={scrollToSection} />
-      <Programs />
-      <FullSchedule />
       <AthleteDifference />
+      <Programs />
+      <SchedulePreview />
       <Coaches />
-      <Testimonials />
       <CTABanner onNavigate={scrollToSection} />
       <Footer />
       <StickyMobileCTA />
