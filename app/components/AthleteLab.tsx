@@ -77,7 +77,7 @@ const programs: Program[] = [
       "A 30-minute high-energy introduction to movement for toddlers. Through games, obstacle courses, and guided activities, kids build balance, coordination, body control, and confidence. Parent participation encouraged.",
     price: "$25",
     priceSub: "per session",
-    priceNote: "Multi-session packages available. Contact us for details.",
+    priceNote: "Interested in a multi-session package? Contact us for details.",
     schedule: [
       { day: "Monday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
       { day: "Wednesday", time: "9:45–10:15 AM", location: "Riverside Sports Complex, Pembroke" },
@@ -109,9 +109,9 @@ const programs: Program[] = [
     features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
     image: assets.miniSoccerImg,
     video: assets.miniSoccerVideo,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
-    bookingUrlAlt: "https://bookings.theathletelab.net/pricing-plans/list",
-    bookingUrlAltLabel: "8-Week Session ($140)",
+    bookingUrl: "https://bookings.theathletelab.net/pricing-plans/list",
+    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
+    bookingUrlAltLabel: "Book a Drop-In ($25)",
     color: "#22c55e",
     featured: true,
   },
@@ -122,10 +122,10 @@ const programs: Program[] = [
     tagline: "Build the athletic foundation",
     description:
       "Designed for developing athletes ready to learn how to move fast, change direction, and build coordination. Sessions focus on acceleration, footwork, reaction drills, and body control that translate to every sport.",
-    price: "$25",
-    priceSub: "drop-in",
-    priceAlt: "5-session pack $100",
-    priceNote: "Drop-in or 5-session package ($100)",
+    price: "$100",
+    priceSub: "5-session pack",
+    priceAlt: "$25 per session drop-in",
+    priceNote: "5-session pack or $25 per session",
     schedule: [
       { day: "Monday", time: "4:00–5:00 PM", location: "City Arena Field 4, Pembroke" },
       { day: "Wednesday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
@@ -135,9 +135,9 @@ const programs: Program[] = [
     features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
     image: assets.speedAgilityImg,
     video: assets.speedAgilityVideo,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
-    bookingUrlAlt: "https://bookings.theathletelab.net/pricing-plans/list",
-    bookingUrlAltLabel: "5-Session Pack ($100)",
+    bookingUrl: "https://bookings.theathletelab.net/pricing-plans/list",
+    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
+    bookingUrlAltLabel: "Book a Drop-In ($25)",
     color: "#3b82f6",
     featured: false,
   },
@@ -148,10 +148,10 @@ const programs: Program[] = [
     tagline: "Train like a serious athlete",
     description:
       "Purpose-driven strength and conditioning for competitive youth athletes. Every session is structured around speed, strength, and conditioning pillars to develop explosiveness, durability, and mental toughness.",
-    price: "$100",
-    priceSub: "5-session pack",
-    priceAlt: "$200/mo unlimited · $25 drop-in",
-    priceNote: "Best value: 5-session pack $100 · Monthly unlimited $200 · Drop-in $25",
+    price: "$200",
+    priceSub: "per month, unlimited",
+    priceAlt: "$100 5-session pack · $25 drop-in",
+    priceNote: "Monthly unlimited $200 · 5-session pack $100 · Drop-in $25",
     schedule: [
       { day: "Monday", time: "7:00–9:00 PM", location: "City Arena Field 4, Pembroke" },
       { day: "Tuesday", time: "4:00–6:00 PM", location: "Arena Field 4, Pembroke" },
@@ -161,9 +161,9 @@ const programs: Program[] = [
     features: ["Strength & power development", "Speed & agility training", "Injury prevention", "Mental toughness"],
     image: assets.perfTrainingImg,
     video: assets.mainVideo,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
-    bookingUrlAlt: "https://bookings.theathletelab.net/pricing-plans/list",
-    bookingUrlAltLabel: "5-Session Pack ($100) or Monthly ($200)",
+    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/performance-training-monthly-membership",
+    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
+    bookingUrlAltLabel: "Book a Drop-In ($25) or 5-Session Pack ($100)",
     color: "#dc2626",
     featured: false,
   },
@@ -1137,6 +1137,11 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
           {program.priceAlt && (
             <div style={{ fontSize: 14, color: brand.mutedLight, marginTop: 6, fontWeight: 500 }}>
               or {program.priceAlt}
+            </div>
+          )}
+          {program.priceNote && !program.priceAlt && (
+            <div style={{ fontSize: 13, color: brand.muted, marginTop: 8, fontStyle: "italic" }}>
+              {program.priceNote}
             </div>
           )}
         </div>
