@@ -36,6 +36,7 @@ export const assets = {
 
 // ── Program Data ──
 export type ScheduleEntry = { day: string; time: string; location: string };
+export type ProgramLink = { label: string; href: string };
 export type Program = {
   id: string;
   ageGroup: string;
@@ -51,6 +52,9 @@ export type Program = {
   image: string;
   video: string | null;
   bookingUrl: string;
+  primaryCtaUrl?: string;
+  primaryCtaLabel?: string;
+  secondaryLinks?: ProgramLink[];
   bookingUrlAlt?: string;
   bookingUrlAltLabel?: string;
   color: string;
@@ -99,9 +103,15 @@ export const programs: Program[] = [
     features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
     image: assets.miniSoccerImg,
     video: assets.miniSoccerVideo,
-    bookingUrl: "https://bookings.theathletelab.net/book-now",
-    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
-    bookingUrlAltLabel: "Book a Drop-In ($25)",
+    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
+    primaryCtaUrl: "https://bookings.theathletelab.net/pricing-plans/list",
+    primaryCtaLabel: "View 8-Week Package Options",
+    secondaryLinks: [
+      { label: "Saturdays 8-Week Package ($140)", href: "https://bookings.theathletelab.net/service-page/mini-soccer-saturdays" },
+      { label: "Sundays 8-Week Package ($140)", href: "https://bookings.theathletelab.net/service-page/mini-soccer-sundays" },
+      { label: "Mondays 8-Week Package ($140)", href: "https://bookings.theathletelab.net/service-page/mini-soccer-mondays-8-weeks" },
+      { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
+    ],
     color: "#22c55e",
     featured: true,
   },
@@ -125,9 +135,12 @@ export const programs: Program[] = [
     features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
     image: assets.speedAgilityImg,
     video: assets.speedAgilityVideo,
-    bookingUrl: "https://bookings.theathletelab.net/book-now",
-    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
-    bookingUrlAltLabel: "Book a Drop-In ($25)",
+    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
+    primaryCtaUrl: "https://bookings.theathletelab.net/service-page/speed-and-agility-5-sessions",
+    primaryCtaLabel: "Book 5-Session Package ($100)",
+    secondaryLinks: [
+      { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility" },
+    ],
     color: "#3b82f6",
     featured: false,
   },
@@ -151,9 +164,15 @@ export const programs: Program[] = [
     features: ["Strength & power development", "Speed & agility training", "Injury prevention", "Mental toughness"],
     image: assets.perfTrainingImg,
     video: assets.mainVideo,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/performance-training-monthly-membership",
-    bookingUrlAlt: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
-    bookingUrlAltLabel: "Book a Drop-In ($25) or 5-Session Pack ($100)",
+    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
+    primaryCtaUrl: "https://bookings.theathletelab.net/service-page/sports-performance-membership",
+    primaryCtaLabel: "Start Monthly Membership ($200)",
+    secondaryLinks: [
+      {
+        label: "Book Drop-In or 5-Pack",
+        href: "https://bookings.theathletelab.net/pricing-plans/list",
+      },
+    ],
     color: "#dc2626",
     featured: false,
   },

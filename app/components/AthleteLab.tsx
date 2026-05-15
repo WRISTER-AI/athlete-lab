@@ -1101,17 +1101,18 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
         )}
 
         <Button
-          href={program.bookingUrl}
+          href={program.primaryCtaUrl || program.bookingUrl}
           variant="primary"
           icon
           style={{ width: "100%", justifyContent: "center" }}
         >
-          Book {program.name}
+          {program.primaryCtaLabel || `Book ${program.name}`}
         </Button>
 
-        {program.bookingUrlAlt && (
+        {(program.secondaryLinks || (program.bookingUrlAlt ? [{ label: program.bookingUrlAltLabel || "View Package Options", href: program.bookingUrlAlt }] : [])).map((link) => (
           <a
-            href={program.bookingUrlAlt}
+            key={`${program.id}-${link.href}-${link.label}`}
+            href={link.href}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -1122,15 +1123,18 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
               color: program.color,
               textDecoration: "none",
               marginTop: 10,
-              padding: "8px 0",
+              padding: "10px 12px",
+              border: `1px solid ${program.color}55`,
+              borderRadius: 8,
+              background: `${program.color}10`,
               transition: "opacity 0.2s ease",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
-            {program.bookingUrlAltLabel || "View Package Options"}
+            {link.label}
           </a>
-        )}
+        ))}
       </div>
 
       <style>{`
