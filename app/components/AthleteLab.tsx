@@ -2204,8 +2204,8 @@ export default function AthleteLab() {
       <Nav onNavigate={scrollToSection} />
       <Hero onNavigate={scrollToSection} />
       <Coaches />
-      <AthleteDifference />
       <Programs />
+      <AthleteDifference />
       <SchedulePreview />
       <CTABanner onNavigate={scrollToSection} />
       <Footer />
