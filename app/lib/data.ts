@@ -112,7 +112,7 @@ export const programs: Program[] = [
     bookingUrl: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
     primaryCtaLabel: "Book a Drop-In ($25)",
     secondaryLinks: [
-      { label: "View 5-Session Package ($100)", href: "https://bookings.theathletelab.net/pricing-plans/list" },
+      { label: "Book Using a 5-Pack", href: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility" },
     ],
     color: "#3b82f6",
     featured: false,
@@ -141,8 +141,8 @@ export const programs: Program[] = [
     primaryCtaLabel: "Book a Drop-In ($25)",
     secondaryLinks: [
       {
-        label: "View 5-Session Package ($100)",
-        href: "https://bookings.theathletelab.net/pricing-plans/list",
+        label: "Book Using a 5-Pack",
+        href: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
       },
     ],
     color: "#dc2626",
