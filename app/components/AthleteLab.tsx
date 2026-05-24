@@ -1356,10 +1356,6 @@ function Coaches() {
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <SectionLabel>Our Coaches</SectionLabel>
           <SectionHeadline>Coached by people who know the game</SectionHeadline>
-          <p style={{ fontSize: 16, lineHeight: 1.7, color: brand.muted, maxWidth: 640, margin: "18px auto 0" }}>
-            The Athlete Lab is run by coaches with real playing and coaching backgrounds,
-            not a generic youth fitness template.
-          </p>
         </div>
 
         <div
@@ -1428,115 +1424,6 @@ function Coaches() {
           ))}
         </div>
 
-        <div
-          className="why-section"
-          style={{
-            marginTop: 56,
-            background: brand.surface,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 16,
-            padding: 40,
-            display: "flex",
-            gap: 40,
-            alignItems: "center",
-          }}
-        >
-          <div style={{ flex: 1 }}>
-            <SectionLabel>Why The Athlete Lab</SectionLabel>
-            <h3
-              style={{
-                fontSize: 28,
-                fontWeight: 800,
-                color: brand.text,
-                letterSpacing: "-0.02em",
-                marginBottom: 20,
-              }}
-            >
-              We train the way games are played.
-            </h3>
-            <div
-              style={{
-                fontSize: 15,
-                lineHeight: 1.8,
-                color: brand.mutedLight,
-                borderLeft: `3px solid ${brand.red}`,
-                paddingLeft: 24,
-              }}
-            >
-              &ldquo;This is speed, agility, strength, and conditioning for young athletes.
-              The goal is simple: help kids move better, get stronger, and have more
-              legs late in games.&rdquo;
-            </div>
-            <div style={{ marginTop: 16, fontSize: 14, fontWeight: 700, color: brand.text }}>
-              — Francis Mulkern, Founder
-            </div>
-          </div>
-
-          <div className="session-steps" style={{ flex: "0 0 auto" }}>
-            <div
-              style={{
-                background: brand.bg,
-                border: `1px solid ${brand.border}`,
-                borderRadius: 12,
-                padding: 24,
-                minWidth: 280,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: brand.red,
-                  letterSpacing: "0.06em",
-                  marginBottom: 20,
-                }}
-              >
-                EVERY SESSION
-              </div>
-              {[
-                { num: "01", title: "Dynamic Warm-Up", desc: "Mobility, activation, movement prep" },
-                { num: "02", title: "Speed & Agility", desc: "Acceleration, footwork, reaction drills" },
-                { num: "03", title: "Strength & Conditioning", desc: "Functional strength, core stability" },
-              ].map((step, i) => (
-                <div
-                  key={step.num}
-                  style={{
-                    display: "flex",
-                    gap: 16,
-                    padding: "14px 0",
-                    borderTop: i > 0 ? `1px solid ${brand.border}` : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 22,
-                      fontWeight: 900,
-                      color: brand.red,
-                      fontFamily: "Georgia, serif",
-                      opacity: 0.5,
-                      minWidth: 30,
-                    }}
-                  >
-                    {step.num}
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: brand.text,
-                        marginBottom: 3,
-                      }}
-                    >
-                      {step.title}
-                    </div>
-                    <div style={{ fontSize: 12, color: brand.muted }}>{step.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
 
       <style>{`
@@ -1555,18 +1442,18 @@ function AthleteDifference() {
   const pillars = [
     {
       label: "Speed & Agility",
-      headline: "Move better and change direction faster.",
-      body: "Athletes work on acceleration, footwork, balance, and reaction so they can move with more confidence in real games.",
+      headline: "Faster feet. Sharper cuts. Better control.",
+      body: "Athletes train acceleration, footwork, balance, and reaction so they can move with more confidence when the game speeds up.",
     },
     {
       label: "Strength & Control",
-      headline: "Build stronger legs, hips, and core.",
-      body: "Training focuses on age-appropriate strength, coordination, and body control so athletes can handle contact, cuts, stops, and starts.",
+      headline: "Strength that actually shows up in games.",
+      body: "We build age-appropriate strength through the legs, hips, and core so athletes can handle contact, stop, cut, recover, and keep playing hard.",
     },
     {
       label: "Conditioning",
-      headline: "More legs late in the game.",
-      body: "The goal is simple: help athletes keep moving well when everyone else is tired.",
+      headline: "Still running full speed late.",
+      body: "The Athlete Lab difference shows up when your kid still has another sprint, another recovery run, and another burst when everyone else is slowing down.",
     },
   ];
 
@@ -1586,13 +1473,14 @@ function AthleteDifference() {
         <div style={{ textAlign: "center", marginBottom: 72 }}>
           <SectionLabel>How We Train</SectionLabel>
           <SectionHeadline>
-            Still fast when
+            Train for the moments
             <br />
-            <span style={{ color: brand.red }}>everyone else is tired.</span>
+            <span style={{ color: brand.red }}>that decide games.</span>
           </SectionHeadline>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
-            That is the point of the training. Speed, agility, strength, and conditioning
-            so young athletes can keep their legs late in games.
+            When your kid is still running full speed and everyone else is slowing down,
+            that is the difference. We train the speed, strength, agility, and conditioning
+            it takes to compete there.
           </p>
         </div>
 
