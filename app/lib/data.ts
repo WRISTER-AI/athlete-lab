@@ -72,7 +72,7 @@ export const programs: Program[] = [
     price: "$140",
     priceSub: "8-week session",
     priceAlt: "$25 drop-in",
-    priceNote: "Wednesday summer session or single drop-in available",
+    priceNote: "Summer sessions or single drop-in available",
     schedule: [
       { day: "Wednesday", time: "10:30–11:15 AM", location: "Riverside Sports Complex, Pembroke" },
     ],
@@ -80,10 +80,11 @@ export const programs: Program[] = [
     image: assets.miniSoccerImg,
     video: assets.miniSoccerVideo,
     bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
-    primaryCtaUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-2",
-    primaryCtaLabel: "Book Wednesday Summer Session ($140)",
+    primaryCtaUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-1",
+    primaryCtaLabel: "Book Summer Session 1 ($140)",
     secondaryLinks: [
-      { label: "Book a Wednesday Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
+      { label: "Book Summer Session 2 ($140)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-2" },
+      { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
     ],
     color: "#22c55e",
     featured: true,
