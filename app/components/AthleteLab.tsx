@@ -161,15 +161,17 @@ function Button({
 
 function VideoPlayer({
   src,
-  poster,
   label,
 }: {
   src: string;
-  poster?: string;
   label?: string;
 }) {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    videoRef.current?.load();
+  }, [src]);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -197,8 +199,7 @@ function VideoPlayer({
       <video
         ref={videoRef}
         src={src}
-        poster={poster}
-        preload="metadata"
+        preload="auto"
         style={{ width: "100%", display: "block", aspectRatio: "16/9", objectFit: "cover" }}
         playsInline
         onPlay={() => setPlaying(true)}
@@ -216,20 +217,6 @@ function VideoPlayer({
             background: "rgba(0,0,0,0.3)",
           }}
         >
-          {poster && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={poster}
-              alt={label || "Video thumbnail"}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-          )}
           <div
             style={{
               position: "absolute",
@@ -828,7 +815,6 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
         {program.video ? (
           <VideoPlayer
             src={program.video}
-            poster={program.image}
             label={`${program.name} in action`}
           />
         ) : (
