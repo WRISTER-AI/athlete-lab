@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   Play, MapPin, Clock, ChevronDown, Menu, X, Mail, Phone,
-  Calendar, Users, Zap, Shield, ArrowRight,
+  Calendar, ArrowRight,
   CheckCircle, Smartphone,
 } from "lucide-react";
 import { brand, assets, programs, coaches } from "../lib/data";
@@ -198,8 +198,11 @@ function VideoPlayer({
         ref={videoRef}
         src={src}
         poster={poster}
+        preload="metadata"
         style={{ width: "100%", display: "block", aspectRatio: "16/9", objectFit: "cover" }}
         playsInline
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}
       />
       {!playing && (
@@ -213,6 +216,27 @@ function VideoPlayer({
             background: "rgba(0,0,0,0.3)",
           }}
         >
+          {poster && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={poster}
+              alt={label || "Video thumbnail"}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          )}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(0,0,0,0.28)",
+            }}
+          />
           <div
             style={{
               width: 72,
@@ -223,6 +247,8 @@ function VideoPlayer({
               alignItems: "center",
               justifyContent: "center",
               boxShadow: "0 0 40px rgba(220,38,38,0.4)",
+              position: "relative",
+              zIndex: 1,
             }}
           >
             <Play size={28} fill="#fff" color="#fff" style={{ marginLeft: 3 }} />
@@ -236,6 +262,7 @@ function VideoPlayer({
                 fontSize: 13,
                 fontWeight: 600,
                 color: "rgba(255,255,255,0.7)",
+                zIndex: 1,
               }}
             >
               ▶ {label}
@@ -280,90 +307,6 @@ function ImageCard({ src, label }: { src: string; label?: string }) {
         >
           {label}
         </div>
-      )}
-    </div>
-  );
-}
-
-function EmailSignup({ programName }: { programName: string }) {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  return (
-    <div
-      style={{
-        background: brand.surface,
-        border: `1px solid ${brand.border}`,
-        borderRadius: 10,
-        padding: "20px 24px",
-        marginTop: 16,
-      }}
-    >
-      {submitted ? (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            color: "#22c55e",
-            fontSize: 14,
-            fontWeight: 600,
-          }}
-        >
-          <CheckCircle size={18} /> You&apos;re on the {programName} list!
-        </div>
-      ) : (
-        <>
-          <div
-            style={{
-              fontSize: 13,
-              fontWeight: 600,
-              color: brand.muted,
-              marginBottom: 10,
-              letterSpacing: "0.02em",
-            }}
-          >
-            <Mail size={14} style={{ marginRight: 6, verticalAlign: "middle" }} />{" "}
-            {`Get ${programName} updates & schedule changes`}
-          </div>
-          <div style={{ display: "flex", gap: 8 }}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="parent@email.com"
-              style={{
-                flex: 1,
-                minWidth: 0,
-                height: 40,
-                padding: "0 14px",
-                background: brand.bg,
-                border: `1px solid ${brand.border}`,
-                borderRadius: 6,
-                color: brand.text,
-                fontSize: 14,
-                outline: "none",
-              }}
-            />
-            <button
-              onClick={() => {
-                if (email.includes("@")) setSubmitted(true);
-              }}
-              style={{
-                height: 40,
-                padding: "0 18px",
-                background: brand.red,
-                color: "#fff",
-                border: "none",
-                borderRadius: 6,
-                fontSize: 13,
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              Join
-            </button>
-          </div>
-        </>
       )}
     </div>
   );
@@ -891,7 +834,6 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
         ) : (
           <ImageCard src={program.image} label={program.name} />
         )}
-        <EmailSignup programName={program.name} />
       </div>
 
       <div>
