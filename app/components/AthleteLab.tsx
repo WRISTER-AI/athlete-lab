@@ -653,7 +653,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               }}
             >
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} />
-              Now enrolling for Spring 2026
+              Now enrolling for Summer 2026
             </motion.div>
 
             <motion.h1
@@ -1452,7 +1452,7 @@ function Coaches() {
                 marginBottom: 20,
               }}
             >
-              Training should look like the sports kids actually play.
+              We train the way games are played.
             </h3>
             <div
               style={{
@@ -1463,9 +1463,9 @@ function Coaches() {
                 paddingLeft: 24,
               }}
             >
-              &ldquo;The goal is to build stronger, faster, more confident athletes without
-              losing the movement skills that make them effective in games. Every session
-              connects strength, speed, agility, and body control back to sport.&rdquo;
+              &ldquo;This is speed, agility, strength, and conditioning for young athletes.
+              The goal is simple: help kids move better, get stronger, and have more
+              legs late in games.&rdquo;
             </div>
             <div style={{ marginTop: 16, fontSize: 14, fontWeight: 700, color: brand.text }}>
               — Francis Mulkern, Founder
@@ -1554,19 +1554,19 @@ function Coaches() {
 function AthleteDifference() {
   const pillars = [
     {
-      label: "Train the Finish",
-      headline: "Still fast when the game gets heavy.",
-      body: "The goal is not to look quick in the first five minutes. It is to keep moving well when legs are tired and decisions matter.",
+      label: "Speed & Agility",
+      headline: "Move better and change direction faster.",
+      body: "Athletes work on acceleration, footwork, balance, and reaction so they can move with more confidence in real games.",
     },
     {
-      label: "Move With Control",
-      headline: "Speed is only useful if they can handle it.",
-      body: "Sessions build acceleration, footwork, coordination, and body control so athletes can cut, stop, recover, and compete with confidence.",
+      label: "Strength & Control",
+      headline: "Build stronger legs, hips, and core.",
+      body: "Training focuses on age-appropriate strength, coordination, and body control so athletes can handle contact, cuts, stops, and starts.",
     },
     {
-      label: "Compete Longer",
-      headline: "Conditioning that shows up in real play.",
-      body: "Strength and conditioning are built into the work, not tacked on at the end. Athletes learn how to keep effort and technique together.",
+      label: "Conditioning",
+      headline: "More legs late in the game.",
+      body: "The goal is simple: help athletes keep moving well when everyone else is tired.",
     },
   ];
 
@@ -1586,13 +1586,13 @@ function AthleteDifference() {
         <div style={{ textAlign: "center", marginBottom: 72 }}>
           <SectionLabel>How We Train</SectionLabel>
           <SectionHeadline>
-            Built for the part of the game
+            Still fast when
             <br />
-            <span style={{ color: brand.red }}>where athletes separate.</span>
+            <span style={{ color: brand.red }}>everyone else is tired.</span>
           </SectionHeadline>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
-            Every session is designed to make young athletes faster, stronger, more coordinated,
-            and more comfortable competing when the pace picks up.
+            That is the point of the training. Speed, agility, strength, and conditioning
+            so young athletes can keep their legs late in games.
           </p>
         </div>
 
@@ -1655,81 +1655,6 @@ function AthleteDifference() {
           ))}
         </div>
 
-        <div
-          style={{
-            background: brand.surface,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 16,
-            padding: "48px 48px",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 60,
-            alignItems: "center",
-          }}
-          className="moments-grid"
-        >
-          <div>
-            <div
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: brand.red,
-                marginBottom: 16,
-              }}
-            >
-              What Parents Should Expect
-            </div>
-            <h3
-              style={{
-                fontSize: 32,
-                fontWeight: 900,
-                color: brand.text,
-                letterSpacing: "-0.03em",
-                lineHeight: 1.15,
-                marginBottom: 20,
-              }}
-            >
-              Coach-led work with a clear purpose
-              <br />
-              <span style={{ color: brand.red }}>every time they show up.</span>
-            </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: brand.mutedLight }}>
-              This is not open gym time. Athletes are coached through warm-ups, movement,
-              speed, agility, strength, and conditioning in a structure that fits their age
-              and sport.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            {[
-              { label: "Coached warm-up" },
-              { label: "Speed mechanics" },
-              { label: "Agility and footwork" },
-              { label: "Body control" },
-              { label: "Strength basics" },
-              { label: "Conditioning finish" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                style={{
-                  background: brand.bg,
-                  border: `1px solid ${brand.border}`,
-                  borderRadius: 10,
-                  padding: "16px 20px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: brand.red, flexShrink: 0 }} />
-                <span style={{ fontSize: 13, fontWeight: 600, color: brand.text }}>
-                  {item.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       <style>{`
