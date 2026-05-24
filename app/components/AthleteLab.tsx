@@ -653,7 +653,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               }}
             >
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} />
-              Now enrolling for Spring 2026
+              Now enrolling for Summer 2026
             </motion.div>
 
             <motion.h1
@@ -1355,7 +1355,7 @@ function Coaches() {
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <SectionLabel>Our Coaches</SectionLabel>
-          <SectionHeadline>Led by athletes who&apos;ve been there</SectionHeadline>
+          <SectionHeadline>Coached by people who know the game</SectionHeadline>
         </div>
 
         <div
@@ -1424,117 +1424,6 @@ function Coaches() {
           ))}
         </div>
 
-        <div
-          className="why-section"
-          style={{
-            marginTop: 56,
-            background: brand.surface,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 16,
-            padding: 40,
-            display: "flex",
-            gap: 40,
-            alignItems: "center",
-          }}
-        >
-          <div style={{ flex: 1 }}>
-            <SectionLabel>Why The Athlete Lab</SectionLabel>
-            <h3
-              style={{
-                fontSize: 28,
-                fontWeight: 800,
-                color: brand.text,
-                letterSpacing: "-0.02em",
-                marginBottom: 20,
-              }}
-            >
-              A gym doesn&apos;t build athletes. We do.
-            </h3>
-            <div
-              style={{
-                fontSize: 15,
-                lineHeight: 1.8,
-                color: brand.mutedLight,
-                borderLeft: `3px solid ${brand.red}`,
-                paddingLeft: 24,
-              }}
-            >
-              &ldquo;A gym membership gives you access to equipment, but it doesn&apos;t build better
-              athletes. I hit the gym hard in college, gained muscle, but lost my agility and first
-              step. Athletic performance requires structured training: building strength while
-              improving speed, agility, and movement quality. That&apos;s what The Athlete Lab is built
-              on.&rdquo;
-            </div>
-            <div style={{ marginTop: 16, fontSize: 14, fontWeight: 700, color: brand.text }}>
-              — Francis Mulkern, Founder
-            </div>
-          </div>
-
-          <div className="session-steps" style={{ flex: "0 0 auto" }}>
-            <div
-              style={{
-                background: brand.bg,
-                border: `1px solid ${brand.border}`,
-                borderRadius: 12,
-                padding: 24,
-                minWidth: 280,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: brand.red,
-                  letterSpacing: "0.06em",
-                  marginBottom: 20,
-                }}
-              >
-                EVERY SESSION
-              </div>
-              {[
-                { num: "01", title: "Dynamic Warm-Up", desc: "Mobility, activation, movement prep" },
-                { num: "02", title: "Speed & Agility", desc: "Acceleration, footwork, reaction drills" },
-                { num: "03", title: "Strength & Conditioning", desc: "Functional strength, core stability" },
-              ].map((step, i) => (
-                <div
-                  key={step.num}
-                  style={{
-                    display: "flex",
-                    gap: 16,
-                    padding: "14px 0",
-                    borderTop: i > 0 ? `1px solid ${brand.border}` : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 22,
-                      fontWeight: 900,
-                      color: brand.red,
-                      fontFamily: "Georgia, serif",
-                      opacity: 0.5,
-                      minWidth: 30,
-                    }}
-                  >
-                    {step.num}
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: brand.text,
-                        marginBottom: 3,
-                      }}
-                    >
-                      {step.title}
-                    </div>
-                    <div style={{ fontSize: 12, color: brand.muted }}>{step.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
 
       <style>{`
@@ -1552,19 +1441,19 @@ function Coaches() {
 function AthleteDifference() {
   const pillars = [
     {
-      label: "The Second Gear",
-      headline: "When everyone else slows down, they speed up.",
-      body: "Athlete Lab athletes still accelerate late in games. They still change direction with control. They still compete at full speed because they've trained for that exact moment.",
+      label: "Speed & Agility",
+      headline: "Faster feet. Sharper cuts. Better control.",
+      body: "Athletes train acceleration, footwork, balance, and reaction so they can move with more confidence when the game speeds up.",
     },
     {
-      label: "The Mental Edge",
-      headline: "Most athletes think: \"I'm tired.\"",
-      body: "Athlete Lab athletes are wired to think: \"This is where I separate.\" That mindset is trained. Pushing through fatigue in circuits, competing when legs are heavy, learning to execute under pressure.",
+      label: "Strength & Control",
+      headline: "Strength that actually shows up in games.",
+      body: "We build age-appropriate strength through the legs, hips, and core so athletes can handle contact, stop, cut, recover, and keep playing hard.",
     },
     {
-      label: "What You're Building",
-      headline: "Not just speed. Not just strength.",
-      body: "You're building resilience, conditioned confidence, and the ability to perform under fatigue. Talent might show early, but late in games, the athlete who can still move, think, and compete is the one who wins.",
+      label: "Conditioning",
+      headline: "Still running full speed late.",
+      body: "The Athlete Lab difference shows up when your kid still has another sprint, another recovery run, and another burst when everyone else is slowing down.",
     },
   ];
 
@@ -1581,17 +1470,17 @@ function AthleteDifference() {
       <GlowEffect color={brand.red} top="50%" left="50%" size="1200px" opacity={0.05} />
 
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 72 }}>
-          <SectionLabel>The Athlete Lab Difference</SectionLabel>
+          <SectionLabel>How We Train</SectionLabel>
           <SectionHeadline>
-            Talent is obvious early.
+            Train for the moments
             <br />
-            <span style={{ color: brand.red }}>Late in games</span>{" "}is where it&apos;s decided.
+            <span style={{ color: brand.red }}>that decide games.</span>
           </SectionHeadline>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
-            Early in games, talent is obvious. But late in games, when fatigue hits, that&apos;s where
-            separation actually happens. Conditioning and mentality take over.
+            When your kid is still running full speed and everyone else is slowing down,
+            that is the difference. We train the speed, strength, agility, and conditioning
+            it takes to compete there.
           </p>
         </div>
 
@@ -1654,82 +1543,6 @@ function AthleteDifference() {
           ))}
         </div>
 
-        {/* The Moments That Matter */}
-        <div
-          style={{
-            background: brand.surface,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 16,
-            padding: "48px 48px",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 60,
-            alignItems: "center",
-          }}
-          className="moments-grid"
-        >
-          <div>
-            <div
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: brand.red,
-                marginBottom: 16,
-              }}
-            >
-              End of Game. Who Wins?
-            </div>
-            <h3
-              style={{
-                fontSize: 32,
-                fontWeight: 900,
-                color: brand.text,
-                letterSpacing: "-0.03em",
-                lineHeight: 1.15,
-                marginBottom: 20,
-              }}
-            >
-              They win the moments
-              <br />
-              <span style={{ color: brand.red }}>that matter most.</span>
-            </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.8, color: brand.mutedLight }}>
-              Loose balls. Final sprints. Defensive recoveries. Last attacking runs.
-              That&apos;s where games are decided, and that&apos;s where Athlete Lab athletes
-              stand out most.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            {[
-              { label: "Still accelerating" },
-              { label: "Sharp decisions" },
-              { label: "Full-speed cuts" },
-              { label: "Pressure mindset" },
-              { label: "Extra-effort plays" },
-              { label: "Clutch moments" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                style={{
-                  background: brand.bg,
-                  border: `1px solid ${brand.border}`,
-                  borderRadius: 10,
-                  padding: "16px 20px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: brand.red, flexShrink: 0 }} />
-                <span style={{ fontSize: 13, fontWeight: 600, color: brand.text }}>
-                  {item.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       <style>{`
@@ -2203,10 +2016,10 @@ export default function AthleteLab() {
     <div style={{ background: brand.bg, minHeight: "100vh" }}>
       <Nav onNavigate={scrollToSection} />
       <Hero onNavigate={scrollToSection} />
-      <AthleteDifference />
-      <Programs />
-      <SchedulePreview />
       <Coaches />
+      <Programs />
+      <AthleteDifference />
+      <SchedulePreview />
       <CTABanner onNavigate={scrollToSection} />
       <Footer />
       <StickyMobileCTA />
