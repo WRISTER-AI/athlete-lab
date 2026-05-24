@@ -1355,7 +1355,11 @@ function Coaches() {
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <SectionLabel>Our Coaches</SectionLabel>
-          <SectionHeadline>Led by athletes who&apos;ve been there</SectionHeadline>
+          <SectionHeadline>Coached by people who know the game</SectionHeadline>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: brand.muted, maxWidth: 640, margin: "18px auto 0" }}>
+            The Athlete Lab is run by coaches with real playing and coaching backgrounds,
+            not a generic youth fitness template.
+          </p>
         </div>
 
         <div
@@ -1448,7 +1452,7 @@ function Coaches() {
                 marginBottom: 20,
               }}
             >
-              A gym doesn&apos;t build athletes. We do.
+              Training should look like the sports kids actually play.
             </h3>
             <div
               style={{
@@ -1459,11 +1463,9 @@ function Coaches() {
                 paddingLeft: 24,
               }}
             >
-              &ldquo;A gym membership gives you access to equipment, but it doesn&apos;t build better
-              athletes. I hit the gym hard in college, gained muscle, but lost my agility and first
-              step. Athletic performance requires structured training: building strength while
-              improving speed, agility, and movement quality. That&apos;s what The Athlete Lab is built
-              on.&rdquo;
+              &ldquo;The goal is to build stronger, faster, more confident athletes without
+              losing the movement skills that make them effective in games. Every session
+              connects strength, speed, agility, and body control back to sport.&rdquo;
             </div>
             <div style={{ marginTop: 16, fontSize: 14, fontWeight: 700, color: brand.text }}>
               — Francis Mulkern, Founder
@@ -1552,19 +1554,19 @@ function Coaches() {
 function AthleteDifference() {
   const pillars = [
     {
-      label: "The Second Gear",
-      headline: "When everyone else slows down, they speed up.",
-      body: "Athlete Lab athletes still accelerate late in games. They still change direction with control. They still compete at full speed because they've trained for that exact moment.",
+      label: "Train the Finish",
+      headline: "Still fast when the game gets heavy.",
+      body: "The goal is not to look quick in the first five minutes. It is to keep moving well when legs are tired and decisions matter.",
     },
     {
-      label: "The Mental Edge",
-      headline: "Most athletes think: \"I'm tired.\"",
-      body: "Athlete Lab athletes are wired to think: \"This is where I separate.\" That mindset is trained. Pushing through fatigue in circuits, competing when legs are heavy, learning to execute under pressure.",
+      label: "Move With Control",
+      headline: "Speed is only useful if they can handle it.",
+      body: "Sessions build acceleration, footwork, coordination, and body control so athletes can cut, stop, recover, and compete with confidence.",
     },
     {
-      label: "What You're Building",
-      headline: "Not just speed. Not just strength.",
-      body: "You're building resilience, conditioned confidence, and the ability to perform under fatigue. Talent might show early, but late in games, the athlete who can still move, think, and compete is the one who wins.",
+      label: "Compete Longer",
+      headline: "Conditioning that shows up in real play.",
+      body: "Strength and conditioning are built into the work, not tacked on at the end. Athletes learn how to keep effort and technique together.",
     },
   ];
 
@@ -1581,17 +1583,16 @@ function AthleteDifference() {
       <GlowEffect color={brand.red} top="50%" left="50%" size="1200px" opacity={0.05} />
 
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 72 }}>
-          <SectionLabel>The Athlete Lab Difference</SectionLabel>
+          <SectionLabel>How We Train</SectionLabel>
           <SectionHeadline>
-            Talent is obvious early.
+            Built for the part of the game
             <br />
-            <span style={{ color: brand.red }}>Late in games</span>{" "}is where it&apos;s decided.
+            <span style={{ color: brand.red }}>where athletes separate.</span>
           </SectionHeadline>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: brand.muted, maxWidth: 580, margin: "20px auto 0" }}>
-            Early in games, talent is obvious. But late in games, when fatigue hits, that&apos;s where
-            separation actually happens. Conditioning and mentality take over.
+            Every session is designed to make young athletes faster, stronger, more coordinated,
+            and more comfortable competing when the pace picks up.
           </p>
         </div>
 
@@ -1654,7 +1655,6 @@ function AthleteDifference() {
           ))}
         </div>
 
-        {/* The Moments That Matter */}
         <div
           style={{
             background: brand.surface,
@@ -1679,7 +1679,7 @@ function AthleteDifference() {
                 marginBottom: 16,
               }}
             >
-              End of Game. Who Wins?
+              What Parents Should Expect
             </div>
             <h3
               style={{
@@ -1691,24 +1691,24 @@ function AthleteDifference() {
                 marginBottom: 20,
               }}
             >
-              They win the moments
+              Coach-led work with a clear purpose
               <br />
-              <span style={{ color: brand.red }}>that matter most.</span>
+              <span style={{ color: brand.red }}>every time they show up.</span>
             </h3>
             <p style={{ fontSize: 15, lineHeight: 1.8, color: brand.mutedLight }}>
-              Loose balls. Final sprints. Defensive recoveries. Last attacking runs.
-              That&apos;s where games are decided, and that&apos;s where Athlete Lab athletes
-              stand out most.
+              This is not open gym time. Athletes are coached through warm-ups, movement,
+              speed, agility, strength, and conditioning in a structure that fits their age
+              and sport.
             </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             {[
-              { label: "Still accelerating" },
-              { label: "Sharp decisions" },
-              { label: "Full-speed cuts" },
-              { label: "Pressure mindset" },
-              { label: "Extra-effort plays" },
-              { label: "Clutch moments" },
+              { label: "Coached warm-up" },
+              { label: "Speed mechanics" },
+              { label: "Agility and footwork" },
+              { label: "Body control" },
+              { label: "Strength basics" },
+              { label: "Conditioning finish" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -2203,10 +2203,10 @@ export default function AthleteLab() {
     <div style={{ background: brand.bg, minHeight: "100vh" }}>
       <Nav onNavigate={scrollToSection} />
       <Hero onNavigate={scrollToSection} />
+      <Coaches />
       <AthleteDifference />
       <Programs />
       <SchedulePreview />
-      <Coaches />
       <CTABanner onNavigate={scrollToSection} />
       <Footer />
       <StickyMobileCTA />
