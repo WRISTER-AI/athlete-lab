@@ -27,6 +27,15 @@ function programById(id) {
 }
 
 test("fall training schedule uses the current Monday-Thursday City Arena offer", () => {
+  const miniSoccer = programById("mini-soccer");
+  assert.deepEqual(miniSoccer.schedule, [
+    {
+      day: "Wednesday",
+      time: "10:30-11:15 AM",
+      location: "Riverside Sports Complex, Pembroke",
+    },
+  ]);
+
   const speedAgility = programById("speed-agility");
   assert.deepEqual(speedAgility.schedule, [
     {
@@ -57,8 +66,8 @@ test("removed public schedule slots and programs are not exposed", () => {
     .join("\n");
   const allProgramText = programs.map((program) => `${program.id} ${program.name}`).join("\n");
 
-  assert.doesNotMatch(allScheduleText, /Friday|Saturday|Sunday|Starland|Riverside|7:00-9:00|5:00-8:00|6:00-7:00 PM|7:00-8:00 PM/);
-  assert.doesNotMatch(allProgramText, /mini-soccer|High School|College/i);
+  assert.doesNotMatch(allScheduleText, /Friday|Saturday|Sunday|Starland|7:00-9:00|5:00-8:00|6:00-7:00 PM|7:00-8:00 PM/);
+  assert.doesNotMatch(allProgramText, /High School|College/i);
 });
 
 test("expired summer promo is not active", () => {

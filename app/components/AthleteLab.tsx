@@ -1991,6 +1991,8 @@ function Footer() {
               Intro Speed &amp; Agility: 4-5pm
               <br />
               Youth Sports Performance: 5-7pm
+              <br />
+              Wed Mini Soccer: 10:30-11:15am
             </div>
           </div>
 
@@ -2073,6 +2075,7 @@ function Footer() {
           </div>
           {[
             "City Arena Field 4, Pembroke",
+            "Riverside Sports Complex, Pembroke",
           ].map((loc) => (
             <span key={loc} style={{ fontSize: 13, color: brand.mutedLight }}>
               {loc}

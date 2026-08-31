@@ -90,6 +90,31 @@ export const promo: Promo = {
 
 export const programs: Program[] = [
   {
+    id: "mini-soccer",
+    ageGroup: "Ages 3-5",
+    name: "Mini Soccer",
+    tagline: "Where young athletes learn to move",
+    description:
+      "Introduces the basics of soccer while developing balance, coordination, running mechanics, and body control. Athletes work on dribbling, stopping, and ball skills through stations and interactive games.",
+    price: "$140",
+    priceSub: "8-week session",
+    priceAlt: "$25 drop-in",
+    priceNote: "Summer sessions or single drop-in available",
+    schedule: [{ day: "Wednesday", time: "10:30-11:15 AM", location: "Riverside Sports Complex, Pembroke" }],
+    features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
+    image: assets.miniSoccerImg,
+    video: assets.miniSoccerVideo,
+    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
+    primaryCtaUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-1",
+    primaryCtaLabel: "Book Summer Session 1 ($140)",
+    secondaryLinks: [
+      { label: "Book Summer Session 2 ($140)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-2" },
+      { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
+    ],
+    color: "#22c55e",
+    featured: true,
+  },
+  {
     id: "speed-agility",
     ageGroup: "Ages 5-8",
     name: "Intro to Speed & Agility",
