@@ -1,20 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Clock, MapPin, ArrowLeft } from "lucide-react";
 import { brand, programs } from "../lib/data";
 import type { ScheduleEntry } from "../lib/data";
 
 export default function FullSchedulePage() {
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday"];
 
   const getClassesForDay = (day: string) => {
     const classes: Array<ScheduleEntry & { program: string; color: string; ageGroup: string; bookingUrl: string }> = [];
     programs.forEach((p) => {
       p.schedule.forEach((s) => {
-        if (s.day === day) {
-          classes.push({ ...s, program: p.name, color: p.color, ageGroup: p.ageGroup, bookingUrl: p.bookingUrl });
+        if ((s.days || [s.day]).includes(day)) {
+          classes.push({
+            ...s,
+            program: s.label || p.name,
+            color: p.color,
+            ageGroup: s.ageGroup || p.ageGroup,
+            bookingUrl: s.bookingUrl || p.bookingUrl,
+          });
         }
       });
     });

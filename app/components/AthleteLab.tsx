@@ -8,7 +8,7 @@ import {
   Calendar, ArrowRight,
   CheckCircle, Smartphone,
 } from "lucide-react";
-import { brand, assets, programs, coaches } from "../lib/data";
+import { brand, assets, promo, programs, coaches } from "../lib/data";
 import type { Program } from "../lib/data";
 
 // Data imported from ../lib/data
@@ -300,7 +300,116 @@ function ImageCard({ src, label }: { src: string; label?: string }) {
 }
 
 // ── Navigation ──
-function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
+function PromoBanner({
+  visible,
+  onNavigate,
+}: {
+  visible: boolean;
+  onNavigate: (id: string) => void;
+}) {
+  if (!visible) return null;
+
+  return (
+    <div
+      className="promo-banner"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 120,
+        minHeight: 46,
+        background: "linear-gradient(90deg, #dc2626, #f97316)",
+        color: "#fff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 16,
+        padding: "9px clamp(16px, 4vw, 48px)",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.28)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 10,
+          minWidth: 0,
+          overflow: "hidden",
+        }}
+      >
+        <span className="promo-title-desktop" style={{ fontSize: 13, fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+          {promo.title}
+        </span>
+        <span
+          className="promo-title-mobile"
+          style={{
+            display: "none",
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+          }}
+        >
+          Friend free this week
+        </span>
+        <span
+          className="promo-banner-copy"
+          style={{
+            fontSize: 13,
+            fontWeight: 600,
+            color: "rgba(255,255,255,0.86)",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {promo.body}
+        </span>
+      </div>
+      <a
+        href={`#${promo.ctaTarget}`}
+        onClick={(e) => {
+          e.preventDefault();
+          onNavigate(promo.ctaTarget);
+        }}
+        style={{
+          flex: "0 0 auto",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          height: 28,
+          padding: "0 12px",
+          borderRadius: 6,
+          background: "#fff",
+          color: brand.red,
+          fontSize: 11,
+          fontWeight: 900,
+          letterSpacing: "0.04em",
+          textTransform: "uppercase",
+          textDecoration: "none",
+        }}
+      >
+        <span className="promo-cta-full">{promo.ctaLabel}</span>
+        <span className="promo-cta-short" style={{ display: "none" }}>Book</span>
+        <ArrowRight size={13} />
+      </a>
+      <style>{`
+        @media (max-width: 720px) {
+          .promo-banner { justify-content: space-between !important; gap: 10px !important; }
+          .promo-title-desktop { display: none !important; }
+          .promo-title-mobile { display: inline !important; }
+          .promo-banner-copy { display: none !important; }
+          .promo-cta-full { display: none !important; }
+          .promo-cta-short { display: inline !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function Nav({ onNavigate, promoVisible }: { onNavigate: (id: string) => void; promoVisible: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -313,7 +422,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
   const links = [
     { label: "Programs", id: "programs" },
     { label: "Schedule", id: "schedule", href: "/schedule" },
-    { label: "Coaches", id: "coaches" },
+    { label: "Coach", id: "coaches" },
     { label: "Contact", id: "contact" },
   ];
 
@@ -326,7 +435,7 @@ function Nav({ onNavigate }: { onNavigate: (id: string) => void }) {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         style={{
           position: "fixed",
-          top: 0,
+          top: promoVisible ? 46 : 0,
           left: 0,
           right: 0,
           zIndex: 100,
@@ -583,7 +692,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               }}
             >
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} />
-              Now enrolling for Summer 2026
+              Now enrolling for Fall 2026
             </motion.div>
 
             <motion.h1
@@ -991,7 +1100,7 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
           >
             {program.schedule.map((s) => (
               <div
-                key={s.day + s.time}
+                key={`${s.label || program.name}-${s.day}-${s.time}`}
                 className="schedule-row"
                 style={{
                   display: "grid",
@@ -1002,7 +1111,14 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
                   fontSize: 14,
                 }}
               >
-                <span style={{ fontWeight: 700, color: brand.text }}>{s.day}</span>
+                <span style={{ color: brand.text }}>
+                  <span style={{ display: "block", fontWeight: 700 }}>{s.day}</span>
+                  {s.label && (
+                    <span style={{ display: "block", color: program.color, fontSize: 11, fontWeight: 700, marginTop: 3 }}>
+                      {s.label}
+                    </span>
+                  )}
+                </span>
                 <span
                   style={{
                     color: brand.mutedLight,
@@ -1110,12 +1226,12 @@ function Programs() {
         </div>
 
         <div
+          className="program-tab-grid"
           style={{
-            display: "flex",
-            justifyContent: "center",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
             gap: 8,
             marginBottom: 48,
-            flexWrap: "wrap",
           }}
         >
           {programs.map((p) => {
@@ -1128,12 +1244,14 @@ function Programs() {
                 whileTap={{ scale: 0.98 }}
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: 8,
-                  flex: "1 1 auto",
-                  minWidth: "150px",
-                  padding: "12px 24px",
+                  gap: 6,
+                  width: "100%",
+                  minHeight: 68,
+                  minWidth: 0,
+                  padding: "12px 14px",
                   borderRadius: 8,
                   cursor: "pointer",
                   fontSize: 14,
@@ -1153,6 +1271,8 @@ function Programs() {
                     borderRadius: 100,
                     background: isActive ? `${p.color}20` : brand.surfaceLight,
                     color: isActive ? p.color : brand.muted,
+                    lineHeight: 1.25,
+                    textAlign: "center",
                   }}
                 >
                   {p.name}
@@ -1165,6 +1285,10 @@ function Programs() {
         {programs.map((p) => (
           <ProgramCard key={p.id} program={p} isActive={activeProgram === p.id} />
         ))}
+
+        <style>{`
+          @media (max-width: 520px) { .program-tab-grid { grid-template-columns: 1fr !important; } }
+        `}</style>
       </div>
     </section>
   );
@@ -1172,15 +1296,17 @@ function Programs() {
 
 // ── Schedule Preview ──
 function SchedulePreview() {
-  const preview = programs.map((p) => ({
-    program: p.name,
-    color: p.color,
-    ageGroup: p.ageGroup,
-    day: p.schedule[0].day,
-    time: p.schedule[0].time,
-    location: p.schedule[0].location,
-    bookingUrl: p.bookingUrl,
-  }));
+  const preview = programs.flatMap((p) =>
+    p.schedule.map((s) => ({
+      program: s.label || p.name,
+      color: p.color,
+      ageGroup: s.ageGroup || p.ageGroup,
+      day: s.day,
+      time: s.time,
+      location: s.location,
+      bookingUrl: s.bookingUrl || p.bookingUrl,
+    }))
+  );
 
   return (
     <section
@@ -1201,14 +1327,14 @@ function SchedulePreview() {
           className="schedule-preview-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
             gap: 16,
             marginBottom: 32,
           }}
         >
           {preview.map((s) => (
             <a
-              key={s.program}
+              key={`${s.program}-${s.day}-${s.time}`}
               href={s.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -1269,6 +1395,10 @@ function SchedulePreview() {
 
 // ── Coaches ──
 function Coaches() {
+  const coach = coaches[0];
+
+  if (!coach) return null;
+
   return (
     <section
       id="coaches"
@@ -1282,74 +1412,161 @@ function Coaches() {
       <GlowEffect color={brand.red} top="50%" left="80%" size="600px" opacity={0.05} />
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <SectionLabel>Our Coaches</SectionLabel>
-          <SectionHeadline>Coached by people who know the game</SectionHeadline>
+          <SectionLabel>The Coach</SectionLabel>
+          <SectionHeadline>Led by Francis Mulkern</SectionHeadline>
+          <p
+            style={{
+              maxWidth: 720,
+              margin: "18px auto 0",
+              color: brand.mutedLight,
+              fontSize: "clamp(16px, 2vw, 19px)",
+              lineHeight: 1.7,
+            }}
+          >
+            Former Merrimack player and Boston Bolts coach bringing college-level standards to youth athlete development.
+          </p>
         </div>
 
         <div
           className="coaches-grid"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}
+          style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.18fr) minmax(320px, 0.82fr)", gap: 36, maxWidth: 1160, margin: "0 auto" }}
         >
-          {coaches.map((coach) => (
-            <motion.div
-              key={coach.name}
-              whileHover={{ y: -5, boxShadow: "0px 10px 30px rgba(0,0,0,0.5)" }}
-              transition={{ duration: 0.3 }}
+          <motion.div
+            className="coach-photo-panel"
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              position: "relative",
+              minHeight: 560,
+            }}
+          >
+            <div
+              className="coach-photo-mosaic"
               style={{
-                background: brand.surface,
-                border: `1px solid ${brand.border}`,
-                borderRadius: 16,
-                padding: 32,
-                cursor: "pointer",
+                display: "grid",
+                gridTemplateColumns: "1.25fr 0.75fr",
+                gridTemplateRows: "1fr 1fr",
+                gap: 14,
+                height: "100%",
+                minHeight: 560,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 20,
-                  marginBottom: 24,
-                }}
-              >
+              {coach.photos.map((photo, index) => (
                 <div
+                  key={photo.src}
+                  className={index === 0 ? "coach-photo-tile coach-photo-primary" : "coach-photo-tile"}
                   style={{
-                    width: 80,
-                    height: 80,
-                    borderRadius: "50%",
+                    position: "relative",
+                    gridRow: index === 0 ? "1 / span 2" : "auto",
+                    borderRadius: index === 0 ? 18 : 14,
                     overflow: "hidden",
-                    border: `3px solid ${brand.red}`,
-                    flexShrink: 0,
+                    minHeight: index === 0 ? 560 : 0,
                     background: brand.surfaceLight,
+                    border: `1px solid ${brand.border}`,
+                    boxShadow: index === 0 ? "0 26px 70px rgba(0,0,0,0.45)" : "0 16px 40px rgba(0,0,0,0.28)",
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={coach.photo}
-                    alt={coach.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-                <div>
-                  <div
+                    src={photo.src}
+                    alt={photo.alt}
                     style={{
-                      fontSize: 20,
-                      fontWeight: 800,
-                      color: brand.text,
-                      letterSpacing: "-0.01em",
+                      width: "100%",
+                      height: "100%",
+                      minHeight: index === 0 ? 560 : 0,
+                      objectFit: "cover",
+                      objectPosition: photo.objectPosition,
+                      display: "block",
+                      filter: "saturate(1.04) contrast(1.03)",
                     }}
-                  >
-                    {coach.name}
-                  </div>
-                  <div style={{ fontSize: 13, color: brand.red, fontWeight: 600, marginTop: 2 }}>
-                    {coach.title}
-                  </div>
+                  />
+                  {index === 0 && (
+                    <>
+                      <div
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          background: "linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0.08) 58%)",
+                        }}
+                      />
+                      <div style={{ position: "absolute", left: 26, right: 26, bottom: 24 }}>
+                        <div
+                          style={{
+                            fontSize: "clamp(26px, 3vw, 38px)",
+                            fontWeight: 900,
+                            color: "#fff",
+                            letterSpacing: "-0.03em",
+                            lineHeight: 1.02,
+                          }}
+                        >
+                          {coach.name}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 13,
+                            color: "#fff",
+                            fontWeight: 800,
+                            marginTop: 8,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          {coach.title}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
-              </div>
-              <p style={{ fontSize: 14, lineHeight: 1.8, color: brand.mutedLight, margin: 0 }}>
-                {coach.bio}
-              </p>
-            </motion.div>
-          ))}
+              ))}
+            </div>
+          </motion.div>
+          <div
+            className="coach-copy-panel"
+            style={{
+              background: "rgba(255,255,255,0.02)",
+              border: `1px solid ${brand.border}`,
+              borderRadius: 16,
+              padding: "clamp(28px, 4vw, 48px)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              minHeight: 420,
+            }}
+          >
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                width: "fit-content",
+                padding: "6px 12px",
+                borderRadius: 100,
+                background: `${brand.red}14`,
+                border: `1px solid ${brand.red}33`,
+                color: brand.red,
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                marginBottom: 22,
+              }}
+            >
+              Founder-led training
+            </div>
+            <h3
+              style={{
+                fontSize: "clamp(28px, 4vw, 42px)",
+                lineHeight: 1.08,
+                letterSpacing: "-0.03em",
+                color: brand.text,
+                margin: "0 0 20px",
+              }}
+            >
+              A training environment built around standards, confidence, and long-term athletic growth.
+            </h3>
+            <p style={{ fontSize: 16, lineHeight: 1.85, color: brand.mutedLight, margin: 0 }}>
+              {coach.bio}
+            </p>
+          </div>
         </div>
 
       </div>
@@ -1357,8 +1574,30 @@ function Coaches() {
       <style>{`
         @media (max-width: 900px) {
           .coaches-grid { grid-template-columns: 1fr !important; }
+          .coach-photo-panel { min-height: 0 !important; }
+          .coach-photo-mosaic {
+            grid-template-columns: 1fr 1fr !important;
+            grid-template-rows: auto auto !important;
+            min-height: 0 !important;
+          }
+          .coach-photo-primary {
+            grid-column: 1 / -1 !important;
+            grid-row: auto !important;
+            min-height: 430px !important;
+          }
+          .coach-photo-primary > img { min-height: 430px !important; }
+          .coach-photo-tile:not(.coach-photo-primary) {
+            aspect-ratio: 1 / 1 !important;
+          }
+          .coach-copy-panel { min-height: 0 !important; }
           .why-section { flex-direction: column !important; }
           .session-steps { width: 100% !important; }
+        }
+        @media (max-width: 560px) {
+          .coach-photo-mosaic { grid-template-columns: 1fr !important; }
+          .coach-photo-primary { min-height: 390px !important; }
+          .coach-photo-primary > img { min-height: 390px !important; }
+          .coach-photo-tile:not(.coach-photo-primary) { aspect-ratio: 4 / 3 !important; }
         }
       `}</style>
     </section>
@@ -1747,17 +1986,11 @@ function Footer() {
               HOURS
             </div>
             <div style={{ fontSize: 13, color: brand.muted, lineHeight: 1.8 }}>
-              Mon: 4–5pm &amp; 7–9pm
+              Mon-Thu: 4-7pm
               <br />
-              Tue: 4–6pm
+              Intro Speed &amp; Agility: 4-5pm
               <br />
-              Wed: Closed
-              <br />
-              Thu: 7–9pm
-              <br />
-              Fri: 4–8pm
-              <br />
-              Sat–Sun: By Appointment
+              Youth Sports Performance: 5-7pm
             </div>
           </div>
 
@@ -1839,10 +2072,7 @@ function Footer() {
             <MapPin size={13} /> LOCATIONS:
           </div>
           {[
-            "City Arena, Pembroke",
-            "Arena Field 4, Pembroke",
-            "Riverside Sports Complex, Pembroke",
-            "Starland Sportsplex, Hanover",
+            "City Arena Field 4, Pembroke",
           ].map((loc) => (
             <span key={loc} style={{ fontSize: 13, color: brand.mutedLight }}>
               {loc}
@@ -1931,10 +2161,24 @@ function StickyMobileCTA() {
 
 // ── Main App ──
 export default function AthleteLab() {
+  const promoEndsAt = Date.parse(promo.endsAt);
+  const [promoClock, setPromoClock] = useState(() => Date.now());
+  const promoVisible = promo.active && promoClock <= promoEndsAt;
+
+  useEffect(() => {
+    if (!promo.active) return;
+
+    const msUntilPromoEnds = promoEndsAt - Date.now() + 1000;
+    if (msUntilPromoEnds <= 0) return;
+
+    const timer = window.setTimeout(() => setPromoClock(Date.now()), msUntilPromoEnds);
+    return () => window.clearTimeout(timer);
+  }, [promoEndsAt]);
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 80;
+      const offset = promoVisible ? 136 : 80;
       const top = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: "smooth" });
     }
@@ -1942,7 +2186,8 @@ export default function AthleteLab() {
 
   return (
     <div style={{ background: brand.bg, minHeight: "100vh" }}>
-      <Nav onNavigate={scrollToSection} />
+      <PromoBanner visible={promoVisible} onNavigate={scrollToSection} />
+      <Nav onNavigate={scrollToSection} promoVisible={promoVisible} />
       <Hero onNavigate={scrollToSection} />
       <Coaches />
       <Programs />

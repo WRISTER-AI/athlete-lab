@@ -17,7 +17,9 @@ export const assets = {
   logoIcon: "https://static.wixstatic.com/media/5abe16_beb360a530434852aa61d87a03f46513~mv2.png",
   logoFull: "https://static.wixstatic.com/media/07f490_2252602a95894028947be151ae41b016~mv2.jpg",
   franPhoto: "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg",
-  chrisPhoto: "https://static.wixstatic.com/media/5abe16_fd56d4ba25a64c5881e662e81a7a59f0~mv2.png",
+  franActionOne: "/coach/francis-action-1.jpg",
+  franActionTwo: "/coach/francis-action-2.jpg",
+  franTeamImpact: "/coach/francis-team-impact.jpg",
   qrCode: "https://static.wixstatic.com/media/2feeec_9502e1d7d07e4bdf97f5fe0fa4d9309f~mv2.png",
   appStore: "https://static.wixstatic.com/media/3e41b8_a0bf062897f64090b91f438ce6bf69ba~mv2.png",
   googlePlay: "https://static.wixstatic.com/media/3e41b8_c7dfb607579c44039e9f8c2610f15d3d~mv2.png",
@@ -35,8 +37,24 @@ export const assets = {
 };
 
 // ── Program Data ──
-export type ScheduleEntry = { day: string; time: string; location: string };
+export type ScheduleEntry = {
+  day: string;
+  time: string;
+  location: string;
+  days?: string[];
+  label?: string;
+  ageGroup?: string;
+  bookingUrl?: string;
+};
 export type ProgramLink = { label: string; href: string };
+export type Promo = {
+  active: boolean;
+  title: string;
+  body: string;
+  ctaLabel: string;
+  ctaTarget: string;
+  endsAt: string;
+};
 export type Program = {
   id: string;
   ageGroup: string;
@@ -61,37 +79,19 @@ export type Program = {
   featured: boolean;
 };
 
+export const promo: Promo = {
+  active: false,
+  title: "Bring a friend free this week",
+  body: "Book a summer training session and bring one friend free through July 5.",
+  ctaLabel: "Book Summer Training",
+  ctaTarget: "programs",
+  endsAt: "2026-07-05T23:59:59-04:00",
+};
+
 export const programs: Program[] = [
   {
-    id: "mini-soccer",
-    ageGroup: "Ages 3–5",
-    name: "Mini Soccer",
-    tagline: "Where young athletes learn to move",
-    description:
-      "Introduces the basics of soccer while developing balance, coordination, running mechanics, and body control. Athletes work on dribbling, stopping, and ball skills through stations and interactive games.",
-    price: "$140",
-    priceSub: "8-week session",
-    priceAlt: "$25 drop-in",
-    priceNote: "Summer sessions or single drop-in available",
-    schedule: [
-      { day: "Wednesday", time: "10:30–11:15 AM", location: "Riverside Sports Complex, Pembroke" },
-    ],
-    features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
-    image: assets.miniSoccerImg,
-    video: assets.miniSoccerVideo,
-    bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
-    primaryCtaUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-1",
-    primaryCtaLabel: "Book Summer Session 1 ($140)",
-    secondaryLinks: [
-      { label: "Book Summer Session 2 ($140)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-2" },
-      { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
-    ],
-    color: "#22c55e",
-    featured: true,
-  },
-  {
     id: "speed-agility",
-    ageGroup: "Ages 5–8",
+    ageGroup: "Ages 5-8",
     name: "Intro to Speed & Agility",
     tagline: "Build the athletic foundation",
     description:
@@ -99,12 +99,14 @@ export const programs: Program[] = [
     price: "$100",
     priceSub: "5-session pack",
     priceAlt: "$25 per session drop-in",
-    priceNote: "5-session pack or $25 per session",
+    priceNote: "Shared 5-session pack or $25 per session",
     schedule: [
-      { day: "Monday", time: "4:00–5:00 PM", location: "City Arena Field 4, Pembroke" },
-      { day: "Wednesday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
-      { day: "Thursday", time: "4:00–5:00 PM", location: "Starland Sportsplex, Hanover" },
-      { day: "Friday", time: "4:00–5:00 PM", location: "Riverside Sports Complex, Pembroke" },
+      {
+        day: "Monday-Thursday",
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        time: "4:00-5:00 PM",
+        location: "City Arena Field 4, Pembroke",
+      },
     ],
     features: ["First-step quickness", "Change of direction", "Footwork & coordination", "Sport-transferable skills"],
     image: assets.speedAgilityImg,
@@ -112,40 +114,42 @@ export const programs: Program[] = [
     bookingUrl: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility",
     primaryCtaLabel: "Book a Drop-In ($25)",
     secondaryLinks: [
-      { label: "Book Using a 5-Pack", href: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility" },
+      { label: "Book Using the Shared 5-Pack", href: "https://bookings.theathletelab.net/booking-calendar/intro-to-speed-agility" },
     ],
     color: "#3b82f6",
-    featured: false,
+    featured: true,
   },
   {
     id: "performance",
-    ageGroup: "Ages 9+",
-    name: "Performance Training",
-    tagline: "Train like a serious athlete",
+    ageGroup: "Ages 9-18",
+    name: "Youth Sports Performance",
+    tagline: "Build strength, speed, and game-ready conditioning",
     description:
-      "Purpose-driven strength and conditioning for competitive youth athletes. Every session is structured around speed, strength, and conditioning pillars to develop explosiveness, durability, and mental toughness.",
+      "Purpose-driven strength and conditioning for competitive youth athletes. Sessions are structured around speed, strength, and conditioning pillars to develop explosiveness, durability, and mental toughness.",
     price: "$100",
     priceSub: "5-session pack",
     priceAlt: "$25 drop-in",
-    priceNote: "5-session pack $100 / Drop-in $25",
+    priceNote: "Shared 5-session pack $100 / Drop-in $25",
     schedule: [
-      { day: "Monday", time: "7:00–9:00 PM", location: "City Arena Field 4, Pembroke" },
-      { day: "Tuesday", time: "4:00–6:00 PM", location: "Arena Field 4, Pembroke" },
-      { day: "Thursday", time: "7:00–9:00 PM", location: "Arena Field 4, Pembroke" },
-      { day: "Friday", time: "5:00–8:00 PM", location: "Riverside Sports Complex, Pembroke" },
+      {
+        day: "Monday-Thursday",
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        time: "5:00-7:00 PM",
+        location: "City Arena Field 4, Pembroke",
+      },
     ],
     features: ["Strength & power development", "Speed & agility training", "Injury prevention", "Mental toughness"],
     image: assets.perfTrainingImg,
     video: assets.mainVideo,
     bookingUrl: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
-    primaryCtaLabel: "Book a Drop-In ($25)",
+    primaryCtaLabel: "Book Youth Sports Performance",
     secondaryLinks: [
       {
-        label: "Book Using a 5-Pack",
+        label: "Book Using the Shared 5-Pack",
         href: "https://bookings.theathletelab.net/booking-calendar/sports-performance-training-drop-in",
       },
     ],
-    color: "#dc2626",
+    color: "#f97316",
     featured: false,
   },
 ];
@@ -156,12 +160,23 @@ export const coaches = [
     name: "Francis Mulkern",
     title: "Founder & Head Coach",
     photo: assets.franPhoto,
+    photos: [
+      {
+        src: assets.franPhoto,
+        alt: "Francis Mulkern headshot",
+        objectPosition: "50% 32%",
+      },
+      {
+        src: assets.franTeamImpact,
+        alt: "Francis Mulkern greeting a young player on the field",
+        objectPosition: "42% 28%",
+      },
+      {
+        src: assets.franActionOne,
+        alt: "Francis Mulkern challenging for the ball during a soccer match",
+        objectPosition: "50% 42%",
+      },
+    ],
     bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts, most recently leading a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional youth athletic training on the South Shore.",
-  },
-  {
-    name: "Chris Nelson",
-    title: "Performance Coach",
-    photo: assets.chrisPhoto,
-    bio: "Former collegiate tennis player at Quinnipiac University, competing at the NCAA level. Standout athlete at Scituate High School earning All-Scholastic honors and serving as team captain. Brings a disciplined, detail-oriented approach to training, helping athletes improve agility, coordination, and confidence.",
   },
 ];
