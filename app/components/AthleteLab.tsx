@@ -1113,6 +1113,9 @@ function ProgramCard({ program, isActive }: { program: Program; isActive: boolea
               >
                 <span style={{ color: brand.text }}>
                   <span style={{ display: "block", fontWeight: 700 }}>{s.day}</span>
+                  {s.dateRange && (
+                    <span style={{ display: "block", color: brand.muted, fontSize: 12, marginTop: 4 }}>{s.dateRange}</span>
+                  )}
                   {s.label && (
                     <span style={{ display: "block", color: program.color, fontSize: 11, fontWeight: 700, marginTop: 3 }}>
                       {s.label}
@@ -1302,6 +1305,7 @@ function SchedulePreview() {
       color: p.color,
       ageGroup: s.ageGroup || p.ageGroup,
       day: s.day,
+      dateRange: s.dateRange,
       time: s.time,
       location: s.location,
       bookingUrl: s.bookingUrl || p.bookingUrl,
@@ -1320,7 +1324,7 @@ function SchedulePreview() {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <SectionLabel>Schedule</SectionLabel>
-          <SectionHeadline>This week at The Athlete Lab</SectionHeadline>
+          <SectionHeadline>Weekly training schedule</SectionHeadline>
         </div>
 
         <div
@@ -1359,6 +1363,9 @@ function SchedulePreview() {
               <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: brand.mutedLight, marginBottom: 6 }}>
                 <Clock size={12} /> {s.day} {s.time}
               </div>
+              {s.dateRange && (
+                <div style={{ fontSize: 12, color: brand.mutedLight, marginBottom: 6 }}>{s.dateRange}</div>
+              )}
               <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: brand.muted }}>
                 <MapPin size={12} /> {s.location}
               </div>
@@ -1992,7 +1999,9 @@ function Footer() {
               <br />
               Youth Sports Performance: 5-7pm
               <br />
-              Wed Mini Soccer: 10:30-11:15am
+              Mon &amp; Wed Mini Soccer: 10:30-11:15am
+              <br />
+              Mini Soccer starts Sept 21 &amp; 23
             </div>
           </div>
 

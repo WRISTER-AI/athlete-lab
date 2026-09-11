@@ -30,11 +30,23 @@ test("fall training schedule uses the current Monday-Thursday City Arena offer",
   const miniSoccer = programById("mini-soccer");
   assert.deepEqual(miniSoccer.schedule, [
     {
+      day: "Monday",
+      time: "10:30-11:15 AM",
+      location: "City Arena, Pembroke",
+      dateRange: "September 21–November 9, 2026",
+      bookingUrl: "https://bookings.theathletelab.net/service-page/mini-soccer-monday-ages-3-5",
+    },
+    {
       day: "Wednesday",
       time: "10:30-11:15 AM",
-      location: "Riverside Sports Complex, Pembroke",
+      location: "City Arena, Pembroke",
+      dateRange: "September 23–November 11, 2026",
+      bookingUrl: "https://bookings.theathletelab.net/service-page/mini-soccer-wednesday-ages-3-5",
     },
   ]);
+  assert.equal(miniSoccer.primaryCtaUrl, miniSoccer.schedule[0].bookingUrl);
+  assert.equal(miniSoccer.secondaryLinks[0].href, miniSoccer.schedule[1].bookingUrl);
+  assert.equal(miniSoccer.secondaryLinks[1].href, miniSoccer.bookingUrl);
 
   const speedAgility = programById("speed-agility");
   assert.deepEqual(speedAgility.schedule, [

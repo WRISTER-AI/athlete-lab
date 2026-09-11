@@ -45,6 +45,7 @@ export type ScheduleEntry = {
   label?: string;
   ageGroup?: string;
   bookingUrl?: string;
+  dateRange?: string;
 };
 export type ProgramLink = { label: string; href: string };
 export type Promo = {
@@ -99,16 +100,31 @@ export const programs: Program[] = [
     price: "$140",
     priceSub: "8-week session",
     priceAlt: "$25 drop-in",
-    priceNote: "Summer sessions or single drop-in available",
-    schedule: [{ day: "Wednesday", time: "10:30-11:15 AM", location: "Riverside Sports Complex, Pembroke" }],
+    priceNote: "Choose a Monday or Wednesday 8-week fall session, or book a drop-in",
+    schedule: [
+      {
+        day: "Monday",
+        time: "10:30-11:15 AM",
+        location: "City Arena, Pembroke",
+        dateRange: "September 21–November 9, 2026",
+        bookingUrl: "https://bookings.theathletelab.net/service-page/mini-soccer-monday-ages-3-5",
+      },
+      {
+        day: "Wednesday",
+        time: "10:30-11:15 AM",
+        location: "City Arena, Pembroke",
+        dateRange: "September 23–November 11, 2026",
+        bookingUrl: "https://bookings.theathletelab.net/service-page/mini-soccer-wednesday-ages-3-5",
+      },
+    ],
     features: ["Ball skills & dribbling", "Running mechanics", "Confidence building", "Game-based learning"],
     image: assets.miniSoccerImg,
     video: assets.miniSoccerVideo,
     bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
-    primaryCtaUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-1",
-    primaryCtaLabel: "Book Summer Session 1 ($140)",
+    primaryCtaUrl: "https://bookings.theathletelab.net/service-page/mini-soccer-monday-ages-3-5",
+    primaryCtaLabel: "Book Mondays · Starts Sept 21 ($140)",
     secondaryLinks: [
-      { label: "Book Summer Session 2 ($140)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-summer-session-2" },
+      { label: "Book Wednesdays · Starts Sept 23 ($140)", href: "https://bookings.theathletelab.net/service-page/mini-soccer-wednesday-ages-3-5" },
       { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
     ],
     color: "#22c55e",

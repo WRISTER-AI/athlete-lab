@@ -202,6 +202,9 @@ export default function FullSchedulePage() {
                       >
                         <Clock size={12} /> {cls.time}
                       </div>
+                      {cls.dateRange && (
+                        <div style={{ fontSize: 12, color: brand.mutedLight, marginTop: 4 }}>{cls.dateRange}</div>
+                      )}
                       <div
                         style={{
                           fontSize: 12,
