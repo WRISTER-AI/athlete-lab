@@ -1,5 +1,11 @@
 # The Athlete Lab maintenance
 
+## Latest section-order deployment (2026-09-11)
+
+Owner-approved commit `3c6fc28` is LIVE: homepage order is Hero, Programs, How We Train, Coach, Schedule. Published to the existing Vercel project as `dpl_GBFmqzu7tEKwt7e77yr5ruHCgQSt`, https://athlete-9cn1jgbqd-the-athlete-lab.vercel.app, aliased to https://www.theathletelab.net. Local production build, TypeScript, targeted ESLint, and all five existing tests passed. Vercel returned READY. Direct public HTTP checks returned 200 for homepage and schedule and verified Programs before training benefits before Coach, with both fall Mini Soccer booking links retained. A fresh visual browser check remains unverified because the browser has been timing out.
+
+GitHub push was attempted again and failed; source sync remains unresolved. Previous production deployment for rollback is `dpl_Fpm4ycxE3KddM1thxaG87NQ1qHeW`. No Wix, domain, or billing settings were changed for this deployment.
+
 ## Latest published update (2026-09-11)
 
 Owner-approved Mini Soccer update is LIVE. Local commit `30517ec` adds Monday September 21–November 9 and Wednesday September 23–November 11, 2026, 10:30–11:15 AM at City Arena, Pembroke ($140 per eight-week course). Links use Wix `/service-page/mini-soccer-monday-ages-3-5` and `/service-page/mini-soccer-wednesday-ages-3-5`; courses use service pages rather than the drop-in calendar route. The existing drop-in link is preserved.
