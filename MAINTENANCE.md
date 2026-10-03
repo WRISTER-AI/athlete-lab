@@ -1,5 +1,15 @@
 # The Athlete Lab maintenance
 
+## Temporary location notice published (2026-10-03)
+
+Owner-requested top-of-website notice is LIVE. Source commit `3a73b92` adds a shared `LocationNotice` to the homepage immediately below its navigation and to `/schedule` below its top bar. It announces that Mini Soccer and Intro to Speed & Agility move to Riverside Sports Complex, 38 Riverside Drive, Pembroke, for October 5–11, 2026, due to the City Arena consignment sale. Days and times stay the same, including drop-ins. All Youth Sports Performance classes remain at City Arena in the gym.
+
+The component stops displaying after `2026-10-12T00:00:00-04:00` using the visitor's clock; open pages refresh visibility every minute. Statically generated HTML includes the notice, and React hides it after hydration when expired. No prices, standard schedule entries, or booking links changed.
+
+Vercel deployment `dpl_3A1cZshwavd3xhwFkkgDkmqytBA7` returned READY and was aliased to https://www.theathletelab.net. Immutable deployment URL: https://athlete-5une6ysty-the-athlete-lab.vercel.app. Previous production for rollback: `dpl_GBFmqzu7tEKwt7e77yr5ruHCgQSt`. Public homepage and schedule notice were verified through the browser after deployment. Desktop and mobile previews showed readable text and no horizontal overflow. Production build, TypeScript, ESLint, diff check, and all five existing tests passed. Initial font fetch failed before network access was granted; rerun succeeded.
+
+Publishing used the existing Vercel project and existing CLI authentication. No DNS, billing, or Wix site content changed. The public homepage is this Next.js/Vercel site; Wix is used for the bookings subdomain. Separate Wix booking changes were already made earlier in the owner's finance/business task for the five affected drop-in occurrences. GitHub source sync remains pending as previously documented; the source commit is preserved locally. Do not overwrite this checkout with the older GitHub branch.
+
 ## Latest section-order deployment (2026-09-11)
 
 Owner-approved commit `3c6fc28` is LIVE: homepage order is Hero, Programs, How We Train, Coach, Schedule. Published to the existing Vercel project as `dpl_GBFmqzu7tEKwt7e77yr5ruHCgQSt`, https://athlete-9cn1jgbqd-the-athlete-lab.vercel.app, aliased to https://www.theathletelab.net. Local production build, TypeScript, targeted ESLint, and all five existing tests passed. Vercel returned READY. Direct public HTTP checks returned 200 for homepage and schedule and verified Programs before training benefits before Coach, with both fall Mini Soccer booking links retained. A fresh visual browser check remains unverified because the browser has been timing out.
