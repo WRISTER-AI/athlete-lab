@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Clock, MapPin, ArrowLeft } from "lucide-react";
 import { brand, programs } from "../lib/data";
 import type { ScheduleEntry } from "../lib/data";
+import LocationNotice from "../components/LocationNotice";
 
 export default function FullSchedulePage() {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday"];
@@ -76,6 +77,8 @@ export default function FullSchedulePage() {
           style={{ height: 40, width: "auto", objectFit: "contain" }}
         />
       </div>
+
+      <LocationNotice />
 
       <div style={{ padding: "60px clamp(20px, 4vw, 48px) 80px", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 48 }}>

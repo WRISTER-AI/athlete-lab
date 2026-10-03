@@ -35,3 +35,53 @@ button {
 input, textarea {
   font-family: inherit;
 }
+
+.location-notice {
+  background: #281114;
+  border-bottom: 2px solid #f93a3a;
+  color: #fff;
+}
+
+.location-notice-home {
+  padding-top: 110px;
+}
+
+.location-notice-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px clamp(20px, 4vw, 48px);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.location-notice h2 {
+  color: #ff9999;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.location-notice-move {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.location-notice-reason {
+  color: #e7ced1;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.location-notice-staying {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #684248;
+}
+
+@media (max-width: 600px) {
+  .location-notice-content { font-size: 14px; padding-top: 16px; padding-bottom: 16px; }
+  .location-notice h2 { font-size: 12px; }
+  .location-notice-move { font-size: 17px; }
+}
