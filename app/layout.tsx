@@ -21,7 +21,7 @@ const syncopate = Syncopate({
 export const metadata: Metadata = {
   title: "The Athlete Lab | Youth Athletic Training | Pembroke & Hanover, MA",
   description:
-    "Youth speed, strength, and conditioning training for ages 2 to 17 on the South Shore of Massachusetts. Programs in Pembroke and Hanover, MA. Book a session today.",
+    "Youth speed, strength, and conditioning training for ages 3 to 18 on the South Shore of Massachusetts. Classes in Pembroke, serving families across the South Shore. Book a session today.",
 };
 
 export default function RootLayout({

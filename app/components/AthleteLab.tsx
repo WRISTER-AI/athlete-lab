@@ -767,7 +767,7 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
             >
               {[
                 { num: "14+", label: "Weekly sessions" },
-                { num: "2–17", label: "Ages served" },
+                { num: "3–18", label: "Ages served" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div style={{ fontSize: 32, fontWeight: 900, color: brand.text, letterSpacing: "-0.02em", fontFamily: "Georgia, serif" }}>
@@ -1996,13 +1996,13 @@ function Footer() {
             <div style={{ fontSize: 13, color: brand.muted, lineHeight: 1.8 }}>
               Mon-Thu: 4-7pm
               <br />
-              Intro Speed &amp; Agility: 4-5pm
+              Intro to Speed &amp; Agility: 4-5pm
               <br />
               Youth Sports Performance: 5-7pm
               <br />
               Mon &amp; Wed Mini Soccer: 10:30-11:15am
               <br />
-              Mini Soccer starts Sept 21 &amp; 23
+              Mini Soccer fall sessions: Sept 21–Nov 11
             </div>
           </div>
 

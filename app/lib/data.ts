@@ -122,9 +122,9 @@ export const programs: Program[] = [
     video: assets.miniSoccerVideo,
     bookingUrl: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in",
     primaryCtaUrl: "https://bookings.theathletelab.net/service-page/mini-soccer-monday-ages-3-5",
-    primaryCtaLabel: "Book Mondays · Starts Sept 21 ($140)",
+    primaryCtaLabel: "Book Mondays ($140)",
     secondaryLinks: [
-      { label: "Book Wednesdays · Starts Sept 23 ($140)", href: "https://bookings.theathletelab.net/service-page/mini-soccer-wednesday-ages-3-5" },
+      { label: "Book Wednesdays ($140)", href: "https://bookings.theathletelab.net/service-page/mini-soccer-wednesday-ages-3-5" },
       { label: "Book a Drop-In ($25)", href: "https://bookings.theathletelab.net/booking-calendar/mini-soccer-drop-in" },
     ],
     color: "#22c55e",

@@ -1,5 +1,13 @@
 # The Athlete Lab maintenance
 
+## Copy consistency cleanup ready for review (2026-10-05)
+
+Preview only; these copy changes are not published to the public website. Preview deployment `dpl_FXkGgitVcqwox6cn5isxef6qUPgt` is READY at https://athlete-g3ab3roai-the-athlete-lab.vercel.app. The homepage and its metadata now show ages 3-18. Mini Soccer booking buttons no longer describe September start dates as upcoming; the full course date ranges remain in the schedules. Footer text uses the full Intro to Speed & Agility name and labels the Mini Soccer fall date range. The schedule metadata now includes both Monday and Wednesday Mini Soccer. Homepage metadata describes classes in Pembroke serving the South Shore rather than claiming a current Hanover class location.
+
+Vercel's production-mode preview build, TypeScript, targeted ESLint, diff check, and all five existing tests passed. Desktop and 390px mobile previews were inspected; updated links retained their Wix destinations, all eight homepage images loaded, and homepage/schedule had no horizontal overflow. Local development remains blocked by the existing Windows SWC folder-access error. Screenshots are saved outside the repository in outputs/Website-Copy-Cleanup-Desktop-2026-10-05.png and outputs/Website-Copy-Cleanup-Mobile-2026-10-05.png.
+
+Publish only when requested. Current live deployment and rollback details remain in the following section. GitHub synchronization is still unresolved; preserve local commits. Prices, program schedules, booking destinations, Wix records, and the temporary location notice were not changed.
+
 ## Booking and email fixes published (2026-10-05)
 
 Source commit `2ffe3a6` adds temporary 307 redirects in `next.config.ts` for `/book-now`, `/booking-calendar/:path*`, `/service-page/:path*`, `/booking-form/:path*`, and `/pricing-plans/:path*` to the same paths on https://bookings.theathletelab.net. Query parameters are retained. This repairs Wix-generated links using the main website domain.
