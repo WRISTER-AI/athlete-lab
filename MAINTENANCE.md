@@ -1,5 +1,17 @@
 # The Athlete Lab maintenance
 
+## Booking and email fixes published (2026-10-05)
+
+Source commit `2ffe3a6` adds temporary 307 redirects in `next.config.ts` for `/book-now`, `/booking-calendar/:path*`, `/service-page/:path*`, `/booking-form/:path*`, and `/pricing-plans/:path*` to the same paths on https://bookings.theathletelab.net. Query parameters are retained. This repairs Wix-generated links using the main website domain.
+
+Production deployment `dpl_WvyADXWYa2dz6zpkQV5MfKi3fPXt` built successfully and was promoted to the existing public website after staging verification. Immutable URL: https://athlete-9222p29z9-the-athlete-lab.vercel.app. Previous production for rollback: `dpl_3A1cZshwavd3xhwFkkgDkmqytBA7`, https://athlete-5une6ysty-the-athlete-lab.vercel.app. Roll back through the existing Vercel project or promote that previous deployment using the existing CLI authentication.
+
+All five program destinations, book-now, and pricing plans returned 200 after redirects; booking-calendar and booking-form query preservation passed. Homepage and schedule returned 200. The real Intro booking button reached its Wix calendar. No bookings or payments were submitted. TypeScript, ESLint, and five existing tests passed. The local production build was blocked by Windows SWC folder-access errors; the Vercel production build passed.
+
+Separately, the existing Wix footer email link was corrected from theathletelab@yahoo.co to theathletelab@yahoo.com and published. The Website Inquiry subject was preserved and the public mailto destination was verified. No domain, DNS, billing, price, or booking-history changes were made.
+
+GitHub push remains unresolved due to local credential-manager failure. The current verified remote and public repository API still identify WRISTER-AI/athlete-lab; do not replace this checkout with the older remote branch. The code is committed locally and live via the existing Vercel CLI connection. Verification records are saved outside the repository in outputs/Booking-Link-Verification-2026-10-05.json and outputs/Wix-Email-Link-Fixed-2026-10-05.png.
+
 ## Temporary location notice published (2026-10-03)
 
 Owner-requested top-of-website notice is LIVE. Source commit `3a73b92` adds a shared `LocationNotice` to the homepage immediately below its navigation and to `/schedule` below its top bar. It announces that Mini Soccer and Intro to Speed & Agility move to Riverside Sports Complex, 38 Riverside Drive, Pembroke, for October 5–11, 2026, due to the City Arena consignment sale. Days and times stay the same, including drop-ins. All Youth Sports Performance classes remain at City Arena in the gym.
