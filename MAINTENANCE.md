@@ -1,5 +1,13 @@
 # The Athlete Lab maintenance
 
+## New-review notifications in Wix (2026-10-09)
+
+Wix automation **Website reviews — notify Francis** (`a1e69c8d-87fa-4c14-81c1-4f3a4fab6102`) is ACTIVE. Its Wix CMS **Item added** trigger is limited to **Website Reviews — approval inbox** (`WebsiteReviews`). It sends a **Custom notification** push to the **Owner** collaborator role only, using Wix mobile apps and the dashboard site feed. It does not notify customers or other collaborator roles, and does not approve or publish reviews.
+
+Alert title: **New website review**. Message: "A new review is waiting. Open Wix CMS > Website Reviews — approval inbox to read it and choose whether to publish it." Phone delivery requires the owner's Wix app and device notification permissions to allow notifications; physical phone receipt has not been verified.
+
+Verified with a submission through the live `/write-review` form. The form confirmed receipt, and Wix run `dee8bd1a-2566-44d7-a5d4-8870186ac5fa` ended successfully with both the item-added trigger and push-notification action checked. The new-review alert was also visibly received in the owner's Wix notification bell feed. A third private test entry, **SETUP TEST — notification**, remains unapproved; the public review feed remains empty. This Wix-only setup required no website source change or deployment. Manage or disable it through Wix Automations. Proof: `../outputs/Wix-Review-Notification-Run-2026-10-09.png`.
+
 ## Website review form and Wix approval inbox (2026-10-09)
 
 This workflow supersedes the historical Yahoo/mailto review instructions below. Visitors use `/write-review`, linked from the homepage Testimonials section. They enter their own display name, program and review, and confirm publication permission. No email application or visitor account is required. Keep the public section minimal; do not add wording about vetting or the private approval process.
