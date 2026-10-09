@@ -16,7 +16,9 @@ export const brand = {
 export const assets = {
   logoIcon: "https://static.wixstatic.com/media/5abe16_beb360a530434852aa61d87a03f46513~mv2.png",
   logoFull: "https://static.wixstatic.com/media/07f490_2252602a95894028947be151ae41b016~mv2.jpg",
-  franPhoto: "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg",
+  franPhoto: "/coach/francis-class-instruction.png",
+  franClassSpeedDrills: "/coach/francis-class-speed-drills.jpg",
+  franClassStrength: "/coach/francis-class-strength.png",
   franActionOne: "/coach/francis-action-1.jpg",
   franActionTwo: "/coach/francis-action-2.jpg",
   franTeamImpact: "/coach/francis-team-impact.jpg",
@@ -204,18 +206,18 @@ export const coaches = [
     photos: [
       {
         src: assets.franPhoto,
-        alt: "Francis Mulkern headshot",
-        objectPosition: "50% 32%",
+        alt: "Francis Mulkern leading group instruction during an Athlete Lab class",
+        objectPosition: "50% 50%",
       },
       {
-        src: assets.franTeamImpact,
-        alt: "Francis Mulkern greeting a young player on the field",
-        objectPosition: "42% 28%",
+        src: assets.franClassSpeedDrills,
+        alt: "Francis Mulkern coaching athletes through resisted sprint drills",
+        objectPosition: "45% 50%",
       },
       {
-        src: assets.franActionOne,
-        alt: "Francis Mulkern challenging for the ball during a soccer match",
-        objectPosition: "50% 42%",
+        src: assets.franClassStrength,
+        alt: "Francis Mulkern supervising strength exercises on the indoor turf",
+        objectPosition: "40% 50%",
       },
     ],
     bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts, most recently leading a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional youth athletic training on the South Shore.",

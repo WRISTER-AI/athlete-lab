@@ -95,13 +95,13 @@ test("public coach data only exposes Francis as the current coach contact", () =
     coaches.map((coach) => coach.name),
     ["Francis Mulkern"],
   );
-  assert.equal(coaches[0].photo, "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg");
+  assert.equal(coaches[0].photo, "/coach/francis-class-instruction.png");
   assert.deepEqual(
     coaches[0].photos.map((photo) => photo.src),
     [
-      "https://static.wixstatic.com/media/07f490_16536d81421644d68f2fe04e46891490~mv2.jpg",
-      "/coach/francis-team-impact.jpg",
-      "/coach/francis-action-1.jpg",
+      "/coach/francis-class-instruction.png",
+      "/coach/francis-class-speed-drills.jpg",
+      "/coach/francis-class-strength.png",
     ],
   );
 });

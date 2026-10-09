@@ -1447,18 +1447,15 @@ function Coaches() {
             transition={{ duration: 0.3 }}
             style={{
               position: "relative",
-              minHeight: 560,
             }}
           >
             <div
               className="coach-photo-mosaic"
               style={{
                 display: "grid",
-                gridTemplateColumns: "1.25fr 0.75fr",
-                gridTemplateRows: "1fr 1fr",
+                gridTemplateColumns: "1fr 1fr",
+                gridTemplateRows: "auto auto",
                 gap: 14,
-                height: "100%",
-                minHeight: 560,
               }}
             >
               {coach.photos.map((photo, index) => (
@@ -1467,10 +1464,10 @@ function Coaches() {
                   className={index === 0 ? "coach-photo-tile coach-photo-primary" : "coach-photo-tile"}
                   style={{
                     position: "relative",
-                    gridRow: index === 0 ? "1 / span 2" : "auto",
+                    gridColumn: index === 0 ? "1 / -1" : "auto",
+                    aspectRatio: index === 0 ? "16 / 9" : "16 / 10",
                     borderRadius: index === 0 ? 18 : 14,
                     overflow: "hidden",
-                    minHeight: index === 0 ? 560 : 0,
                     background: brand.surfaceLight,
                     border: `1px solid ${brand.border}`,
                     boxShadow: index === 0 ? "0 26px 70px rgba(0,0,0,0.45)" : "0 16px 40px rgba(0,0,0,0.28)",
@@ -1480,10 +1477,13 @@ function Coaches() {
                   <img
                     src={photo.src}
                     alt={photo.alt}
+                    loading="lazy"
+                    decoding="async"
                     style={{
+                      position: "absolute",
+                      inset: 0,
                       width: "100%",
                       height: "100%",
-                      minHeight: index === 0 ? 560 : 0,
                       objectFit: "cover",
                       objectPosition: photo.objectPosition,
                       display: "block",
@@ -1584,30 +1584,13 @@ function Coaches() {
       <style>{`
         @media (max-width: 900px) {
           .coaches-grid { grid-template-columns: 1fr !important; }
-          .coach-photo-panel { min-height: 0 !important; }
-          .coach-photo-mosaic {
-            grid-template-columns: 1fr 1fr !important;
-            grid-template-rows: auto auto !important;
-            min-height: 0 !important;
-          }
-          .coach-photo-primary {
-            grid-column: 1 / -1 !important;
-            grid-row: auto !important;
-            min-height: 430px !important;
-          }
-          .coach-photo-primary > img { min-height: 430px !important; }
-          .coach-photo-tile:not(.coach-photo-primary) {
-            aspect-ratio: 1 / 1 !important;
-          }
           .coach-copy-panel { min-height: 0 !important; }
           .why-section { flex-direction: column !important; }
           .session-steps { width: 100% !important; }
         }
         @media (max-width: 560px) {
           .coach-photo-mosaic { grid-template-columns: 1fr !important; }
-          .coach-photo-primary { min-height: 390px !important; }
-          .coach-photo-primary > img { min-height: 390px !important; }
-          .coach-photo-tile:not(.coach-photo-primary) { aspect-ratio: 4 / 3 !important; }
+          .coach-photo-tile { aspect-ratio: 16 / 9 !important; }
         }
       `}</style>
     </section>

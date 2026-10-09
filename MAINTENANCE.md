@@ -1,5 +1,13 @@
 # The Athlete Lab maintenance
 
+## Coach class photographs (preview, 2026-10-09)
+
+Replaced the cliff portrait and two old soccer photographs in the coach section with three existing class photos from this site's Wix media library. Original files are copied into `public/coach/`: `francis-class-instruction.png` (Wix `speed 2.png`, media ID `5abe16_d680d666893c4c699744163186e23a4c~mv2.png`), `francis-class-speed-drills.jpg` (`speed pic_edited_edited.jpg`, `22615e_ad24193aa85d4bce94259a20b812361a~mv2.jpg`), and `francis-class-strength.png` (`speed 5.png`, `5abe16_b6d1667bde504514986119da84b5e9b0~mv2.png`). No generated imagery or edits to the originals. The source Wix library and older local photos are retained.
+
+`app/lib/data.ts` selects the images and descriptive alt text. `Coaches` in `app/components/AthleteLab.tsx` uses a wide main photo with two supporting photos, stacked on phones. Fixed aspect ratios preserve layout while native lazy loading defers downloads. The existing direct-image rendering pattern is retained; the preview browser blocked the optional Next.js image-optimization endpoint. Coach biography, programs, schedules, prices, bookings and reviews are unchanged.
+
+TypeScript, targeted ESLint, all nine existing tests and the Vercel production-mode build passed. All three photographs loaded on the desktop and 390px phone preview without horizontal overflow. READY preview: https://athlete-ev5cbooi5-the-athlete-lab.vercel.app/#coaches (`dpl_HMrQ9Per4HBRKwtWu7cQXMhwwUsL`). Desktop and phone screenshots are saved outside Git in `../outputs/Coach-Class-Photos-Desktop-2026-10-09.png` and `Coach-Class-Photos-Mobile-2026-10-09.png`. This photo change has not been promoted to production; the live deployment recorded below remains unchanged.
+
 ## New-review notifications in Wix (2026-10-09)
 
 Wix automation **Website reviews — notify Francis** (`a1e69c8d-87fa-4c14-81c1-4f3a4fab6102`) is ACTIVE. Its Wix CMS **Item added** trigger is limited to **Website Reviews — approval inbox** (`WebsiteReviews`). It sends a **Custom notification** push to the **Owner** collaborator role only, using Wix mobile apps and the dashboard site feed. It does not notify customers or other collaborator roles, and does not approve or publish reviews.
