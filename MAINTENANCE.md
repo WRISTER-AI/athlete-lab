@@ -1,5 +1,13 @@
 # The Athlete Lab maintenance
 
+## Bring a friend promotion published (2026-10-09)
+
+At the owner's request, the Riverside relocation banner was replaced on both the homepage and `/schedule` with "Bring a friend to class for free" for October 12-18, 2026. It applies to Mini Soccer, Intro to Speed & Agility, and Youth Sports Performance. `app/components/LocationNotice.tsx` remains the shared banner component; the existing filename is retained. It hides after midnight starting October 19 in America/New_York using the existing client-clock/one-minute refresh behavior.
+
+Source commit `54136f5` was saved to GitHub master and verified. Preview `dpl_CG4KMeotAnFKTkVvoiV8ueTVKo23` passed a Vercel build, TypeScript, targeted ESLint, diff check, and all five existing tests. Desktop and phone previews were inspected on both pages. Promotion created READY production deployment `dpl_5di1aSdfr2Keh9jCDZ9BtC1PQG1S`, https://athlete-aoys2aknh-the-athlete-lab.vercel.app, serving the existing public domains. Previous production for rollback is `dpl_GNK1JhK1RZseTocFfKPwh4u3zxxS`, https://athlete-nk1a1mtsd-the-athlete-lab.vercel.app.
+
+The live homepage and schedule show the new offer and no longer show the temporary relocation notice. The footer's normal Riverside location reference is intentionally retained. This change advertises the offer; no Wix coupon, booking configuration, pricing, schedule, DNS, or billing settings were changed. Verification records and screenshots are saved outside Git in outputs/Bring-Friend-Live-Verification-2026-10-09.json, outputs/Bring-Friend-Live-Desktop-2026-10-09.png, and outputs/Bring-Friend-Live-Mobile-2026-10-09.png.
+
 ## GitHub connection and future sync (2026-10-09)
 
 The owner authorized the official GitHub CLI connection as `theathletelab`. GitHub's authenticated repository API confirms that this account has **push** access to https://github.com/WRISTER-AI/athlete-lab, whose default branch is `master`. It does not have repository admin access. The URL https://github.com/theathletelab/athlete-lab returns 404 for this signed-in account. Keep the verified existing remote; do not infer a completed GitHub ownership transfer or change the remote to an unverified address. The Vercel project remains athlete-lab in the-athlete-lab.
@@ -11,6 +19,8 @@ For future approved website changes: edit the existing project files, run releva
 Sync is a deliberate maintenance step, not a background watcher. Continue to publish through the existing Vercel project when the owner asks, then verify the public website. This setup does not create a replacement repository or Vercel project, change deployment settings, or authorize outgoing messages. Keep private customer records and email exports in the workspace outputs folder, outside this public repository.
 
 An additional offline code/history backup was verified at `../outputs/Athlete-Lab-Source-2026-10-09.bundle`. It is a Git bundle rather than a replacement website source file. Historical entries below that describe GitHub as disconnected record the earlier state.
+
+Sync verified: the initial successful push saved all eight previously unpushed website/documentation commits plus sync tooling as `015588b`; the next successful push saved the banner replacement as `54136f5`. The documented command was tested with both `-DryRun` and a real push, and GitHub master matched local HEAD after each real push. No website rebuild is needed for documentation-only commits.
 
 ## Reviews and testimonials published (2026-10-09)
 
