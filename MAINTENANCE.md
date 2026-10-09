@@ -1,8 +1,14 @@
 # The Athlete Lab maintenance
 
-## Reviews and testimonials preview (2026-10-09)
+## Reviews and testimonials published (2026-10-09)
 
-Preview only; not published to the public website. Latest deployment `dpl_JCc7NpqWbxEvCyQLjKpcn7ky7zMJ` is READY at https://athlete-28xphjsb4-the-athlete-lab.vercel.app/#reviews. It also retains the previously prepared copy cleanup described below. Production remains unchanged.
+Published after the owner's explicit "yes publish it" approval. Vercel promoted the approved preview `dpl_JCc7NpqWbxEvCyQLjKpcn7ky7zMJ` by creating production deployment `dpl_GNK1JhK1RZseTocFfKPwh4u3zxxS`, now READY at https://athlete-nk1a1mtsd-the-athlete-lab.vercel.app and serving https://www.theathletelab.net/#reviews. Both theathletelab.net and www.theathletelab.net are confirmed aliases on the existing athlete-lab project. The approved version includes the copy cleanup described below. Source is saved in local commit `43f0cb1`.
+
+Rollback: previous production is `dpl_WvyADXWYa2dz6zpkQV5MfKi3fPXt`, https://athlete-9222p29z9-the-athlete-lab.vercel.app. Promote that deployment through the existing project if rollback is requested. Vercel may create a new production deployment when promoting; wait for READY and verify the public domain.
+
+Public verification: homepage, root-domain redirect, schedule, and bookings homepage returned HTTP 200; Reviews navigation and the Write a review mailto destination were verified on the live site. The section shows only its heading and link until genuine quotes are approved. All eight homepage images loaded. Live screenshots are in outputs/Website-Reviews-Live-Desktop-2026-10-09.png and outputs/Website-Reviews-Live-Mobile-2026-10-09.png. No email, booking, or payment was submitted.
+
+GitHub sync was retried before publishing. Fetch succeeded and remote master is `dcb8d84`, an ancestor of local master. Push failed because Windows could not run Git Credential Manager (NtCreateDirectoryObject access denied); no force push was attempted. Production publishing succeeded independently through the existing Vercel CLI connection. Preserve local commits until GitHub authentication is repaired.
 
 The homepage now has a Reviews navigation link and a reviews section after the coach section. `app/components/Testimonials.tsx` and `Testimonials.module.css` provide the layout. `app/lib/testimonials.ts` contains the review email draft and the public approved-testimonial list, which is intentionally empty until genuine reviews are approved.
 
@@ -20,13 +26,13 @@ No messages were sent and no Wix, pricing, schedule, booking, DNS, or billing se
 
 The simplified revision passed TypeScript, targeted ESLint, diff check, and the Vercel preview build. Desktop and 390px phone layouts were checked again, including the email destination and removal of moderation wording. Updated screenshots: outputs/Website-Reviews-Simple-Desktop-2026-10-09.png and outputs/Website-Reviews-Simple-Mobile-2026-10-09.png. The preceding screenshot names document the original design, now superseded.
 
-## Copy consistency cleanup ready for review (2026-10-05)
+## Copy consistency cleanup (prepared 2026-10-05, published 2026-10-09)
 
-Preview only; these copy changes are not published to the public website. Preview deployment `dpl_FXkGgitVcqwox6cn5isxef6qUPgt` is READY at https://athlete-g3ab3roai-the-athlete-lab.vercel.app. The homepage and its metadata now show ages 3-18. Mini Soccer booking buttons no longer describe September start dates as upcoming; the full course date ranges remain in the schedules. Footer text uses the full Intro to Speed & Agility name and labels the Mini Soccer fall date range. The schedule metadata now includes both Monday and Wednesday Mini Soccer. Homepage metadata describes classes in Pembroke serving the South Shore rather than claiming a current Hanover class location.
+These copy changes are now live as part of the approved October 9 release above. Original preview deployment `dpl_FXkGgitVcqwox6cn5isxef6qUPgt` remains at https://athlete-g3ab3roai-the-athlete-lab.vercel.app. The homepage and its metadata now show ages 3-18. Mini Soccer booking buttons no longer describe September start dates as upcoming; the full course date ranges remain in the schedules. Footer text uses the full Intro to Speed & Agility name and labels the Mini Soccer fall date range. The schedule metadata now includes both Monday and Wednesday Mini Soccer. Homepage metadata describes classes in Pembroke serving the South Shore rather than claiming a current Hanover class location.
 
 Vercel's production-mode preview build, TypeScript, targeted ESLint, diff check, and all five existing tests passed. Desktop and 390px mobile previews were inspected; updated links retained their Wix destinations, all eight homepage images loaded, and homepage/schedule had no horizontal overflow. Local development remains blocked by the existing Windows SWC folder-access error. Screenshots are saved outside the repository in outputs/Website-Copy-Cleanup-Desktop-2026-10-05.png and outputs/Website-Copy-Cleanup-Mobile-2026-10-05.png.
 
-Publish only when requested. Current live deployment and rollback details remain in the following section. GitHub synchronization is still unresolved; preserve local commits. Prices, program schedules, booking destinations, Wix records, and the temporary location notice were not changed.
+Current live deployment and rollback details are in the October 9 section above. GitHub synchronization is still unresolved; preserve local commits. Prices, program schedules, booking destinations, Wix records, and the temporary location notice were not changed.
 
 ## Booking and email fixes published (2026-10-05)
 
