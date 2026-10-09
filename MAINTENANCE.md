@@ -2,11 +2,11 @@
 
 ## Reviews and testimonials preview (2026-10-09)
 
-Preview only; not published to the public website. Deployment `dpl_5Mk9NMsDowNJRBzPx3YfaTpK1PoK` is READY at https://athlete-h2f451plt-the-athlete-lab.vercel.app/#reviews. It also retains the previously prepared copy cleanup described below. Production remains unchanged.
+Preview only; not published to the public website. Latest deployment `dpl_JCc7NpqWbxEvCyQLjKpcn7ky7zMJ` is READY at https://athlete-28xphjsb4-the-athlete-lab.vercel.app/#reviews. It also retains the previously prepared copy cleanup described below. Production remains unchanged.
 
 The homepage now has a Reviews navigation link and a reviews section after the coach section. `app/components/Testimonials.tsx` and `Testimonials.module.css` provide the layout. `app/lib/testimonials.ts` contains the review email draft and the public approved-testimonial list, which is intentionally empty until genuine reviews are approved.
 
-The owner chose email review in Yahoo instead of an approval dashboard. The Email a review button opens the visitor's email app with a draft addressed to theathletelab@yahoo.com, subject "The Athlete Lab — review for approval". The visitor must send it; the website does not automatically submit or store reviews. A direct email address is also shown. Delivery has not been tested by sending a message.
+The owner requested a minimal public section: a Testimonials heading, approved quotes when available, and a Write a review link. Do not restore the invitation panel, explanatory paragraphs, or wording about vetting/approval. The link opens the visitor's email app with a draft addressed to theathletelab@yahoo.com, subject "The Athlete Lab — review". The visitor must send it; the website does not automatically submit or store reviews. The draft asks for publication permission without describing moderation. Delivery has not been tested by sending a message. The Yahoo approval workflow remains in place privately.
 
 Approval process:
 1. Francis reads submissions in Yahoo and checks the author's permission to publish.
@@ -17,6 +17,8 @@ Approval process:
 TypeScript, targeted ESLint, diff check, all five existing tests, and Vercel's production-mode preview build passed. Desktop (1440px), tablet (820px), and phone (390px) layouts were inspected. The mobile Reviews navigation and encoded email draft were verified; all eight homepage images loaded and booking links retained their existing Wix destinations. Local build remains blocked by the existing Windows SWC folder-access error. Screenshots are saved outside the repository in outputs/Website-Reviews-Desktop-2026-10-09.png, outputs/Website-Reviews-Mobile-2026-10-09.png, and outputs/Website-Reviews-Mobile-Email-2026-10-09.png.
 
 No messages were sent and no Wix, pricing, schedule, booking, DNS, or billing settings changed. GitHub synchronization remains unresolved as documented below; preserve local commits.
+
+The simplified revision passed TypeScript, targeted ESLint, diff check, and the Vercel preview build. Desktop and 390px phone layouts were checked again, including the email destination and removal of moderation wording. Updated screenshots: outputs/Website-Reviews-Simple-Desktop-2026-10-09.png and outputs/Website-Reviews-Simple-Mobile-2026-10-09.png. The preceding screenshot names document the original design, now superseded.
 
 ## Copy consistency cleanup ready for review (2026-10-05)
 

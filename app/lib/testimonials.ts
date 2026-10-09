@@ -13,7 +13,7 @@ export type ApprovedTestimonial = {
 export const approvedTestimonials: ApprovedTestimonial[] = [];
 
 export const reviewEmail = "theathletelab@yahoo.com";
-export const reviewEmailSubject = "The Athlete Lab — review for approval";
+export const reviewEmailSubject = "The Athlete Lab — review";
 export const reviewEmailBody = [
   "Hi Coach Francis,",
   "",
@@ -25,8 +25,6 @@ export const reviewEmailBody = [
   "My review: ",
   "",
   "Permission to publish my review and display name on The Athlete Lab website (Yes / No): ",
-  "",
-  "I understand my review will be read by Coach Francis before any publication. My email address will not be displayed.",
 ].join("\n");
 
 export const reviewEmailUrl = `mailto:${reviewEmail}?subject=${encodeURIComponent(reviewEmailSubject)}&body=${encodeURIComponent(reviewEmailBody)}`;
