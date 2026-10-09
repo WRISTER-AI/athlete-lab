@@ -1,5 +1,17 @@
 # The Athlete Lab maintenance
 
+## GitHub connection and future sync (2026-10-09)
+
+The owner authorized the official GitHub CLI connection as `theathletelab`. GitHub's authenticated repository API confirms that this account has **push** access to https://github.com/WRISTER-AI/athlete-lab, whose default branch is `master`. It does not have repository admin access. The URL https://github.com/theathletelab/athlete-lab returns 404 for this signed-in account. Keep the verified existing remote; do not infer a completed GitHub ownership transfer or change the remote to an unverified address. The Vercel project remains athlete-lab in the-athlete-lab.
+
+The workspace has GitHub CLI 2.102.0 under `../work/github-cli/2.102.0/bin/gh.exe`, downloaded from the official GitHub CLI release and checked against its SHA-256 digest. Authentication uses `GH_CONFIG_DIR` pointing to `../work/github-auth`, outside this repository. Windows Credential Manager remains inaccessible here, so GitHub CLI used its file-storage fallback. Never print, commit, upload, or copy that authentication directory into deployment artifacts.
+
+For future approved website changes: edit the existing project files, run relevant checks, preview visual changes, and commit the intended files. Then run `./scripts/Sync-GitHub.ps1` from PowerShell. Use `-DryRun` to test access without updating GitHub. The script verifies the remote and write permission, refuses uncommitted or diverging work, never force-pushes, and confirms that remote `master` equals local HEAD. It reads authentication through GitHub CLI and supplies it only in the process environment; it does not embed credentials in the script, Git remote, or command arguments. Custom `-GitHubCli` and `-AuthDirectory` paths support another workspace.
+
+Sync is a deliberate maintenance step, not a background watcher. Continue to publish through the existing Vercel project when the owner asks, then verify the public website. This setup does not create a replacement repository or Vercel project, change deployment settings, or authorize outgoing messages. Keep private customer records and email exports in the workspace outputs folder, outside this public repository.
+
+An additional offline code/history backup was verified at `../outputs/Athlete-Lab-Source-2026-10-09.bundle`. It is a Git bundle rather than a replacement website source file. Historical entries below that describe GitHub as disconnected record the earlier state.
+
 ## Reviews and testimonials published (2026-10-09)
 
 Published after the owner's explicit "yes publish it" approval. Vercel promoted the approved preview `dpl_JCc7NpqWbxEvCyQLjKpcn7ky7zMJ` by creating production deployment `dpl_GNK1JhK1RZseTocFfKPwh4u3zxxS`, now READY at https://athlete-nk1a1mtsd-the-athlete-lab.vercel.app and serving https://www.theathletelab.net/#reviews. Both theathletelab.net and www.theathletelab.net are confirmed aliases on the existing athlete-lab project. The approved version includes the copy cleanup described below. Source is saved in local commit `43f0cb1`.
