@@ -1,5 +1,23 @@
 # The Athlete Lab maintenance
 
+## Reviews and testimonials preview (2026-10-09)
+
+Preview only; not published to the public website. Deployment `dpl_5Mk9NMsDowNJRBzPx3YfaTpK1PoK` is READY at https://athlete-h2f451plt-the-athlete-lab.vercel.app/#reviews. It also retains the previously prepared copy cleanup described below. Production remains unchanged.
+
+The homepage now has a Reviews navigation link and a reviews section after the coach section. `app/components/Testimonials.tsx` and `Testimonials.module.css` provide the layout. `app/lib/testimonials.ts` contains the review email draft and the public approved-testimonial list, which is intentionally empty until genuine reviews are approved.
+
+The owner chose email review in Yahoo instead of an approval dashboard. The Email a review button opens the visitor's email app with a draft addressed to theathletelab@yahoo.com, subject "The Athlete Lab — review for approval". The visitor must send it; the website does not automatically submit or store reviews. A direct email address is also shown. Delivery has not been tested by sending a message.
+
+Approval process:
+1. Francis reads submissions in Yahoo and checks the author's permission to publish.
+2. Francis tells the assistant which exact quote, display name (prefer first name and last initial), and program to post. Confirm permission when missing; do not invent or silently rewrite reviews.
+3. Add only those public fields, a stable ID, and `approvedForPublication: true` to `approvedTestimonials`. Pending submissions, email addresses, and approval records stay out of the repository because its code is public.
+4. Show a preview and publish only when requested. Removing an approved entry and redeploying removes it from the website. No incoming email publishes automatically.
+
+TypeScript, targeted ESLint, diff check, all five existing tests, and Vercel's production-mode preview build passed. Desktop (1440px), tablet (820px), and phone (390px) layouts were inspected. The mobile Reviews navigation and encoded email draft were verified; all eight homepage images loaded and booking links retained their existing Wix destinations. Local build remains blocked by the existing Windows SWC folder-access error. Screenshots are saved outside the repository in outputs/Website-Reviews-Desktop-2026-10-09.png, outputs/Website-Reviews-Mobile-2026-10-09.png, and outputs/Website-Reviews-Mobile-Email-2026-10-09.png.
+
+No messages were sent and no Wix, pricing, schedule, booking, DNS, or billing settings changed. GitHub synchronization remains unresolved as documented below; preserve local commits.
+
 ## Copy consistency cleanup ready for review (2026-10-05)
 
 Preview only; these copy changes are not published to the public website. Preview deployment `dpl_FXkGgitVcqwox6cn5isxef6qUPgt` is READY at https://athlete-g3ab3roai-the-athlete-lab.vercel.app. The homepage and its metadata now show ages 3-18. Mini Soccer booking buttons no longer describe September start dates as upcoming; the full course date ranges remain in the schedules. Footer text uses the full Intro to Speed & Agility name and labels the Mini Soccer fall date range. The schedule metadata now includes both Monday and Wednesday Mini Soccer. Homepage metadata describes classes in Pembroke serving the South Shore rather than claiming a current Hanover class location.

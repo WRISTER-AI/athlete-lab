@@ -11,6 +11,7 @@ import {
 import { brand, assets, promo, programs, coaches } from "../lib/data";
 import type { Program } from "../lib/data";
 import LocationNotice from "./LocationNotice";
+import Testimonials from "./Testimonials";
 
 // Data imported from ../lib/data
 
@@ -424,6 +425,7 @@ function Nav({ onNavigate, promoVisible }: { onNavigate: (id: string) => void; p
     { label: "Programs", id: "programs" },
     { label: "Schedule", id: "schedule", href: "/schedule" },
     { label: "Coach", id: "coaches" },
+    { label: "Reviews", id: "reviews" },
     { label: "Contact", id: "contact" },
   ];
 
@@ -2206,6 +2208,7 @@ export default function AthleteLab() {
       <Programs />
       <AthleteDifference />
       <Coaches />
+      <Testimonials />
       <SchedulePreview />
       <CTABanner onNavigate={scrollToSection} />
       <Footer />

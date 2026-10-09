@@ -1,0 +1,47 @@
+.section {
+  padding: 104px clamp(20px, 4vw, 48px);
+  background: #0b0b0d;
+  border-block: 1px solid rgba(255, 255, 255, 0.08);
+  scroll-margin-top: 130px;
+}
+
+.container { max-width: 1200px; margin: 0 auto; }
+.intro { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(32px, 6vw, 88px); }
+.eyebrow { color: #f93a3a; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; }
+.heading { color: #f4f4f5; font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.heading span { color: #f93a3a; }
+.description { color: #d4d4d8; font-size: 17px; line-height: 1.8; max-width: 490px; margin-top: 24px; }
+.note { display: flex; align-items: flex-start; gap: 12px; color: #a1a1aa; font-size: 13px; line-height: 1.6; margin-top: 28px; }
+.note svg { flex-shrink: 0; color: #f93a3a; }
+.invitation { padding: clamp(24px, 4vw, 40px); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px; background: linear-gradient(145deg, #1c1416, #101012 65%); min-width: 0; }
+.icon { display: inline-flex; color: #ff8585; background: rgba(249, 58, 58, 0.1); padding: 12px; border-radius: 12px; margin-bottom: 22px; }
+.invitation h3 { color: #f4f4f5; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
+.invitation > p { color: #d4d4d8; font-size: 15px; line-height: 1.7; }
+.button { display: inline-flex; justify-content: center; align-items: center; gap: 12px; min-height: 52px; padding: 14px 24px; margin-top: 26px; background: #f93a3a; color: #fff; border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none; }
+.button:hover { background: #ff5252; }
+.section a:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+.invitation .emailHelp { color: #a1a1aa; font-size: 12px; margin-top: 14px; }
+.emailHelp a { color: #d4d4d8; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.invitation .privacy { color: #a1a1aa; font-size: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.testimonials { margin-top: 64px; }
+.testimonialsHeading { font-size: 24px; font-weight: 800; margin-bottom: 24px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; }
+.card { min-width: 0; padding: 32px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; background: #141416; display: flex; flex-direction: column; }
+.quoteIcon { color: #f93a3a; margin-bottom: 20px; }
+.card blockquote { font-size: 17px; line-height: 1.8; color: #f4f4f5; white-space: pre-line; overflow-wrap: anywhere; flex: 1; }
+.card figcaption { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.name, .program { display: block; overflow-wrap: anywhere; }
+.name { font-size: 14px; font-weight: 700; }
+.program { font-size: 12px; line-height: 1.5; color: #a1a1aa; margin-top: 4px; }
+
+@media (max-width: 800px) {
+  .section { padding-block: 72px; }
+  .intro { grid-template-columns: 1fr; gap: 32px; }
+  .description { max-width: none; }
+}
+
+@media (max-width: 480px) {
+  .button { width: 100%; }
+  .description { font-size: 16px; }
+  .card { padding: 24px; }
+}
