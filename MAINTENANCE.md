@@ -1,5 +1,25 @@
 # The Athlete Lab maintenance
 
+## Website review form and Wix approval inbox (2026-10-09)
+
+This workflow supersedes the historical Yahoo/mailto review instructions below. Visitors use `/write-review`, linked from the homepage Testimonials section. They enter their own display name, program and review, and confirm publication permission. No email application or visitor account is required. Keep the public section minimal; do not add wording about vetting or the private approval process.
+
+Francis manages submissions in [Wix CMS: Website Reviews — approval inbox](https://manage.wix.com/dashboard/9cc93184-95fb-492d-9187-1d4ce30db037/wix-cms/data/WebsiteReviews). Open an item, read the review and permission, check **Approved for website**, then **Save** to publish it. Uncheck that field and save to remove it. Changes appear on the next homepage load; no Git commit or deployment is needed. Leave unwanted reviews unchecked. Do not approve the clearly marked SETUP TEST entries. Do not invent reviews or approve real customer submissions on the owner's behalf.
+
+The private collection ID is `WebsiteReviews` on the existing Wix site `9cc93184-95fb-492d-9187-1d4ce30db037`. Read, insert, update and remove permissions are ADMIN only. The website server inserts reviews with `approved: false` regardless of submitted fields. Its public endpoint returns only approved, consented reviews with an allowlist of public fields. Names, programs and quotes are validated; private records and credentials never go into Git or browser bundles.
+
+The owner explicitly authorized a dedicated Wix key named **Athlete Lab website reviews**, scoped to this site and Wix Data (plus Wix's required basic site-list permission). It is stored as the secret `WIX_REVIEWS_API_KEY` in the existing Vercel project's Production and Preview environments. The temporary transfer file and clipboard contents were cleared. Never print the key or add it to a `NEXT_PUBLIC_` variable. The key has no bookings, payments or contacts permissions. Local previews without the key show a disabled form; use the protected Vercel preview for connected tests.
+
+Relevant files: `app/write-review/page.tsx`, `ReviewForm.tsx`, `ReviewForm.module.css`; `app/api/reviews/route.ts`; `app/lib/review-store.ts` and `testimonials.ts`; `app/components/Testimonials.tsx`. The endpoint uses same-origin validation, bounded request bodies, a signed expiring form token, a honeypot and an atomic per-IP/per-hour insertion limit. Only a keyed hash is stored, not the raw IP. Rotating IPs can bypass a network limit; this is basic abuse protection, not a CAPTCHA. Static approved-testimonial fallback remains empty.
+
+Verification: all nine tests, TypeScript, targeted ESLint and the production-mode Vercel preview build passed. Connected preview `dpl_2XqNQjz797dA3FZs5mB9kGM3KQRu` successfully saved a website submission. The pending sample was absent from the homepage, appeared after checking approval in Wix, and disappeared after unchecking approval. Two clearly marked setup entries remain private; neither is a customer review. Wix rejected a repeated insert ID with HTTP 409, confirming the atomic duplicate protection. Desktop and phone form layouts were inspected. The local Windows SWC build limitation recorded below remains; Vercel's production-mode build succeeded.
+
+Pre-release rollback target: `dpl_5di1aSdfr2Keh9jCDZ9BtC1PQG1S` (https://athlete-aoys2aknh-the-athlete-lab.vercel.app). Promote this existing deployment if a rollback is requested, wait for READY and verify the public domain. Preserve the CMS collection and submissions. Production release verification will be recorded after promotion.
+
+## Spaces by Wix updates (2026-10-09)
+
+Published the owner's **Bring a friend to class for free** promotion for **October 12–18, 2026**, covering Mini Soccer, Intro to Speed & Agility and Youth Sports Performance, on the existing Spaces app Home screen. The banner opens Services. Publication was verified by reloading the app editor. A **Write a review** link to `https://www.theathletelab.net/write-review` is prepared directly below the promotion and will be published once the form is live. No push notification or email was sent. Unlike the website banner, the Spaces banner has no automatic expiry configured; remove it after October 18. The actual phone app has not been inspected in this workspace.
+
 ## Bring a friend promotion published (2026-10-09)
 
 At the owner's request, the Riverside relocation banner was replaced on both the homepage and `/schedule` with "Bring a friend to class for free" for October 12-18, 2026. It applies to Mini Soccer, Intro to Speed & Agility, and Youth Sports Performance. `app/components/LocationNotice.tsx` remains the shared banner component; the existing filename is retained. It hides after midnight starting October 19 in America/New_York using the existing client-clock/one-minute refresh behavior.

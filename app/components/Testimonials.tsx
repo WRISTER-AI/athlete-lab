@@ -1,16 +1,30 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Quote } from "lucide-react";
-import { approvedTestimonials, reviewEmailUrl } from "../lib/testimonials";
+import { approvedTestimonials, reviewFormUrl, type ApprovedTestimonial } from "../lib/testimonials";
 import styles from "./Testimonials.module.css";
 
 export default function Testimonials() {
-  const testimonials = approvedTestimonials.filter((review) => review.approvedForPublication === true);
+  const [testimonials, setTestimonials] = useState(approvedTestimonials);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/reviews", { signal: controller.signal, cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) return;
+        const data = await response.json();
+        if (Array.isArray(data.reviews)) setTestimonials([...approvedTestimonials, ...data.reviews.filter((review: ApprovedTestimonial) => review.approvedForPublication === true)]);
+      })
+      .catch(() => { /* Preserve the existing section when Wix is unavailable. */ });
+    return () => controller.abort();
+  }, []);
 
   return (
     <section id="reviews" aria-labelledby="reviews-heading" className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 id="reviews-heading" className={styles.heading}>Testimonials</h2>
-          <a className={styles.writeLink} href={reviewEmailUrl}>
+          <a className={styles.writeLink} href={reviewFormUrl}>
             Write a review <ArrowUpRight size={18} aria-hidden="true" />
           </a>
         </div>

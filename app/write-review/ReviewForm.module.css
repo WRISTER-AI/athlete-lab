@@ -1,0 +1,25 @@
+.page { min-height: 100vh; background: #0b0b0d; color: #f4f4f5; padding: 40px 24px 72px; }
+.container { max-width: 620px; margin: 0 auto; }
+.back { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; color: #d4d4d8; text-decoration: none; }
+.eyebrow { margin: 48px 0 12px; color: #f93a3a; font-size: 12px; font-weight: 700; letter-spacing: .16em; }
+.page h1 { font-size: clamp(34px, 6vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -.03em; }
+.intro { color: #a1a1aa; margin: 16px 0 32px; line-height: 1.6; }
+.form { display: flex; flex-direction: column; }
+.form > label { margin: 22px 0 10px; font-size: 14px; font-weight: 600; }
+.form > label:first-child { margin-top: 0; }
+.form > input, .form select, .form textarea { width: 100%; min-width: 0; padding: 14px 16px; border: 1px solid #515159; border-radius: 9px; background: #17171a; color: #f4f4f5; font: inherit; font-size: 16px; line-height: 1.5; color-scheme: dark; }
+.form textarea { resize: vertical; min-height: 160px; }
+.form input:focus-visible, .form textarea:focus-visible, .form select:focus-visible, .page a:focus-visible, .submit:focus-visible { outline: 2px solid #ff8585; outline-offset: 4px; }
+.help { font-size: 12px; color: #a1a1aa; line-height: 1.5; margin-top: 8px; }
+.form .consent { display: flex; gap: 12px; align-items: flex-start; font-weight: 400; font-size: 13px; line-height: 1.6; color: #d4d4d8; cursor: pointer; }
+.consent input { flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px; accent-color: #f93a3a; }
+.submit { margin-top: 20px; min-height: 52px; padding: 14px 24px; border: 0; border-radius: 9px; background: #f93a3a; color: #fff; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.submit:hover { background: #df2c2c; }
+.submit:disabled { opacity: .55; cursor: not-allowed; }
+.error { color: #ffabab; line-height: 1.6; font-size: 14px; margin-top: 16px; }
+.honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.success { border: 1px solid #333339; border-radius: 16px; padding: 28px; background: #17171a; }
+.success h2 { font-size: 28px; font-weight: 700; }
+.success p { color: #d4d4d8; line-height: 1.7; margin: 12px 0 24px; }
+.success a { color: #ff8585; text-underline-offset: 4px; }
+@media (max-width: 480px) { .page { padding: 20px 20px 48px; } .eyebrow { margin-top: 28px; } }
