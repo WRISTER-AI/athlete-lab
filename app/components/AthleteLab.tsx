@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { brand, assets, promo, programs, coaches } from "../lib/data";
 import type { Program } from "../lib/data";
-import LocationNotice from "./LocationNotice";
 import Testimonials from "./Testimonials";
 import programStyles from "./Programs.module.css";
 
@@ -1891,7 +1890,6 @@ export default function AthleteLab() {
     <div style={{ background: brand.bg, minHeight: "100vh" }}>
       <PromoBanner visible={promoVisible} onNavigate={scrollToSection} />
       <Nav onNavigate={scrollToSection} promoVisible={promoVisible} />
-      <LocationNotice homepage />
       <Hero onNavigate={scrollToSection} />
       <Programs />
       <AthleteDifference />
