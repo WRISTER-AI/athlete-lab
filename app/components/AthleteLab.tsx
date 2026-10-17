@@ -12,6 +12,7 @@ import { brand, assets, promo, programs, coaches } from "../lib/data";
 import type { Program } from "../lib/data";
 import LocationNotice from "./LocationNotice";
 import Testimonials from "./Testimonials";
+import programStyles from "./Programs.module.css";
 
 // Data imported from ../lib/data
 
@@ -164,9 +165,11 @@ function Button({
 function VideoPlayer({
   src,
   label,
+  poster,
 }: {
   src: string;
   label?: string;
+  poster?: string;
 }) {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -201,6 +204,8 @@ function VideoPlayer({
       <video
         ref={videoRef}
         src={src}
+        poster={poster}
+        aria-label={label}
         preload="auto"
         style={{ width: "100%", display: "block", aspectRatio: "16/9", objectFit: "cover" }}
         playsInline
@@ -242,21 +247,6 @@ function VideoPlayer({
           >
             <Play size={28} fill="#fff" color="#fff" style={{ marginLeft: 3 }} />
           </div>
-          {label && (
-            <div
-              style={{
-                position: "absolute",
-                bottom: 16,
-                left: 16,
-                fontSize: 13,
-                fontWeight: 600,
-                color: "rgba(255,255,255,0.7)",
-                zIndex: 1,
-              }}
-            >
-              ▶ {label}
-            </div>
-          )}
         </div>
       )}
     </div>
@@ -904,397 +894,106 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
 }
 
 // ── Program Card ──
-function ProgramCard({ program, isActive }: { program: Program; isActive: boolean }) {
-  const [scheduleOpen, setScheduleOpen] = useState(false);
-  if (!isActive) return null;
+function ProgramCard({ program }: { program: Program }) {
+  const days = program.schedule.map((session) => session.day).join(" & ");
+  const times = [...new Set(program.schedule.map((session) => session.time))].join(" / ");
+  const locations = [...new Set(program.schedule.map((session) => session.location))].join(" / ");
+  const secondaryLinks = program.secondaryLinks || (program.bookingUrlAlt
+    ? [{ label: program.bookingUrlAltLabel || "View Package Options", href: program.bookingUrlAlt }]
+    : []);
 
   return (
-    <div
-      className="program-card-grid"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: 40,
-        background: "rgba(255,255,255,0.02)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderRadius: 24,
-        padding: "clamp(20px, 4vw, 40px)",
-        boxShadow: "0 10px 40px rgba(0,0,0,0.2)",
-      }}
+    <article
+      className={programStyles.card}
+      aria-labelledby={`program-${program.id}-title`}
+      style={{ "--program-color": program.color } as React.CSSProperties}
     >
-      <div>
+      <div className={programStyles.eyebrow}>
+        <span className={programStyles.age}>{program.ageGroup}</span>
+        <span className={programStyles.category}>
+          {program.id === "mini-soccer" ? "Soccer foundations" : "All sports"}
+        </span>
+      </div>
+      <h3 id={`program-${program.id}-title`} className={programStyles.title}>{program.name}</h3>
+      <p className={programStyles.tagline}>{program.tagline}</p>
+      <div className={programStyles.media}>
         {program.video ? (
           <VideoPlayer
             src={program.video}
             label={`${program.name} in action`}
+            poster={program.id === "performance" ? assets.franClassStrength : undefined}
           />
         ) : (
           <ImageCard src={program.image} label={program.name} />
         )}
       </div>
-
-      <div>
-        {program.featured && (
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              padding: "5px 12px",
-              borderRadius: 100,
-              background: "rgba(220,38,38,0.1)",
-              border: "1px solid rgba(220,38,38,0.3)",
-              fontSize: 11,
-              fontWeight: 800,
-              color: brand.red,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              marginBottom: 12,
-            }}
-          >
-            ★ FEATURED PROGRAM
-          </div>
-        )}
-
-        <div
-          style={{
-            display: "inline-block",
-            padding: "4px 12px",
-            borderRadius: 100,
-            background: `${program.color}15`,
-            border: `1px solid ${program.color}30`,
-            fontSize: 12,
-            fontWeight: 700,
-            color: program.color,
-            letterSpacing: "0.04em",
-            marginBottom: 16,
-          }}
-        >
-          {program.ageGroup}
+      <div className={programStyles.schedule}>
+        <p><Calendar size={15} /><span>{days}</span></p>
+        <p><Clock size={15} /><span>{times}</span></p>
+        <p><MapPin size={15} /><span>{locations}</span></p>
+      </div>
+      <div className={programStyles.price}>
+        <div className={programStyles.priceLine}>
+          <strong>{program.price}</strong>
+          {program.priceSub && <span>{program.priceSub}</span>}
         </div>
-
-        <h3
-          style={{
-            fontSize: program.featured ? 42 : 36,
-            fontWeight: 900,
-            color: brand.text,
-            letterSpacing: "-0.02em",
-            margin: "0 0 8px 0",
-          }}
-        >
-          {program.name}
-        </h3>
-
-        <p style={{ fontSize: 14, color: brand.muted, fontStyle: "italic", margin: "0 0 20px 0" }}>
-          {program.tagline}
-        </p>
-
-        <p style={{ fontSize: 15, lineHeight: 1.7, color: brand.mutedLight, margin: "0 0 24px 0" }}>
-          {program.description}
-        </p>
-
-        <div
-          className="program-features-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "10px 16px",
-            marginBottom: 24,
-          }}
-        >
-          {program.features.map((f) => (
-            <div
-              key={f}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                fontSize: 13,
-                color: brand.mutedLight,
-              }}
-            >
-              <CheckCircle size={14} color={program.color} /> {f}
-            </div>
-          ))}
-        </div>
-
-        <div
-          style={{
-            background: brand.surface,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 10,
-            padding: "20px 24px",
-            marginBottom: 20,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-            <span
-              style={{
-                fontSize: 36,
-                fontWeight: 900,
-                color: brand.text,
-                fontFamily: "Georgia, serif",
-              }}
-            >
-              {program.price}
-            </span>
-            {program.priceSub && (
-              <span style={{ fontSize: 14, color: brand.muted, fontWeight: 500 }}>
-                {program.priceSub}
-              </span>
-            )}
-          </div>
-          {program.priceAlt && (
-            <div style={{ fontSize: 14, color: brand.mutedLight, marginTop: 6, fontWeight: 500 }}>
-              or {program.priceAlt}
-            </div>
-          )}
-          {program.priceNote && !program.priceAlt && (
-            <div style={{ fontSize: 13, color: brand.muted, marginTop: 8, fontStyle: "italic" }}>
-              {program.priceNote}
-            </div>
-          )}
-        </div>
-
-        <button
-          onClick={() => setScheduleOpen(!scheduleOpen)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            background: brand.surface,
-            border: `1px solid ${brand.border}`,
-            borderRadius: 10,
-            padding: "14px 20px",
-            cursor: "pointer",
-            color: brand.text,
-            fontSize: 14,
-            fontWeight: 600,
-            marginBottom: scheduleOpen ? 0 : 20,
-            borderBottomLeftRadius: scheduleOpen ? 0 : 10,
-            borderBottomRightRadius: scheduleOpen ? 0 : 10,
-          }}
-        >
-          <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Calendar size={16} /> Schedule &amp; Locations
-          </span>
-          <ChevronDown
-            size={18}
-            style={{
-              transition: "transform 0.2s ease",
-              transform: scheduleOpen ? "rotate(180deg)" : "none",
-            }}
-          />
-        </button>
-
-        {scheduleOpen && (
-          <div
-            style={{
-              background: brand.surface,
-              border: `1px solid ${brand.border}`,
-              borderTop: "none",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              padding: "4px 20px 16px",
-              marginBottom: 20,
-            }}
-          >
-            {program.schedule.map((s) => (
-              <div
-                key={`${s.label || program.name}-${s.day}-${s.time}`}
-                className="schedule-row"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "90px 1fr 1fr",
-                  gap: 12,
-                  padding: "12px 0",
-                  borderBottom: `1px solid ${brand.border}`,
-                  fontSize: 14,
-                }}
-              >
-                <span style={{ color: brand.text }}>
-                  <span style={{ display: "block", fontWeight: 700 }}>{s.day}</span>
-                  {s.dateRange && (
-                    <span style={{ display: "block", color: brand.muted, fontSize: 12, marginTop: 4 }}>{s.dateRange}</span>
-                  )}
-                  {s.label && (
-                    <span style={{ display: "block", color: program.color, fontSize: 11, fontWeight: 700, marginTop: 3 }}>
-                      {s.label}
-                    </span>
-                  )}
-                </span>
-                <span
-                  style={{
-                    color: brand.mutedLight,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  <Clock size={13} /> {s.time}
-                </span>
-                <span
-                  style={{
-                    color: brand.muted,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                >
-                  <MapPin size={13} /> {s.location}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
-
+        {program.priceAlt ? <p>or {program.priceAlt}</p> : <p>{program.priceNote}</p>}
+      </div>
+      <div className={programStyles.actions}>
         <Button
           href={program.primaryCtaUrl || program.bookingUrl}
           variant="primary"
-          icon
-          style={{ width: "100%", justifyContent: "center" }}
+          style={{ width: "100%", justifyContent: "center", padding: "0 12px", fontSize: 12, textAlign: "center" }}
         >
           {program.primaryCtaLabel || `Book ${program.name}`}
         </Button>
-
-        {(program.secondaryLinks || (program.bookingUrlAlt ? [{ label: program.bookingUrlAltLabel || "View Package Options", href: program.bookingUrlAlt }] : [])).map((link) => (
-          <a
-            key={`${program.id}-${link.href}-${link.label}`}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "block",
-              textAlign: "center",
-              fontSize: 13,
-              fontWeight: 600,
-              color: program.color,
-              textDecoration: "none",
-              marginTop: 10,
-              padding: "10px 12px",
-              border: `1px solid ${program.color}55`,
-              borderRadius: 8,
-              background: `${program.color}10`,
-              transition: "opacity 0.2s ease",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
+        {secondaryLinks.map((link) => (
+          <a key={link.href + link.label} href={link.href} target="_blank" rel="noopener noreferrer" className={programStyles.secondary}>
             {link.label}
           </a>
         ))}
       </div>
-
-      <style>{`
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-        @media (max-width: 900px) { .program-card-grid { grid-template-columns: 1fr !important; } }
-        @media (max-width: 480px) {
-          .schedule-row { grid-template-columns: 1fr !important; gap: 4px !important; padding: 10px 0 !important; }
-          .program-features-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-    </div>
+      <details className={programStyles.details}>
+        <summary>Program details &amp; full schedule <ChevronDown size={17} /></summary>
+        <p className={programStyles.description}>{program.description}</p>
+        <ul className={programStyles.features}>
+          {program.features.map((feature) => <li key={feature}><CheckCircle size={14} />{feature}</li>)}
+        </ul>
+        {program.schedule.map((session) => (
+          <div key={`${session.label || program.name}-${session.day}-${session.time}`} className={programStyles.session}>
+            <strong>{session.day}{session.label ? ` · ${session.label}` : ""}</strong>
+            {session.dateRange && <p>{session.dateRange}</p>}
+            <p>{session.time}</p>
+            <p>{session.location}</p>
+          </div>
+        ))}
+      </details>
+    </article>
   );
 }
 
 // ── Programs Section ──
 function Programs() {
-  const [activeProgram, setActiveProgram] = useState("mini-soccer");
+  const displayOrder = ["performance", "speed-agility", "mini-soccer"];
+  const visiblePrograms = [...programs].sort((a, b) => displayOrder.indexOf(a.id) - displayOrder.indexOf(b.id));
 
   return (
     <section
       id="programs"
-      style={{
-        position: "relative",
-        padding: "120px clamp(20px, 4vw, 48px)",
-        background: brand.bg,
-      }}
+      style={{ position: "relative", padding: "88px clamp(20px, 4vw, 48px)", background: brand.bg, scrollMarginTop: 70 }}
     >
       <GlowEffect color={brand.red} top="0%" left="50%" size="1000px" opacity={0.04} />
       <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <SectionLabel>Programs</SectionLabel>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
+          <SectionLabel>Three programs. One athletic foundation.</SectionLabel>
           <SectionHeadline>Find the right program for your athlete</SectionHeadline>
-          <p
-            style={{
-              fontSize: 16,
-              color: brand.muted,
-              marginTop: 12,
-              maxWidth: 500,
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            Structured, coached programs built around long-term youth athlete development on the South Shore.
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: brand.muted, margin: "16px auto 0", maxWidth: 650 }}>
+            Speed, strength and confidence for every sport. Plus a dedicated soccer introduction for our youngest athletes.
           </p>
         </div>
-
-        <div
-          className="program-tab-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
-            gap: 8,
-            marginBottom: 48,
-          }}
-        >
-          {programs.map((p) => {
-            const isActive = activeProgram === p.id;
-            return (
-              <motion.button
-                key={p.id}
-                onClick={() => setActiveProgram(p.id)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
-                  width: "100%",
-                  minHeight: 68,
-                  minWidth: 0,
-                  padding: "12px 14px",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  letterSpacing: "0.02em",
-                  border: isActive ? `2px solid ${p.color}` : `1px solid ${brand.border}`,
-                  background: isActive ? `${p.color}10` : brand.surface,
-                  color: isActive ? p.color : brand.muted,
-                  transition: "all 0.2s ease",
-                }}
-              >
-                {p.ageGroup}
-                <span
-                  style={{
-                    fontSize: 11,
-                    padding: "2px 8px",
-                    borderRadius: 100,
-                    background: isActive ? `${p.color}20` : brand.surfaceLight,
-                    color: isActive ? p.color : brand.muted,
-                    lineHeight: 1.25,
-                    textAlign: "center",
-                  }}
-                >
-                  {p.name}
-                </span>
-              </motion.button>
-            );
-          })}
+        <div className={programStyles.grid}>
+          {visiblePrograms.map((program) => <ProgramCard key={program.id} program={program} />)}
         </div>
-
-        {programs.map((p) => (
-          <ProgramCard key={p.id} program={p} isActive={activeProgram === p.id} />
-        ))}
-
-        <style>{`
-          @media (max-width: 520px) { .program-tab-grid { grid-template-columns: 1fr !important; } }
-        `}</style>
       </div>
     </section>
   );

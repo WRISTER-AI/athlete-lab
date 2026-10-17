@@ -1,5 +1,11 @@
 # The Athlete Lab maintenance
 
+## All three programs visible (2026-10-17)
+
+The owner approved publishing the three-card program layout. `app/components/AthleteLab.tsx` now shows Youth Sports Performance, Intro to Speed & Agility, and Mini Soccer together instead of tabs. The first two carry an "All sports" label. `app/components/Programs.module.css` places the cards side by side on desktop and stacks them on phones. Each card keeps the existing age range, video, price, schedule and booking links; full descriptions and schedules expand independently. Youth Sports Performance uses the existing strength-class photograph as its video poster. Program data and Wix settings are unchanged.
+
+TypeScript, targeted ESLint, diff check, all nine existing tests, and the Vercel production-mode preview build passed. Desktop (1440px), tablet (820px), and phone (390px) were inspected, with all three videos loaded and no card/page horizontal overflow. The Mini Soccer detail panel retained both course date ranges. Final READY preview: https://athlete-1qspqx25f-the-athlete-lab.vercel.app/#programs (`dpl_9pWte9MQrP4oDPQB2qKMuPytVFkv`). Screenshots are saved outside Git in `../outputs/Three-Programs-Desktop-2026-10-17.png` and `Three-Programs-Mobile-2026-10-17.png`. The existing local Windows SWC build limitation remains; Vercel's production-mode build succeeded. Production verification will be recorded after deployment.
+
 ## Coach class photographs (published, 2026-10-09)
 
 Replaced the cliff portrait and two old soccer photographs in the coach section with three existing class photos from this site's Wix media library. Original files are copied into `public/coach/`: `francis-class-instruction.png` (Wix `speed 2.png`, media ID `5abe16_d680d666893c4c699744163186e23a4c~mv2.png`), `francis-class-speed-drills.jpg` (`speed pic_edited_edited.jpg`, `22615e_ad24193aa85d4bce94259a20b812361a~mv2.jpg`), and `francis-class-strength.png` (`speed 5.png`, `5abe16_b6d1667bde504514986119da84b5e9b0~mv2.png`). No generated imagery or edits to the originals. The source Wix library and older local photos are retained.
