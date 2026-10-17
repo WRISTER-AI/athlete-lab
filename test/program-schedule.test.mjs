@@ -117,7 +117,7 @@ test("coach section copy is singular and current", () => {
 
   assert.match(componentSource, /<SectionLabel>The Coach<\/SectionLabel>/);
   assert.match(componentSource, /Led by Francis Mulkern/);
-  assert.match(componentSource, /Former Merrimack player and Boston Bolts coach/);
+  assert.match(componentSource, /Learn from a former college athlete who brings firsthand experience of competing at the next level to young athletes in every sport/);
   assert.doesNotMatch(componentSource, /Coached by someone who knows the game/);
   assert.doesNotMatch(componentSource, /<SectionLabel>Our Coaches<\/SectionLabel>/);
 });

@@ -226,6 +226,23 @@ export const coaches = [
         objectPosition: "40% 50%",
       },
     ],
-    bio: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts, most recently leading a team where 19 of 23 players went on to play college soccer. Created The Athlete Lab to provide structured, intentional youth athletic training on the South Shore.",
+    bio: "Francis Mulkern competed at Merrimack College. He knows the preparation, discipline and sacrifices it takes to reach that level, and the daily commitment it takes to succeed there. He brings that experience to young athletes with goals of their own.",
+    approach: [
+      {
+        title: "A coach who understands your ambition",
+        description: "Train with someone who has pursued that goal and experienced the demands of college sport firsthand.",
+      },
+      {
+        title: "Build the tools. Develop the habits.",
+        description: "Work on speed, strength, agility and conditioning with the effort, discipline and consistency that competing at a higher level demands.",
+      },
+      {
+        title: "Your next step starts here",
+        description: "From learning the fundamentals to pursuing bigger goals, build an athletic foundation through age-appropriate training for every sport.",
+      },
+    ],
+    background: "Former collegiate soccer player at Merrimack College with a background in Sports Medicine and Pre-Physical Therapy. Spent 10 years coaching with the Boston Bolts, most recently leading a team where 19 of 23 players went on to play college soccer.",
+    allSports: "Across the court, field and ice, athletes rely on speed, strength, agility and conditioning. We build those foundations so you can bring them to your sport.",
+    sports: ["Basketball", "Football", "Hockey", "Lacrosse", "Baseball", "Softball", "Soccer", "And more"],
   },
 ];

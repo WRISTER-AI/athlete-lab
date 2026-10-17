@@ -712,6 +712,22 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               style={{
+                fontSize: "clamp(16px, 1.6vw, 19px)",
+                lineHeight: 1.5,
+                fontWeight: 800,
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                color: brand.text,
+                margin: "0 0 14px",
+              }}
+            >
+              Speed. Strength. Agility. <span style={{ color: brand.red }}>For every sport.</span>
+            </motion.p>
+
+            <motion.p
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
                 fontSize: 18,
                 lineHeight: 1.65,
                 color: brand.muted,
@@ -719,7 +735,10 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
                 margin: "0 0 40px 0",
               }}
             >
-              Youth speed, strength, and conditioning training on the South Shore. Pembroke and Hanover, MA.
+              For athletes playing basketball, football, hockey, lacrosse, baseball, softball, soccer and more.
+              <span style={{ display: "block", marginTop: 12 }}>
+                Youth athletic training on the South Shore. Pembroke and Hanover, MA.
+              </span>
             </motion.p>
 
             <motion.div
@@ -1108,7 +1127,7 @@ function SchedulePreview() {
 }
 
 // ── Coaches ──
-function Coaches() {
+function Coaches({ onNavigate }: { onNavigate: (id: string) => void }) {
   const coach = coaches[0];
 
   if (!coach) return null;
@@ -1137,7 +1156,7 @@ function Coaches() {
               lineHeight: 1.7,
             }}
           >
-            Former Merrimack player and Boston Bolts coach bringing college-level standards to youth athlete development.
+            Learn from a former college athlete who brings firsthand experience of competing at the next level to young athletes in every sport.
           </p>
         </div>
 
@@ -1233,6 +1252,25 @@ function Coaches() {
                 </div>
               ))}
             </div>
+            <div style={{ marginTop: 24, padding: 24, background: "rgba(255,255,255,0.02)", border: `1px solid ${brand.border}`, borderRadius: 16 }}>
+              <h3 style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase", color: brand.text, margin: "0 0 10px" }}>
+                Experience behind the coaching
+              </h3>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: brand.mutedLight, margin: 0 }}>
+                {coach.background}
+              </p>
+              <div style={{ marginTop: 20, paddingTop: 20, borderTop: `1px solid ${brand.border}` }}>
+                <h4 style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.35, color: brand.text, margin: "0 0 10px" }}>
+                  Different sports. Same athletic foundation.
+                </h4>
+                <p style={{ fontSize: 14, lineHeight: 1.8, color: brand.mutedLight, margin: 0 }}>
+                  {coach.allSports}
+                </p>
+                <p style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.9, color: brand.red, margin: "12px 0 0" }}>
+                  {coach.sports.join(" · ")}
+                </p>
+              </div>
+            </div>
           </motion.div>
           <div
             className="coach-copy-panel"
@@ -1264,7 +1302,7 @@ function Coaches() {
                 marginBottom: 22,
               }}
             >
-              Founder-led training
+              The Athlete Lab Difference
             </div>
             <h3
               style={{
@@ -1275,11 +1313,31 @@ function Coaches() {
                 margin: "0 0 20px",
               }}
             >
-              A training environment built around standards, confidence, and long-term athletic growth.
+              Train with someone who&#8217;s been where you want to go.
             </h3>
             <p style={{ fontSize: 16, lineHeight: 1.85, color: brand.mutedLight, margin: 0 }}>
               {coach.bio}
             </p>
+            <ul style={{ display: "grid", gap: 20, margin: "28px 0", padding: 0, listStyle: "none" }}>
+              {coach.approach.map((point) => (
+                <li key={point.title} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                  <CheckCircle size={18} aria-hidden="true" style={{ color: brand.red, flexShrink: 0, marginTop: 3 }} />
+                  <div>
+                    <h4 style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.45, color: brand.text, margin: "0 0 5px" }}>
+                      {point.title}
+                    </h4>
+                    <p style={{ fontSize: 14, lineHeight: 1.7, color: brand.mutedLight, margin: 0 }}>
+                      {point.description}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div>
+              <Button href="#programs" icon onClick={(e) => { e.preventDefault(); onNavigate("programs"); }}>
+                Find your program
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -1893,7 +1951,7 @@ export default function AthleteLab() {
       <Hero onNavigate={scrollToSection} />
       <Programs />
       <AthleteDifference />
-      <Coaches />
+      <Coaches onNavigate={scrollToSection} />
       <Testimonials />
       <SchedulePreview />
       <CTABanner onNavigate={scrollToSection} />
