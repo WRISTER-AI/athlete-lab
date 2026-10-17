@@ -1,5 +1,11 @@
 # The Athlete Lab maintenance
 
+## Bring-a-friend website banner removed (published, 2026-10-17)
+
+At the owner's request, removed the `LocationNotice` import and rendering from the homepage and full schedule page. The old banner component and its styles remain unused; no active promotion is displayed. This removal applies to the Next.js website; Wix/Spaces content was not changed.
+
+Targeted ESLint, all nine tests, diff check, and the production build including TypeScript passed. Source commit `cd08226` was pushed and verified on GitHub master. Production deployment `dpl_Ex8z4KdtnxsPXf6PAo3YebEgARXg`, https://athlete-fvj0yqys0-the-athlete-lab.vercel.app, is READY and assigned to www.theathletelab.net. Live homepage and `/schedule` contain neither the promotion text nor its banner element. Desktop homepage and phone layouts were inspected; no phone overflow was present. All three program cards and separate performance class times remain. Screenshot: `../outputs/Bring-Friend-Banner-Removed-2026-10-17.png`. Rollback target: `dpl_94k7eJpm711UR7iR72Bi9cJCE6nn`, https://athlete-mthmagm43-the-athlete-lab.vercel.app.
+
 ## Separate performance class times (published, 2026-10-17)
 
 The owner clarified that Youth Sports Performance offers separate 5 PM and 6 PM classes, not one two-hour class. `app/lib/data.ts` now has distinct Monday-Thursday entries for 5:00-6:00 PM and 6:00-7:00 PM. The homepage card says "Choose a class" and lists both times. Its full details, homepage schedule, `/schedule` (two entries per weekday), and footer now reflect that distinction. Duplicate weekday labels are suppressed on the program card. Prices, booking links and Wix settings are unchanged. The existing schedule regression checks were updated to require both classes and reject the combined 5:00-7:00 PM label.
