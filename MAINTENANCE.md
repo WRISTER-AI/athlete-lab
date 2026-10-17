@@ -1,5 +1,11 @@
 # The Athlete Lab maintenance
 
+## Separate performance class times (published, 2026-10-17)
+
+The owner clarified that Youth Sports Performance offers separate 5 PM and 6 PM classes, not one two-hour class. `app/lib/data.ts` now has distinct Monday-Thursday entries for 5:00-6:00 PM and 6:00-7:00 PM. The homepage card says "Choose a class" and lists both times. Its full details, homepage schedule, `/schedule` (two entries per weekday), and footer now reflect that distinction. Duplicate weekday labels are suppressed on the program card. Prices, booking links and Wix settings are unchanged. The existing schedule regression checks were updated to require both classes and reject the combined 5:00-7:00 PM label.
+
+TypeScript, targeted ESLint, all nine tests, diff check, and the Vercel production build passed. Source commit `0d38109` was pushed and verified on GitHub master. Production deployment `dpl_94k7eJpm711UR7iR72Bi9cJCE6nn`, https://athlete-mthmagm43-the-athlete-lab.vercel.app, is READY. The live homepage was inspected on desktop and phone; both times and the corrected footer are present, with no horizontal overflow. The live full schedule shows both one-hour classes on every Monday-Thursday and no combined two-hour label. Screenshot: `../outputs/Performance-Class-Times-Live-2026-10-17.png`. Rollback target: `dpl_9w3Z14xbeY6szSh5NpdsZsLhb2pg`, https://athlete-7g845jyce-the-athlete-lab.vercel.app.
+
 ## All three programs visible (published, 2026-10-17)
 
 The owner approved publishing the three-card program layout. `app/components/AthleteLab.tsx` now shows Youth Sports Performance, Intro to Speed & Agility, and Mini Soccer together instead of tabs. The first two carry an "All sports" label. `app/components/Programs.module.css` places the cards side by side on desktop and stacks them on phones. Each card keeps the existing age range, video, price, schedule and booking links; full descriptions and schedules expand independently. Youth Sports Performance uses the existing strength-class photograph as its video poster. Program data and Wix settings are unchanged.
