@@ -895,8 +895,8 @@ function Hero({ onNavigate }: { onNavigate: (id: string) => void }) {
 
 // ── Program Card ──
 function ProgramCard({ program }: { program: Program }) {
-  const days = program.schedule.map((session) => session.day).join(" & ");
-  const times = [...new Set(program.schedule.map((session) => session.time))].join(" / ");
+  const days = [...new Set(program.schedule.map((session) => session.day))].join(" & ");
+  const times = [...new Set(program.schedule.map((session) => session.time))];
   const locations = [...new Set(program.schedule.map((session) => session.location))].join(" / ");
   const secondaryLinks = program.secondaryLinks || (program.bookingUrlAlt
     ? [{ label: program.bookingUrlAltLabel || "View Package Options", href: program.bookingUrlAlt }]
@@ -929,7 +929,13 @@ function ProgramCard({ program }: { program: Program }) {
       </div>
       <div className={programStyles.schedule}>
         <p><Calendar size={15} /><span>{days}</span></p>
-        <p><Clock size={15} /><span>{times}</span></p>
+        <p>
+          <Clock size={15} />
+          <span>
+            {times.length > 1 && <span style={{ display: "block", fontWeight: 600 }}>Choose a class:</span>}
+            {times.map((time) => <span key={time} style={{ display: "block" }}>{time}</span>)}
+          </span>
+        </p>
         <p><MapPin size={15} /><span>{locations}</span></p>
       </div>
       <div className={programStyles.price}>
@@ -1682,7 +1688,7 @@ function Footer() {
               <br />
               Intro to Speed &amp; Agility: 4-5pm
               <br />
-              Youth Sports Performance: 5-7pm
+              Youth Sports Performance: 5-6pm or 6-7pm
               <br />
               Mon &amp; Wed Mini Soccer: 10:30-11:15am
               <br />

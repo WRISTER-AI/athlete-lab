@@ -177,7 +177,13 @@ export const programs: Program[] = [
       {
         day: "Monday-Thursday",
         days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-        time: "5:00-7:00 PM",
+        time: "5:00-6:00 PM",
+        location: "City Arena Field 4, Pembroke",
+      },
+      {
+        day: "Monday-Thursday",
+        days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+        time: "6:00-7:00 PM",
         location: "City Arena Field 4, Pembroke",
       },
     ],

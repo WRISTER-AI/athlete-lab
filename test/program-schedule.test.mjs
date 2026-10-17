@@ -65,7 +65,13 @@ test("fall training schedule uses the current Monday-Thursday City Arena offer",
     {
       day: "Monday-Thursday",
       days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-      time: "5:00-7:00 PM",
+      time: "5:00-6:00 PM",
+      location: "City Arena Field 4, Pembroke",
+    },
+    {
+      day: "Monday-Thursday",
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      time: "6:00-7:00 PM",
       location: "City Arena Field 4, Pembroke",
     },
   ]);
@@ -78,7 +84,7 @@ test("removed public schedule slots and programs are not exposed", () => {
     .join("\n");
   const allProgramText = programs.map((program) => `${program.id} ${program.name}`).join("\n");
 
-  assert.doesNotMatch(allScheduleText, /Friday|Saturday|Sunday|Starland|7:00-9:00|5:00-8:00|6:00-7:00 PM|7:00-8:00 PM/);
+  assert.doesNotMatch(allScheduleText, /Friday|Saturday|Sunday|Starland|7:00-9:00|5:00-8:00|5:00-7:00 PM|7:00-8:00 PM/);
   assert.doesNotMatch(allProgramText, /High School|College/i);
 });
 
